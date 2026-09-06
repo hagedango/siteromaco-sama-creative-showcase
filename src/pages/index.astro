@@ -244,6 +244,7 @@ const craftNotes = [
                   <span class="format-icon" aria-hidden="true">{format.icon}</span>
                   <strong>{format.title}</strong>
                   <span>{format.description}</span>
+                  <em class="format-action">{format.actionLabel}</em>
                 </span>
               </a>
             ))
@@ -472,21 +473,7 @@ const craftNotes = [
     });
   });
 
-  document.querySelectorAll('[data-jump-filter]').forEach((link) => {
-    link.addEventListener('click', (event) => {
-      const selected = link.getAttribute('data-jump-filter');
-      const target = document.querySelector('#works');
-      const button = selected
-        ? document.querySelector(`[data-filter="${CSS.escape(selected)}"]`)
-        : null;
-
-      if (target instanceof HTMLElement) {
-        event.preventDefault();
-        if (button instanceof HTMLButtonElement) button.click();
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    });
-  });
+  // direct links are preserved for format-cards
 </script>
 
 <style>
