@@ -11,15 +11,15 @@ durationSec: 30
 aspectRatio: '16:9'
 poster: '../../assets/works/seed-four-panel.svg'
 posterAlt: '4コマ漫画動画サンプルを示す作品カード'
-media: { type: 'youtube', youtubeId: 'aHuVB-HqrlA' }
+media: { type: 'youtube', youtubeId: '1PVJ6SJkLHo' }
 role: ['4コマ構成', '動画化', '字幕']
 deliverables: ['YouTube動画', '4コマ漫画動画']
 featured: true
 priority: 2
 published: true
-externalUrl: 'https://youtu.be/aHuVB-HqrlA'
+externalUrl: 'https://youtu.be/1PVJ6SJkLHo'
 links:
-  - { label: 'YouTubeで見る', href: 'https://youtu.be/aHuVB-HqrlA', kind: 'short' }
+  - { label: 'YouTubeで見る', href: 'https://youtu.be/1PVJ6SJkLHo', kind: 'short' }
 rightsNote: '提供された公開済みYouTubeリンクをもとに構成。'
 ---
 
