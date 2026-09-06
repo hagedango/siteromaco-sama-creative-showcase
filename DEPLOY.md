@@ -2,7 +2,7 @@
 
 ## Project
 
-- Site: Romaco-sama Creative Showcase | Presented by Hagedango
+- Site: Romaco-sama Creative Showcase | Produced by Hagedango
 - Source directory: `C:\Users\kome\Documents\Codex\2026-09-05\ai-lp-web-1-ai-4\site`
 - Framework: Astro static site
 - Node.js: 22.18.0
@@ -69,7 +69,7 @@ npx wrangler pages deploy dist --project-name romaco-sama-creative-showcase
 - Local independent source: `C:\Users\kome\Documents\Codex\2026-09-05\ai-lp-web-1-ai-4\site`
 - GitHub repository URL: `https://github.com/hagedango/romaco-sama-creative-showcase` after repository creation
 - Public URL: Cloudflare Pages URL after deployment
-- Official links:
+- Romaco-sama links:
   - Lit.Link: `https://lit.link/Romaco`
   - Substack: `https://substack.com/@romaco`
   - Game: `https://booth.pm/ja/items/8668950`

@@ -18,23 +18,51 @@ const hagedangoXUrl = import.meta.env.PUBLIC_HAGEDANGO_X_URL ?? 'https://x.com/d
 const contentMapUrl = 'https://romaco-substack-portal.pages.dev/content-map/';
 const flagshipEpisode = works.find((work) => work.data.episodeId === 'EP-0001');
 const shareText =
-  '罵尻ロマ子様の愛と罵倒が、最新AIで動き出す。Romaco-sama Creative Showcase、これは見ろ。';
+  '1つのキャラクター、1つの文章から、ここまで広がる。Romaco-sama Creative Showcase、これは見ろ。';
 const xShareUrl =
   import.meta.env.PUBLIC_X_SHARE_URL ??
   `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`;
 
-const officialLinks = [
+const creativeFormats = [
+  {
+    icon: '🖼️',
+    title: '4コマ漫画',
+    description: 'キャラクターの静止画を、読めるコミックへ。',
+  },
+  {
+    icon: '🎬',
+    title: '動く4コマ',
+    description: 'Remotionでコマ割りをコードモーション化。',
+  },
+  {
+    icon: '📱',
+    title: 'ショート動画',
+    description: '縦型SNS向けに字幕とテンポを最適化。',
+  },
+  {
+    icon: '🍳',
+    title: '料理シネマ動画',
+    description: '最新AIでシズル感と映画的な空気を生成。',
+  },
+  {
+    icon: '🎓',
+    title: '講座動画',
+    description: 'スライドと音声で教材・解説動画へ展開。',
+  },
+];
+
+const romacoLinks = [
   {
     label: '総合リンク',
     title: 'Romaco-sama Lit.Link',
-    description: '配信、SNS、公式情報をまとめて追う入口。',
+    description: '配信、SNS、活動情報をまとめて追う入口。',
     href: litLinkUrl,
     tone: 'cyan',
   },
   {
     label: 'ゲーム',
     title: '観測してはいけない女',
-    description: 'BOOTHで公開中のロマ子様公式ゲーム。',
+    description: 'BOOTHで公開中のRomaco-samaゲーム。',
     href: gameUrl,
     tone: 'gold',
   },
@@ -82,8 +110,8 @@ const craftNotes = [
 ---
 
 <BaseLayout
-  title="Romaco-sama Creative Showcase | Presented by Hagedango"
-  description="罵尻ロマ子様の愛と罵倒が、4コマ漫画、Remotion動画、料理シネマ、PV、講座動画として最新AIで動き出す公式クリエイティブ・ショウケースです。"
+  title="Romaco-sama Creative Showcase | Produced by Hagedango"
+  description="1つのキャラクター、1つの文章から、4コマ漫画、動く4コマ、ショート動画、料理シネマ、講座動画へ。最新AIとコード技術によるマルチ展開ショウケースです。"
 >
   <header class="site-header glass">
     <a class="brand" href="#top" aria-label="Romaco-sama Creative Showcase ホーム">
@@ -94,7 +122,7 @@ const craftNotes = [
         href="#links">Links</a
       >
     </nav>
-    <a class="header-cta" href="#links">公式リンク</a>
+    <a class="header-cta" href={hagedangoXUrl} target="_blank" rel="noreferrer">制作相談</a>
   </header>
 
   <main id="top">
@@ -111,14 +139,25 @@ const craftNotes = [
       </div>
       <div class="hero-scrim" aria-hidden="true"></div>
       <div class="container hero-content">
-        <p class="eyebrow">Batoshiri Romaco Official</p>
-        <h1 id="hero-title">罵尻ロマ子（Romaco-sama）Official Creative Showcase</h1>
+        <p class="eyebrow">Batoshiri Romaco Showcase</p>
+        <h1 id="hero-title">罵尻ロマ子（Romaco-sama）Creative Showcase</h1>
         <p class="hero-copy">
-          罵尻ロマ子様の愛と罵倒が、最新AIで動き出す――。
-          高飛車で気高い魔王感、そして笑える毒舌エンタメを、4コマ、動く漫画、料理シネマ、PV、講座動画へ広げます。
+          1つのキャラクター、1つの文章から、ここまで広がる――。
+          静止画から、動く漫画、ショート、シネマ、講座動画へ。最新AI×コード技術によるマルチ展開ショウケース。
         </p>
+        <div class="format-showcase" aria-label="制作できるクリエイティブ">
+          {
+            creativeFormats.map((format) => (
+              <article class="format-card glass">
+                <span class="format-icon" aria-hidden="true">{format.icon}</span>
+                <strong>{format.title}</strong>
+                <p>{format.description}</p>
+              </article>
+            ))
+          }
+        </div>
         <p class="credit-line">
-          Presented by Hagedango / Produced & Crafted by はげだんご <a
+          Produced & Crafted by はげだんご <a
             href={hagedangoXUrl}
             target="_blank"
             rel="noreferrer">@dango333</a
@@ -126,10 +165,16 @@ const craftNotes = [
         </p>
         <div class="hero-actions">
           <a class="button button-primary" href="#works">作品ギャラリーを見る</a>
+          <a class="button button-secondary" href={hagedangoXUrl} target="_blank" rel="noreferrer"
+            >制作相談をX DMへ</a
+          >
           <a class="button button-secondary" href={xShareUrl} target="_blank" rel="noreferrer"
             >Xで感想を叫ぶ</a
           >
         </div>
+        <p class="consult-note">
+          自分のキャラクターや教材も、こんな風に動かしてみたい方へ。制作・マルチ展開の相談は、はげだんごのX DMへお気軽にどうぞ。
+        </p>
         <dl class="hero-stats" aria-label="展示カテゴリ">
           <div><dt>Core</dt><dd>Romaco-sama</dd></div>
           <div><dt>Episodes</dt><dd>{works.length}</dd></div>
@@ -258,15 +303,15 @@ const craftNotes = [
       <div class="container">
         <SectionHeading
           id="links-title"
-          eyebrow="Official Links"
+          eyebrow="Romaco Links"
           title="気になったら、女王の領地へ。"
-          description="Romaco-samaの活動、ゲーム、エッセイへすぐ飛べる公式導線です。"
+          description="Romaco-samaの活動、ゲーム、エッセイへすぐ飛べる関連リンクです。"
         />
-        <div class="official-links">
+        <div class="romaco-links">
           {
-            officialLinks.map((link) => (
+            romacoLinks.map((link) => (
               <a
-                class:list={['official-link', 'glass', `official-link-${link.tone}`]}
+                class:list={['romaco-link', 'glass', `romaco-link-${link.tone}`]}
                 href={link.href}
                 target="_blank"
                 rel="noreferrer"
@@ -280,11 +325,16 @@ const craftNotes = [
         </div>
         <div class="reaction-panel glass">
           <p>
-            見た感想は、Xでそのまま叫んでください。Romaco-samaの愛と罵倒が動き出す瞬間を、ぜひ共有で。
+            見た感想は、Xでそのまま叫んでください。自分のキャラクターや教材も動かしてみたい方は、制作担当へ気軽に声をかけてください。
           </p>
-          <a class="button button-primary" href={xShareUrl} target="_blank" rel="noreferrer"
-            >Xで感想・リアクションを叫ぶ</a
-          >
+          <div class="reaction-actions">
+            <a class="button button-primary" href={xShareUrl} target="_blank" rel="noreferrer"
+              >Xで感想・リアクションを叫ぶ</a
+            >
+            <a class="button button-secondary" href={hagedangoXUrl} target="_blank" rel="noreferrer"
+              >制作担当に相談する</a
+            >
+          </div>
         </div>
       </div>
     </section>
@@ -295,11 +345,11 @@ const craftNotes = [
       <div>
         <span>© 2026 Romaco-sama Creative Showcase.</span>
         <p>
-          自分のキャラクターもこんな風に動かしてみたい……という奇特な方は、制作担当（はげだんご）の <a
+          自分のキャラクターや教材も、こんな風に動かしてみたい方へ。制作・マルチ展開のご相談は、制作担当（はげだんご <a
             href={hagedangoXUrl}
             target="_blank"
-            rel="noreferrer">X DMへどうぞ</a
-          >。
+            rel="noreferrer">@dango333</a
+          >）のX DMへお気軽にどうぞ。
         </p>
       </div>
       <a href="#top">Back to top</a>
@@ -489,9 +539,43 @@ const craftNotes = [
     color: var(--color-text-muted);
     font-size: var(--step-0);
   }
+  .format-showcase {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: var(--space-3);
+    max-width: min(100%, 65rem);
+  }
+  .format-card {
+    display: grid;
+    min-height: 9.5rem;
+    align-content: start;
+    gap: var(--space-2);
+    padding: var(--space-4);
+    border-radius: var(--radius-md);
+  }
+  .format-icon {
+    font-size: 1.6rem;
+    line-height: 1;
+  }
+  .format-card strong {
+    color: var(--color-gold);
+    font-size: 0.95rem;
+  }
+  .format-card p {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: 0.8rem;
+    line-height: 1.55;
+  }
   .credit-line {
     max-width: 44rem;
     color: var(--color-text-subtle);
+    font-size: var(--step--1);
+  }
+  .consult-note {
+    max-width: 48rem;
+    margin: 0;
+    color: var(--color-text-muted);
     font-size: var(--step--1);
   }
   .hero-actions,
@@ -715,13 +799,13 @@ const craftNotes = [
     padding-left: 1.1rem;
     color: var(--color-text-muted);
   }
-  .official-links {
+  .romaco-links {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: var(--space-4);
     margin-top: var(--space-7);
   }
-  .official-link {
+  .romaco-link {
     display: grid;
     min-height: 12rem;
     align-content: space-between;
@@ -730,27 +814,27 @@ const craftNotes = [
     border-radius: var(--radius-lg);
     text-decoration: none;
   }
-  .official-link span {
+  .romaco-link span {
     color: var(--color-text-subtle);
     font-size: 0.78rem;
     font-weight: 700;
   }
-  .official-link strong {
+  .romaco-link strong {
     color: var(--color-text);
     font-size: var(--step-1);
     line-height: 1.35;
   }
-  .official-link small {
+  .romaco-link small {
     color: var(--color-text-muted);
     font-size: var(--step--1);
   }
-  .official-link-cyan {
+  .romaco-link-cyan {
     border-color: rgb(81 229 255 / 30%);
   }
-  .official-link-gold {
+  .romaco-link-gold {
     border-color: rgb(242 199 110 / 36%);
   }
-  .official-link-purple {
+  .romaco-link-purple {
     border-color: rgb(169 123 255 / 34%);
   }
   .reaction-panel {
@@ -804,8 +888,9 @@ const craftNotes = [
       right: -9%;
       width: min(42vw, 16rem);
     }
+    .format-showcase,
     .works-grid,
-    .official-links {
+    .romaco-links {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
     .multi-use-board,
@@ -841,13 +926,14 @@ const craftNotes = [
     .hero-stats div {
       flex: 1 1 8rem;
     }
+    .format-showcase,
     .section-row,
     .works-grid,
     .multi-use-flow,
-    .official-links {
+    .romaco-links {
       grid-template-columns: 1fr;
     }
-    .official-link {
+    .romaco-link {
       min-height: 10rem;
     }
     .scroll-cue {
