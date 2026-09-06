@@ -23,6 +23,15 @@ const xShareUrl =
   import.meta.env.PUBLIC_X_SHARE_URL ??
   `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`;
 
+const promoSample = {
+  title: '宣伝用動画サンプル',
+  description:
+    'キャラクターや企画の魅力を、短いPV・告知映像として一気に伝えるサンプル。まず最初に見せたい一本です。',
+  href: 'https://youtu.be/rcqZ8HFt6_4',
+  sample: 'https://img.youtube.com/vi/rcqZ8HFt6_4/hqdefault.jpg',
+  sampleAlt: '宣伝用動画サンプルのYouTubeサムネイル',
+};
+
 const creativeFormats = [
   {
     icon: '🖼️',
@@ -181,6 +190,19 @@ const craftNotes = [
           1つのキャラクター、1つの文章から、ここまで広がる――。
           静止画から、動く漫画、ショート、シネマ、講座動画へ。最新AI×コード技術によるマルチ展開ショウケース。
         </p>
+        <a class="promo-sample glass" href={promoSample.href} target="_blank" rel="noreferrer">
+          <span class="promo-visual">
+            <img src={promoSample.sample} alt={promoSample.sampleAlt} loading="eager" decoding="async" />
+            <span class="play-badge play-badge-large" aria-hidden="true">▶</span>
+            <span class="sample-label">promo movie</span>
+          </span>
+          <span class="promo-copy">
+            <span class="eyebrow">First Look</span>
+            <strong>{promoSample.title}</strong>
+            <span>{promoSample.description}</span>
+            <em>YouTubeで見る ↗</em>
+          </span>
+        </a>
         <div class="format-showcase" aria-label="制作できるクリエイティブ">
           {
             creativeFormats.map((format) => (
@@ -604,6 +626,65 @@ const craftNotes = [
     color: var(--color-text-muted);
     font-size: var(--step-0);
   }
+  .promo-sample {
+    display: grid;
+    grid-template-columns: minmax(17rem, 0.9fr) minmax(0, 1.1fr);
+    overflow: hidden;
+    max-width: min(100%, 58rem);
+    border-color: rgb(242 199 110 / 42%);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--glass-highlight), var(--glow-gold);
+    color: var(--color-text);
+    text-decoration: none;
+  }
+  .promo-visual {
+    position: relative;
+    min-height: 15rem;
+    overflow: hidden;
+    background:
+      radial-gradient(circle at 20% 20%, rgb(242 199 110 / 24%), transparent 40%),
+      rgb(7 10 18 / 88%);
+  }
+  .promo-visual img {
+    width: 100%;
+    height: 100%;
+    min-height: 15rem;
+    object-fit: cover;
+    transition: transform var(--duration-slow) var(--ease-out);
+  }
+  .promo-sample:hover .promo-visual img,
+  .promo-sample:focus-visible .promo-visual img {
+    transform: scale(1.05);
+  }
+  .promo-visual::after {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(180deg, transparent 35%, rgb(7 10 18 / 68%) 100%),
+      radial-gradient(circle at 82% 18%, rgb(81 229 255 / 20%), transparent 34%);
+    content: '';
+  }
+  .promo-copy {
+    display: grid;
+    align-content: center;
+    gap: var(--space-3);
+    padding: var(--space-5);
+  }
+  .promo-copy strong {
+    color: var(--color-gold);
+    font-family: var(--font-display);
+    font-size: var(--step-2);
+    line-height: 1.15;
+  }
+  .promo-copy span:not(.eyebrow) {
+    color: var(--color-text-muted);
+    line-height: 1.75;
+  }
+  .promo-copy em {
+    color: var(--color-cyan);
+    font-style: normal;
+    font-weight: 700;
+  }
   .format-showcase {
     display: grid;
     grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -725,6 +806,11 @@ const craftNotes = [
     color: var(--color-cyan);
     font-size: 0.95rem;
     transform: translate(-50%, -50%);
+  }
+  .play-badge-large {
+    width: 4rem;
+    height: 4rem;
+    font-size: 1.15rem;
   }
   .format-copy {
     display: grid;
@@ -1064,6 +1150,9 @@ const craftNotes = [
       top: 32%;
       right: -9%;
       width: min(42vw, 16rem);
+    }
+    .promo-sample {
+      grid-template-columns: 1fr;
     }
     .format-showcase,
     .works-grid,
