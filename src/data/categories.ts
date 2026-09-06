@@ -1,11 +1,10 @@
 export const workCategories = [
   { slug: 'four-panel', label: '4コマ漫画', shortLabel: '読ませる' },
-  { slug: 'motion-comic', label: 'モーションコミック', shortLabel: '動かす' },
-  { slug: 'ai-animation', label: 'AIアニメ', shortLabel: '演じさせる' },
-  { slug: 'sizzle', label: 'シズル', shortLabel: '惹きつける' },
-  { slug: 'short-video', label: '縦型ショート', shortLabel: '届ける' },
-  { slug: 'education', label: '講座', shortLabel: '教える' },
-  { slug: 'latest-ai', label: '最新AI映像', shortLabel: '更新する' },
+  { slug: 'short-video', label: 'ショート動画', shortLabel: '届ける' },
+  { slug: 'education', label: '講座動画', shortLabel: '教える' },
+  { slug: 'sizzle', label: '料理シネマ', shortLabel: '惹きつける' },
+  { slug: 'remotion', label: 'Remotion', shortLabel: '動かす' },
+  { slug: 'source-essay', label: '原典エッセイ', shortLabel: '読む' },
 ] as const;
 
 export type WorkCategory = (typeof workCategories)[number]['slug'];

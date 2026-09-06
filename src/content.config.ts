@@ -27,6 +27,9 @@ const works = defineCollection({
       title: z.string().min(1).max(60),
       shortDescription: z.string().min(1).max(120),
       category: z.enum(workCategorySlugs),
+      categories: z.array(z.enum(workCategorySlugs)).min(1).optional(),
+      episodeId: z.string().regex(/^EP-\d{4}$/).optional(),
+      classification: z.string().optional(),
       tags: z.array(z.string()).default([]),
       tools: z.array(z.string()).min(1),
       year: z.number().int().min(2020),
@@ -43,6 +46,16 @@ const works = defineCollection({
       published: z.boolean().default(false),
       seed: z.boolean().default(false),
       externalUrl: z.string().url().optional(),
+      portalUrl: z.string().url().optional(),
+      links: z
+        .array(
+          z.object({
+            label: z.string().min(1).max(40),
+            href: z.string().url(),
+            kind: z.enum(['source', 'comic', 'short', 'lecture', 'portal']).optional(),
+          }),
+        )
+        .default([]),
       rightsNote: z.string().optional(),
     }),
 });

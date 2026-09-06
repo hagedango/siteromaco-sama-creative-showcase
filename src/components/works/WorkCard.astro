@@ -7,9 +7,16 @@ interface Props {
 }
 const { work } = Astro.props;
 const { data } = work;
+const categories = data.categories?.length ? data.categories : [data.category];
+const primaryLinks =
+  data.links.length > 0
+    ? data.links
+    : data.externalUrl
+      ? [{ label: '原典を読む', href: data.externalUrl }]
+      : [];
 ---
 
-<article class="work-card glass" data-category={data.category}>
+<article class="work-card glass" data-categories={categories.join(' ')}>
   <div class="poster">
     <img
       src={data.poster.src}
@@ -19,29 +26,34 @@ const { data } = work;
       loading="lazy"
       decoding="async"
     />
-    {data.seed && <span class="seed-label">展示枠</span>}
+    {data.episodeId && <span class="episode-label">{data.episodeId}</span>}
   </div>
   <div class="body">
     <div class="meta">
-      <span>{getCategoryLabel(data.category)}</span><span aria-hidden="true">·</span><span
-        >{data.year}</span
-      >
+      <span>{data.classification ?? getCategoryLabel(data.category)}</span><span aria-hidden="true"
+        >·</span
+      ><span>{data.year}</span>
     </div>
     <h3>{data.title}</h3>
     <p>{data.shortDescription}</p>
+    <div class="format-row" aria-label="展開フォーマット">
+      {categories.map((category) => <span>{getCategoryLabel(category)}</span>)}
+    </div>
     <div class="detail-row">
       <span>{data.aspectRatio}</span>
       {data.durationSec && <span>{data.durationSec}秒</span>}
       {data.role.slice(0, 2).map((role) => <span>{role}</span>)}
     </div>
     <ul aria-label="使用ツール">{data.tools.slice(0, 3).map((tool) => <li>{tool}</li>)}</ul>
-    {
-      data.externalUrl && (
-        <a class="card-link" href={data.externalUrl} target="_blank" rel="noreferrer">
-          作品を開く
-        </a>
-      )
-    }
+    {primaryLinks.length > 0 && (
+      <div class="link-row" aria-label="作品リンク">
+        {primaryLinks.slice(0, 4).map((link) => (
+          <a class="card-link" href={link.href} target="_blank" rel="noreferrer">
+            {link.label}
+          </a>
+        ))}
+      </div>
+    )}
   </div>
 </article>
 
@@ -72,7 +84,7 @@ const { data } = work;
   .work-card:hover .poster :global(img) {
     transform: scale(1.02);
   }
-  .seed-label {
+  .episode-label {
     position: absolute;
     top: var(--space-3);
     right: var(--space-3);
@@ -110,6 +122,20 @@ const { data } = work;
     color: var(--color-text-subtle);
     font-size: 0.78rem;
   }
+  .format-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+  .format-row span {
+    padding: var(--space-1) var(--space-3);
+    border: 1px solid rgb(242 199 110 / 32%);
+    border-radius: var(--radius-pill);
+    background: rgb(242 199 110 / 8%);
+    color: var(--color-gold);
+    font-size: 0.74rem;
+    font-weight: 700;
+  }
   .detail-row span {
     border-bottom: 1px solid rgb(255 255 255 / 16%);
   }
@@ -129,9 +155,17 @@ const { data } = work;
     font-size: 0.75rem;
   }
   .card-link {
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
     color: var(--color-cyan);
     font-size: var(--step--1);
     font-weight: 700;
     text-decoration: none;
+  }
+  .link-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
   }
 </style>

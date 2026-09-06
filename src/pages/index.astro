@@ -15,6 +15,8 @@ const litLinkUrl = import.meta.env.PUBLIC_ROMACO_LITLINK_URL ?? 'https://lit.lin
 const gameUrl = import.meta.env.PUBLIC_ROMACO_GAME_URL ?? 'https://booth.pm/ja/items/8668950';
 const substackUrl = import.meta.env.PUBLIC_ROMACO_SUBSTACK_URL ?? 'https://substack.com/@romaco';
 const hagedangoXUrl = import.meta.env.PUBLIC_HAGEDANGO_X_URL ?? 'https://x.com/dango333';
+const contentMapUrl = 'https://romaco-substack-portal.pages.dev/content-map/';
+const flagshipEpisode = works.find((work) => work.data.episodeId === 'EP-0001');
 const shareText =
   '罵尻ロマ子様の愛と罵倒が、最新AIで動き出す。Romaco-sama Creative Showcase、これは見ろ。';
 const xShareUrl =
@@ -48,27 +50,27 @@ const officialLinks = [
 const multiUseSteps = [
   {
     number: '01',
-    title: '4コマ静止画',
-    purpose: '気高く罵る一瞬を、SNSで読み切れる物語にする。',
-    proof: '表情・オチ・テンポ',
+    title: 'Substack原典',
+    purpose: 'EP-0001「量子力学は、天才たちの正気を壊した」を思想の源泉にする。',
+    proof: '原典記事・思考法',
   },
   {
     number: '02',
-    title: 'Remotion動画',
-    purpose: 'コマ割りを時間軸へ置き換え、視線誘導まで動かす。',
-    proof: 'コードモーション・字幕',
+    title: '4コマ漫画',
+    purpose: '抽象的な科学テーマを、Romaco-samaの罵倒とオチで読み切れる形へ圧縮する。',
+    proof: '公開ポータル掲載',
   },
   {
     number: '03',
-    title: '料理シネマ',
-    purpose: '魔王の日常感とシズルを混ぜ、眺めたくなる短尺にする。',
-    proof: '食材・湯気・リズム',
+    title: 'Shorts / Remotion',
+    purpose: 'コマ割り、字幕、視線誘導を時間軸へ置き換え、SNSで届く短尺へ展開する。',
+    proof: 'コードモーション・縦型動画',
   },
   {
     number: '04',
     title: '講座動画',
-    purpose: '制作の裏側を、音声とスライドで分かるコンテンツにする。',
-    proof: 'VOICEVOX・解説構成',
+    purpose: '難解なテーマを音声・スライド・字幕で理解できる教材型コンテンツへ変換する。',
+    proof: '講座動画公開',
   },
 ];
 
@@ -130,8 +132,8 @@ const craftNotes = [
         </div>
         <dl class="hero-stats" aria-label="展示カテゴリ">
           <div><dt>Core</dt><dd>Romaco-sama</dd></div>
-          <div><dt>Assets</dt><dd>{works.length}</dd></div>
-          <div><dt>Formats</dt><dd>7</dd></div>
+          <div><dt>Episodes</dt><dd>{works.length}</dd></div>
+          <div><dt>Filters</dt><dd>{workCategories.length + 1}</dd></div>
         </dl>
       </div>
       <a class="scroll-cue" href="#works"><span>Scroll</span><span aria-hidden="true">↓</span></a>
@@ -143,8 +145,8 @@ const craftNotes = [
           <SectionHeading
             id="works-title"
             eyebrow="Works Gallery"
-            title="Romaco-samaの愛と罵倒を、形式ごとに見渡す。"
-            description="4コマ、Remotion動画、料理シネマ、H3 PV、講座動画、SNSショート。高飛車で気高い魔王感を、媒体ごとの表情として並べます。"
+            title="Substack原典から広がった、本物の作品群。"
+            description="公開済みポータルの7エピソードを、4コマ、ショート、講座、原典エッセイの実績として整理。カードから原典記事や各公開アセットへ直接飛べます。"
           />
           <p class="works-count" aria-live="polite">
             <span data-visible-count>{works.length}</span>件表示
@@ -161,6 +163,11 @@ const craftNotes = [
             ))
           }
         </div>
+        <p class="source-note">
+          Source: <a href={contentMapUrl} target="_blank" rel="noreferrer"
+            >Romaco-sama Substack Portal Content Map</a
+          >（原典7 / 4コマ4 / ショート6 / 講座2）
+        </p>
 
         {
           works.length > 0 ? (
@@ -184,15 +191,29 @@ const craftNotes = [
         <SectionHeading
           id="multi-use-title"
           eyebrow="1 Source Multi-Use"
-          title="ひとつの魔王素材から、届き方を増やす。"
-          description="罵尻ロマ子様の口調、世界観、コミュニティの熱量を起点に、静止画、コードモーション、日常シネマ、講座へ展開する実例の見せ場です。"
+          title="EP-0001を見れば、マルチ展開力が一発で分かる。"
+          description="ひとつのSubstack記事を起点に、4コマ、Shorts、Remotion的なコードモーション、講座動画まで展開する。Romaco-samaの毒舌エンタメを媒体ごとに変換する実例です。"
         />
 
         <div class="multi-use-board">
           <div class="source-card glass">
-            <span class="eyebrow">Source</span>
-            <strong>Romaco-sama</strong>
-            <span>罵倒の女王、毒舌エンタメ、気高き魔王感、愛あるコミュニティ</span>
+            <span class="eyebrow">Flagship Case</span>
+            <strong>EP-0001 量子力学</strong>
+            <span class="source-summary"
+              >知らない方が幸せだった。量子力学は、天才たちの正気を壊した</span
+            >
+            {
+              flagshipEpisode?.data.externalUrl && flagshipEpisode.data.portalUrl && (
+                <div class="source-actions">
+                  <a href={flagshipEpisode.data.externalUrl} target="_blank" rel="noreferrer">
+                    原典を読む
+                  </a>
+                  <a href={flagshipEpisode.data.portalUrl} target="_blank" rel="noreferrer">
+                    展開を見る
+                  </a>
+                </div>
+              )
+            }
           </div>
           <ol class="multi-use-flow">
             {
@@ -288,7 +309,7 @@ const craftNotes = [
 
 <script is:inline>
   const buttons = Array.from(document.querySelectorAll('[data-filter]'));
-  const cards = Array.from(document.querySelectorAll('.works-grid [data-category]'));
+  const cards = Array.from(document.querySelectorAll('.works-grid [data-categories]'));
   const count = document.querySelector('[data-visible-count]');
 
   buttons.forEach((button) => {
@@ -297,7 +318,8 @@ const craftNotes = [
       let visible = 0;
 
       cards.forEach((card) => {
-        const matches = selected === 'all' || card.getAttribute('data-category') === selected;
+        const categories = card.getAttribute('data-categories')?.split(' ') ?? [];
+        const matches = selected === 'all' || categories.includes(selected);
         card.hidden = !matches;
         if (matches) visible += 1;
       });
@@ -564,6 +586,15 @@ const craftNotes = [
     color: var(--color-text);
     box-shadow: var(--glow-gold);
   }
+  .source-note {
+    margin: var(--space-4) 0 0;
+    color: var(--color-text-subtle);
+    font-size: var(--step--1);
+  }
+  .source-note a {
+    color: var(--color-cyan);
+    text-decoration: none;
+  }
   .works-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -606,8 +637,20 @@ const craftNotes = [
     font-size: var(--step-2);
     line-height: 1.12;
   }
-  .source-card span:last-child {
+  .source-summary {
     color: var(--color-text-muted);
+  }
+  .source-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-top: var(--space-3);
+  }
+  .source-actions a {
+    color: var(--color-cyan);
+    font-size: var(--step--1);
+    font-weight: 700;
+    text-decoration: none;
   }
   .multi-use-flow {
     display: grid;
