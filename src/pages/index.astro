@@ -1,5 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
+import sizzlePreview from '../assets/works/seed-sizzle.svg';
 import SectionHeading from '../components/common/SectionHeading.astro';
 import WorkCard from '../components/works/WorkCard.astro';
 import { workCategories } from '../data/categories';
@@ -28,26 +29,62 @@ const creativeFormats = [
     icon: '🖼️',
     title: '4コマ漫画',
     description: 'キャラクターの静止画を、読めるコミックへ。',
+    sample:
+      'https://romaco-substack-portal.pages.dev/media/EP-0001/quantum-comic-01.png',
+    sampleAlt: 'EP-0001 量子力学エピソードの4コマ漫画サンプル',
+    href: '#works',
+    filter: 'four-panel',
+    label: 'EP-0001 comic',
+    tone: 'comic',
+    preview: 'image',
   },
   {
     icon: '🎬',
     title: '動く4コマ',
     description: 'Remotionでコマ割りをコードモーション化。',
+    sample: 'https://img.youtube.com/vi/4Gqv7d6ShXA/hqdefault.jpg',
+    sampleAlt: 'EP-0001の動く4コマ・Remotion展開を示す動画サムネイル',
+    href: '#works',
+    filter: 'remotion',
+    label: 'motion preview',
+    tone: 'motion',
+    preview: 'video',
   },
   {
     icon: '📱',
     title: 'ショート動画',
     description: '縦型SNS向けに字幕とテンポを最適化。',
+    sample: 'https://img.youtube.com/vi/he-0c5CYyS8/hqdefault.jpg',
+    sampleAlt: 'EP-0008のショート動画プレビューサムネイル',
+    href: '#works',
+    filter: 'short-video',
+    label: 'vertical shorts',
+    tone: 'short',
+    preview: 'phone',
   },
   {
     icon: '🍳',
     title: '料理シネマ動画',
     description: '最新AIでシズル感と映画的な空気を生成。',
+    sample: sizzlePreview.src,
+    sampleAlt: '料理シネマ動画のシズル感を示すカテゴリプレビュー',
+    href: '#works',
+    filter: 'sizzle',
+    label: 'sizzle frame',
+    tone: 'sizzle',
+    preview: 'cinema',
   },
   {
     icon: '🎓',
     title: '講座動画',
     description: 'スライドと音声で教材・解説動画へ展開。',
+    sample: 'https://img.youtube.com/vi/C4k87y6XJJQ/hqdefault.jpg',
+    sampleAlt: 'EP-0005の講座動画プレビューサムネイル',
+    href: '#works',
+    filter: 'education',
+    label: 'lecture deck',
+    tone: 'lecture',
+    preview: 'slide',
   },
 ];
 
@@ -139,7 +176,7 @@ const craftNotes = [
       </div>
       <div class="hero-scrim" aria-hidden="true"></div>
       <div class="container hero-content">
-        <p class="eyebrow">Batoshiri Romaco Showcase</p>
+        <p class="eyebrow">Nonoshiri Romaco Showcase</p>
         <h1 id="hero-title">罵尻ロマ子（Romaco-sama）Creative Showcase</h1>
         <p class="hero-copy">
           1つのキャラクター、1つの文章から、ここまで広がる――。
@@ -148,11 +185,24 @@ const craftNotes = [
         <div class="format-showcase" aria-label="制作できるクリエイティブ">
           {
             creativeFormats.map((format) => (
-              <article class="format-card glass">
-                <span class="format-icon" aria-hidden="true">{format.icon}</span>
-                <strong>{format.title}</strong>
-                <p>{format.description}</p>
-              </article>
+              <a
+                class:list={['format-card', 'glass', `format-card-${format.tone}`]}
+                href={format.href}
+                data-jump-filter={format.filter}
+              >
+                <span class:list={['sample-frame', `sample-${format.preview}`]}>
+                  <img src={format.sample} alt={format.sampleAlt} loading="lazy" decoding="async" />
+                  {(format.preview === 'video' || format.preview === 'phone' || format.preview === 'slide') && (
+                    <span class="play-badge" aria-hidden="true">▶</span>
+                  )}
+                  <span class="sample-label">{format.label}</span>
+                </span>
+                <span class="format-copy">
+                  <span class="format-icon" aria-hidden="true">{format.icon}</span>
+                  <strong>{format.title}</strong>
+                  <span>{format.description}</span>
+                </span>
+              </a>
             ))
           }
         </div>
@@ -378,6 +428,22 @@ const craftNotes = [
       if (count) count.textContent = String(visible);
     });
   });
+
+  document.querySelectorAll('[data-jump-filter]').forEach((link) => {
+    link.addEventListener('click', (event) => {
+      const selected = link.getAttribute('data-jump-filter');
+      const target = document.querySelector('#works');
+      const button = selected
+        ? document.querySelector(`[data-filter="${CSS.escape(selected)}"]`)
+        : null;
+
+      if (target instanceof HTMLElement) {
+        event.preventDefault();
+        if (button instanceof HTMLButtonElement) button.click();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
 </script>
 
 <style>
@@ -543,26 +609,138 @@ const craftNotes = [
     display: grid;
     grid-template-columns: repeat(5, minmax(0, 1fr));
     gap: var(--space-3);
-    max-width: min(100%, 65rem);
+    max-width: min(100%, 72rem);
   }
   .format-card {
     display: grid;
-    min-height: 9.5rem;
-    align-content: start;
+    overflow: hidden;
+    min-height: 16rem;
+    align-content: stretch;
+    gap: 0;
+    padding: 0;
+    border-radius: var(--radius-md);
+    color: var(--color-text);
+    text-decoration: none;
+    transition:
+      transform var(--duration-normal) var(--ease-out),
+      border-color var(--duration-normal) var(--ease-out),
+      box-shadow var(--duration-normal) var(--ease-out);
+  }
+  .format-card:hover,
+  .format-card:focus-visible {
+    transform: translateY(-3px);
+  }
+  .format-card-comic:hover,
+  .format-card-comic:focus-visible,
+  .format-card-lecture:hover,
+  .format-card-lecture:focus-visible {
+    border-color: rgb(242 199 110 / 48%);
+    box-shadow: var(--glass-highlight), var(--glow-gold);
+  }
+  .format-card-motion:hover,
+  .format-card-motion:focus-visible,
+  .format-card-short:hover,
+  .format-card-short:focus-visible {
+    border-color: rgb(81 229 255 / 42%);
+    box-shadow: var(--glass-highlight), var(--glow-cyan);
+  }
+  .format-card-sizzle:hover,
+  .format-card-sizzle:focus-visible {
+    border-color: rgb(169 123 255 / 42%);
+    box-shadow: var(--glass-highlight), var(--glow-purple);
+  }
+  .sample-frame {
+    position: relative;
+    display: block;
+    min-height: 8.4rem;
+    overflow: hidden;
+    background:
+      radial-gradient(circle at 20% 10%, rgb(81 229 255 / 24%), transparent 36%),
+      linear-gradient(135deg, rgb(7 10 18 / 96%), rgb(21 28 49 / 82%));
+  }
+  .sample-frame img {
+    width: 100%;
+    height: 100%;
+    min-height: 8.4rem;
+    object-fit: cover;
+    transform: scale(1.01);
+    transition: transform var(--duration-slow) var(--ease-out);
+  }
+  .format-card:hover .sample-frame img,
+  .format-card:focus-visible .sample-frame img {
+    transform: scale(1.06);
+  }
+  .sample-frame::after {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(180deg, transparent 35%, rgb(7 10 18 / 62%) 100%),
+      radial-gradient(circle at 80% 20%, rgb(242 199 110 / 22%), transparent 34%);
+    content: '';
+  }
+  .sample-phone {
+    display: grid;
+    min-height: 8.4rem;
+    place-items: center;
+  }
+  .sample-phone img {
+    width: 56%;
+    min-height: 7.8rem;
+    border: 0.42rem solid rgb(7 10 18 / 84%);
+    border-radius: 1.1rem;
+    box-shadow: 0 14px 36px rgb(0 0 0 / 46%);
+  }
+  .sample-cinema {
+    border-block: 0.42rem solid rgb(7 10 18 / 82%);
+  }
+  .sample-slide img {
+    object-position: center;
+  }
+  .sample-label {
+    position: absolute;
+    z-index: 1;
+    right: var(--space-3);
+    bottom: var(--space-3);
+    padding: var(--space-1) var(--space-2);
+    border: 1px solid rgb(255 255 255 / 18%);
+    border-radius: var(--radius-pill);
+    background: rgb(7 10 18 / 74%);
+    color: var(--color-text-muted);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+  .play-badge {
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    left: 50%;
+    display: grid;
+    width: 2.8rem;
+    height: 2.8rem;
+    place-items: center;
+    border: 1px solid rgb(255 255 255 / 24%);
+    border-radius: 50%;
+    background: rgb(7 10 18 / 72%);
+    box-shadow: var(--glow-cyan);
+    color: var(--color-cyan);
+    font-size: 0.95rem;
+    transform: translate(-50%, -50%);
+  }
+  .format-copy {
+    display: grid;
     gap: var(--space-2);
     padding: var(--space-4);
-    border-radius: var(--radius-md);
   }
   .format-icon {
     font-size: 1.6rem;
     line-height: 1;
   }
-  .format-card strong {
+  .format-copy strong {
     color: var(--color-gold);
     font-size: 0.95rem;
   }
-  .format-card p {
-    margin: 0;
+  .format-copy span:last-child {
     color: var(--color-text-muted);
     font-size: 0.8rem;
     line-height: 1.55;
