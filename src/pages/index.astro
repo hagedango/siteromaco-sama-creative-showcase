@@ -23,14 +23,26 @@ const xShareUrl =
   import.meta.env.PUBLIC_X_SHARE_URL ??
   `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`;
 
-const promoSample = {
-  title: '宣伝用動画サンプル',
-  description:
-    'キャラクターや企画の魅力を、短いPV・告知映像として一気に伝えるサンプル。まず最初に見せたい一本です。',
-  href: 'https://youtu.be/rcqZ8HFt6_4',
-  sample: 'https://img.youtube.com/vi/rcqZ8HFt6_4/hqdefault.jpg',
-  sampleAlt: '宣伝用動画サンプルのYouTubeサムネイル',
-};
+const promoSamples = [
+  {
+    title: '宣伝用動画サンプル',
+    description:
+      'キャラクターや企画の魅力を、短いPV・告知映像として一気に伝えるサンプル。',
+    href: 'https://youtu.be/rcqZ8HFt6_4',
+    sample: 'https://img.youtube.com/vi/rcqZ8HFt6_4/hqdefault.jpg',
+    sampleAlt: '宣伝用動画サンプルのYouTubeサムネイル',
+    label: 'promo movie',
+  },
+  {
+    title: '4コマ漫画動画サンプル',
+    description:
+      '4コマ漫画の流れを、動画として見やすいテンポ・字幕・間へ変換するサンプル。',
+    href: 'https://youtu.be/1PVJ6SJkLHo',
+    sample: 'https://img.youtube.com/vi/1PVJ6SJkLHo/hqdefault.jpg',
+    sampleAlt: '4コマ漫画動画サンプルのYouTubeサムネイル',
+    label: '4-panel movie',
+  },
+];
 
 const creativeFormats = [
   {
@@ -190,19 +202,25 @@ const craftNotes = [
           1つのキャラクター、1つの文章から、ここまで広がる――。
           静止画から、動く漫画、ショート、シネマ、講座動画へ。最新AI×コード技術によるマルチ展開ショウケース。
         </p>
-        <a class="promo-sample glass" href={promoSample.href} target="_blank" rel="noreferrer">
-          <span class="promo-visual">
-            <img src={promoSample.sample} alt={promoSample.sampleAlt} loading="eager" decoding="async" />
-            <span class="play-badge play-badge-large" aria-hidden="true">▶</span>
-            <span class="sample-label">promo movie</span>
-          </span>
-          <span class="promo-copy">
-            <span class="eyebrow">First Look</span>
-            <strong>{promoSample.title}</strong>
-            <span>{promoSample.description}</span>
-            <em>YouTubeで見る ↗</em>
-          </span>
-        </a>
+        <div class="promo-samples" aria-label="最初に見せたい動画サンプル">
+          {
+            promoSamples.map((sample) => (
+              <a class="promo-sample glass" href={sample.href} target="_blank" rel="noreferrer">
+                <span class="promo-visual">
+                  <img src={sample.sample} alt={sample.sampleAlt} loading="eager" decoding="async" />
+                  <span class="play-badge play-badge-large" aria-hidden="true">▶</span>
+                  <span class="sample-label">{sample.label}</span>
+                </span>
+                <span class="promo-copy">
+                  <span class="eyebrow">First Look</span>
+                  <strong>{sample.title}</strong>
+                  <span>{sample.description}</span>
+                  <em>YouTubeで見る ↗</em>
+                </span>
+              </a>
+            ))
+          }
+        </div>
         <div class="format-showcase" aria-label="制作できるクリエイティブ">
           {
             creativeFormats.map((format) => (
@@ -626,11 +644,16 @@ const craftNotes = [
     color: var(--color-text-muted);
     font-size: var(--step-0);
   }
+  .promo-samples {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-4);
+    max-width: min(100%, 74rem);
+  }
   .promo-sample {
     display: grid;
-    grid-template-columns: minmax(17rem, 0.9fr) minmax(0, 1.1fr);
+    grid-template-columns: 1fr;
     overflow: hidden;
-    max-width: min(100%, 58rem);
     border-color: rgb(242 199 110 / 42%);
     border-radius: var(--radius-lg);
     box-shadow: var(--glass-highlight), var(--glow-gold);
@@ -1151,7 +1174,7 @@ const craftNotes = [
       right: -9%;
       width: min(42vw, 16rem);
     }
-    .promo-sample {
+    .promo-samples {
       grid-template-columns: 1fr;
     }
     .format-showcase,
