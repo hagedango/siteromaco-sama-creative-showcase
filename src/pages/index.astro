@@ -1,6 +1,5 @@
 ---
 import { getCollection } from 'astro:content';
-import sizzlePreview from '../assets/works/seed-sizzle.svg';
 import SectionHeading from '../components/common/SectionHeading.astro';
 import WorkCard from '../components/works/WorkCard.astro';
 import { workCategories } from '../data/categories';
@@ -66,13 +65,13 @@ const creativeFormats = [
     icon: '🍳',
     title: '料理シネマ動画',
     description: '最新AIでシズル感と映画的な空気を生成。',
-    sample: sizzlePreview.src,
-    sampleAlt: '料理シネマ動画のシズル感を示すカテゴリプレビュー',
+    sample: 'https://img.youtube.com/vi/qfpKfBIuMc4/hqdefault.jpg',
+    sampleAlt: '料理シネマ動画のYouTube Shortsプレビューサムネイル',
     href: '#works',
     filter: 'sizzle',
-    label: 'sizzle frame',
+    label: 'cooking short',
     tone: 'sizzle',
-    preview: 'cinema',
+    preview: 'phone',
   },
   {
     icon: '🎓',
