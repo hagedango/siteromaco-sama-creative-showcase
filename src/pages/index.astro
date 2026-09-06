@@ -52,35 +52,38 @@ const creativeFormats = [
     sample:
       'https://romaco-substack-portal.pages.dev/media/EP-0001/quantum-comic-01.png',
     sampleAlt: 'EP-0001 量子力学エピソードの4コマ漫画サンプル',
-    href: '#works',
+    href: 'https://romaco-substack-portal.pages.dev/episodes/quantum-mechanics-genius/#comic-heading',
     filter: 'four-panel',
     label: 'EP-0001 comic',
     tone: 'comic',
     preview: 'image',
+    actionLabel: '4コマを見る ↗',
   },
   {
     icon: '🎬',
     title: '動く4コマ',
     description: 'Remotionでコマ割りをコードモーション化。',
-    sample: 'https://img.youtube.com/vi/qKWwvM7l0R4/hqdefault.jpg',
-    sampleAlt: 'Remotion動画サンプルのYouTube Shortsプレビューサムネイル',
-    href: '#works',
+    sample: 'https://img.youtube.com/vi/1PVJ6SJkLHo/hqdefault.jpg',
+    sampleAlt: '4コマ漫画動画サンプルのYouTubeプレビューサムネイル',
+    href: 'https://youtu.be/1PVJ6SJkLHo',
     filter: 'remotion',
-    label: 'remotion short',
+    label: '4-panel movie',
     tone: 'motion',
     preview: 'phone',
+    actionLabel: '動画を見る ↗',
   },
   {
     icon: '📱',
     title: 'ショート動画',
     description: '縦型SNS向けに字幕とテンポを最適化。',
-    sample: 'https://img.youtube.com/vi/he-0c5CYyS8/hqdefault.jpg',
-    sampleAlt: 'EP-0008のショート動画プレビューサムネイル',
-    href: '#works',
+    sample: 'https://img.youtube.com/vi/4Gqv7d6ShXA/hqdefault.jpg',
+    sampleAlt: 'ショート動画サンプルのYouTube Shortsプレビューサムネイル',
+    href: 'https://youtube.com/shorts/4Gqv7d6ShXA',
     filter: 'short-video',
     label: 'vertical shorts',
     tone: 'short',
     preview: 'phone',
+    actionLabel: 'Shortsを見る ↗',
   },
   {
     icon: '🍳',
@@ -88,23 +91,25 @@ const creativeFormats = [
     description: '最新AIでシズル感と映画的な空気を生成。',
     sample: 'https://img.youtube.com/vi/qfpKfBIuMc4/hqdefault.jpg',
     sampleAlt: '料理シネマ動画のYouTube Shortsプレビューサムネイル',
-    href: '#works',
+    href: 'https://youtube.com/shorts/qfpKfBIuMc4',
     filter: 'sizzle',
     label: 'cooking short',
     tone: 'sizzle',
     preview: 'phone',
+    actionLabel: 'Shortsを見る ↗',
   },
   {
     icon: '🎓',
     title: '講座動画',
     description: 'スライドと音声で教材・解説動画へ展開。',
     sample: 'https://img.youtube.com/vi/C4k87y6XJJQ/hqdefault.jpg',
-    sampleAlt: 'EP-0005の講座動画プレビューサムネイル',
-    href: '#works',
+    sampleAlt: '講座動画サンプルのYouTubeプレビューサムネイル',
+    href: 'https://youtu.be/C4k87y6XJJQ',
     filter: 'education',
     label: 'lecture deck',
     tone: 'lecture',
     preview: 'slide',
+    actionLabel: '講座を見る ↗',
   },
 ];
 
@@ -225,8 +230,7 @@ const craftNotes = [
           {
             creativeFormats.map((format) => (
               <a
-                class:list={['format-card', 'glass', `format-card-${format.tone}`]}
-                href={format.href}
+                class:list={['format-card', 'glass', `format-card-${format.tone}`]} href={format.href} target="_blank" rel="noreferrer"
                 data-jump-filter={format.filter}
               >
                 <span class:list={['sample-frame', `sample-${format.preview}`]}>
