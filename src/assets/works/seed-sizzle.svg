@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" role="img" aria-labelledby="title desc">
+  <title id="title">Cooking cinema showcase placeholder</title>
+  <desc id="desc">Abstract sizzling food and steam motion marks.</desc>
+  <rect width="1200" height="750" fill="#070a12"/>
+  <circle cx="308" cy="366" r="186" fill="#f2c76e" fill-opacity=".18"/>
+  <circle cx="812" cy="270" r="210" fill="#63e6be" fill-opacity=".14"/>
+  <path d="M176 498h848" stroke="#f2c76e" stroke-opacity=".72" stroke-width="18" stroke-linecap="round"/>
+  <path d="M256 412c76-84 152-84 228 0s152 84 228 0 152-84 228 0" fill="none" stroke="#51e5ff" stroke-opacity=".64" stroke-width="12" stroke-linecap="round"/>
+  <path d="M362 242c-46 54-42 98 12 132M588 194c-54 66-50 124 14 172M780 232c-42 52-38 94 12 126" fill="none" stroke="#f5f7ff" stroke-opacity=".36" stroke-width="16" stroke-linecap="round"/>
+</svg>

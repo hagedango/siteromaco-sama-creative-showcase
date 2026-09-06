@@ -1,0 +1,44 @@
+@import './tokens.css';
+@import './reset.css';
+@import './utilities.css';
+
+html {
+  background: var(--color-bg);
+}
+
+body {
+  overflow-x: hidden;
+  background:
+    radial-gradient(circle at 18% 8%, rgb(81 229 255 / 9%), transparent 28rem),
+    radial-gradient(circle at 86% 32%, rgb(169 123 255 / 9%), transparent 30rem), var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  font-size: var(--step-0);
+  line-height: 1.8;
+}
+
+::selection {
+  background: rgb(81 229 255 / 28%);
+  color: var(--color-text);
+}
+:focus-visible {
+  outline: 2px solid var(--color-cyan);
+  outline-offset: 3px;
+}
+main {
+  isolation: isolate;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

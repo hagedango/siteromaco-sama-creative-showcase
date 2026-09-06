@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" role="img" aria-labelledby="title desc">
+  <title id="title">Latest AI PV showcase placeholder</title>
+  <desc id="desc">Abstract premium video loop frame with cinematic scan lines.</desc>
+  <rect width="1200" height="750" fill="#080912"/>
+  <path d="M0 128h1200M0 374h1200M0 622h1200" stroke="#273149" stroke-width="2"/>
+  <rect x="150" y="116" width="900" height="518" rx="42" fill="#12192a" stroke="#f2c76e" stroke-opacity=".42" stroke-width="4"/>
+  <circle cx="422" cy="354" r="166" fill="#51e5ff" fill-opacity=".16"/>
+  <circle cx="704" cy="354" r="214" fill="#a97bff" fill-opacity=".18"/>
+  <path d="M288 502c126-164 252-246 378-246 106 0 190 48 252 144" fill="none" stroke="#f5f7ff" stroke-opacity=".42" stroke-width="20" stroke-linecap="round"/>
+  <path d="M250 572h700" stroke="#51e5ff" stroke-opacity=".52" stroke-width="8" stroke-linecap="round"/>
+</svg>

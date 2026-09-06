@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1200" role="img" aria-labelledby="title desc">
+  <title id="title">Vertical short video showcase placeholder</title>
+  <desc id="desc">Vertical timeline with quick social video rhythm.</desc>
+  <rect width="900" height="1200" fill="#0d1220"/>
+  <rect x="132" y="84" width="636" height="1032" rx="54" fill="#111a2d" stroke="#a97bff" stroke-opacity=".42" stroke-width="5"/>
+  <rect x="194" y="172" width="512" height="330" rx="28" fill="#51e5ff" fill-opacity=".16"/>
+  <rect x="194" y="546" width="512" height="144" rx="24" fill="#f2c76e" fill-opacity=".18"/>
+  <rect x="194" y="728" width="512" height="254" rx="28" fill="#a97bff" fill-opacity=".2"/>
+  <path d="M278 1032h344" stroke="#f5f7ff" stroke-opacity=".38" stroke-width="16" stroke-linecap="round"/>
+  <path d="M352 296l174 102V194z" fill="#f5f7ff" fill-opacity=".82"/>
+</svg>

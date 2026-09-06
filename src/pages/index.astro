@@ -1,0 +1,818 @@
+---
+import { getCollection } from 'astro:content';
+import SectionHeading from '../components/common/SectionHeading.astro';
+import WorkCard from '../components/works/WorkCard.astro';
+import { workCategories } from '../data/categories';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const allWorks = await getCollection('works');
+const works = allWorks
+  .filter(({ data }) => data.published || data.seed)
+  .sort((a, b) => a.data.priority - b.data.priority || b.data.year - a.data.year);
+
+const heroWorks = works.slice(0, 5);
+const litLinkUrl = import.meta.env.PUBLIC_ROMACO_LITLINK_URL ?? 'https://lit.link/Romaco';
+const gameUrl = import.meta.env.PUBLIC_ROMACO_GAME_URL ?? 'https://booth.pm/ja/items/8668950';
+const substackUrl = import.meta.env.PUBLIC_ROMACO_SUBSTACK_URL ?? 'https://substack.com/@romaco';
+const hagedangoXUrl = import.meta.env.PUBLIC_HAGEDANGO_X_URL ?? 'https://x.com/dango333';
+const shareText =
+  '罵尻ロマ子様の愛と罵倒が、最新AIで動き出す。Romaco-sama Creative Showcase、これは見ろ。';
+const xShareUrl =
+  import.meta.env.PUBLIC_X_SHARE_URL ??
+  `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`;
+
+const officialLinks = [
+  {
+    label: '総合リンク',
+    title: 'Romaco-sama Lit.Link',
+    description: '配信、SNS、公式情報をまとめて追う入口。',
+    href: litLinkUrl,
+    tone: 'cyan',
+  },
+  {
+    label: 'ゲーム',
+    title: '観測してはいけない女',
+    description: 'BOOTHで公開中のロマ子様公式ゲーム。',
+    href: gameUrl,
+    tone: 'gold',
+  },
+  {
+    label: 'エッセイ',
+    title: 'Romaco-sama Substack',
+    description: '毒舌の奥にある思想と物語を読むニュースレター。',
+    href: substackUrl,
+    tone: 'purple',
+  },
+];
+
+const multiUseSteps = [
+  {
+    number: '01',
+    title: '4コマ静止画',
+    purpose: '気高く罵る一瞬を、SNSで読み切れる物語にする。',
+    proof: '表情・オチ・テンポ',
+  },
+  {
+    number: '02',
+    title: 'Remotion動画',
+    purpose: 'コマ割りを時間軸へ置き換え、視線誘導まで動かす。',
+    proof: 'コードモーション・字幕',
+  },
+  {
+    number: '03',
+    title: '料理シネマ',
+    purpose: '魔王の日常感とシズルを混ぜ、眺めたくなる短尺にする。',
+    proof: '食材・湯気・リズム',
+  },
+  {
+    number: '04',
+    title: '講座動画',
+    purpose: '制作の裏側を、音声とスライドで分かるコンテンツにする。',
+    proof: 'VOICEVOX・解説構成',
+  },
+];
+
+const craftNotes = [
+  '本サイト内の4コマ漫画、Remotion動画、料理シネマ、講座動画はすべて、はげだんごが最新AIとコード技術で制作・実装しています。',
+  '素材をただ並べるだけではなく、Romaco-samaの毒舌エンタメが媒体ごとにどう変化するかまで設計します。',
+  'はげだんごは専属技術班／AIクリエイターとして、生成、編集、モーション、実装をつなぎます。',
+];
+---
+
+<BaseLayout
+  title="Romaco-sama Creative Showcase | Presented by Hagedango"
+  description="罵尻ロマ子様の愛と罵倒が、4コマ漫画、Remotion動画、料理シネマ、PV、講座動画として最新AIで動き出す公式クリエイティブ・ショウケースです。"
+>
+  <header class="site-header glass">
+    <a class="brand" href="#top" aria-label="Romaco-sama Creative Showcase ホーム">
+      <span class="brand-mark" aria-hidden="true">RC</span><span>ROMACO-SAMA</span>
+    </a>
+    <nav aria-label="メインナビゲーション">
+      <a href="#works">Works</a><a href="#multi-use">Multi-Use</a><a href="#credit">Credit</a><a
+        href="#links">Links</a
+      >
+    </nav>
+    <a class="header-cta" href="#links">公式リンク</a>
+  </header>
+
+  <main id="top">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-media" aria-hidden="true">
+        {
+          heroWorks.map((work, index) => (
+            <figure class:list={['hero-frame', `hero-frame-${index + 1}`]}>
+              <img src={work.data.poster.src} alt="" loading={index === 0 ? 'eager' : 'lazy'} />
+              <figcaption>{work.data.category}</figcaption>
+            </figure>
+          ))
+        }
+      </div>
+      <div class="hero-scrim" aria-hidden="true"></div>
+      <div class="container hero-content">
+        <p class="eyebrow">Batoshiri Romaco Official</p>
+        <h1 id="hero-title">罵尻ロマ子（Romaco-sama）Official Creative Showcase</h1>
+        <p class="hero-copy">
+          罵尻ロマ子様の愛と罵倒が、最新AIで動き出す――。
+          高飛車で気高い魔王感、そして笑える毒舌エンタメを、4コマ、動く漫画、料理シネマ、PV、講座動画へ広げます。
+        </p>
+        <p class="credit-line">
+          Presented by Hagedango / Produced & Crafted by はげだんご <a
+            href={hagedangoXUrl}
+            target="_blank"
+            rel="noreferrer">@dango333</a
+          >
+        </p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#works">作品ギャラリーを見る</a>
+          <a class="button button-secondary" href={xShareUrl} target="_blank" rel="noreferrer"
+            >Xで感想を叫ぶ</a
+          >
+        </div>
+        <dl class="hero-stats" aria-label="展示カテゴリ">
+          <div><dt>Core</dt><dd>Romaco-sama</dd></div>
+          <div><dt>Assets</dt><dd>{works.length}</dd></div>
+          <div><dt>Formats</dt><dd>7</dd></div>
+        </dl>
+      </div>
+      <a class="scroll-cue" href="#works"><span>Scroll</span><span aria-hidden="true">↓</span></a>
+    </section>
+
+    <section class="works-section" id="works" aria-labelledby="works-title">
+      <div class="container">
+        <div class="section-row">
+          <SectionHeading
+            id="works-title"
+            eyebrow="Works Gallery"
+            title="Romaco-samaの愛と罵倒を、形式ごとに見渡す。"
+            description="4コマ、Remotion動画、料理シネマ、H3 PV、講座動画、SNSショート。高飛車で気高い魔王感を、媒体ごとの表情として並べます。"
+          />
+          <p class="works-count" aria-live="polite">
+            <span data-visible-count>{works.length}</span>件表示
+          </p>
+        </div>
+
+        <div class="filter-bar" role="tablist" aria-label="作品カテゴリ">
+          <button type="button" data-filter="all" aria-selected="true">すべて</button>
+          {
+            workCategories.map((category) => (
+              <button type="button" data-filter={category.slug} aria-selected="false">
+                {category.label}
+              </button>
+            ))
+          }
+        </div>
+
+        {
+          works.length > 0 ? (
+            <div class="works-grid">
+              {works.map((work) => (
+                <WorkCard work={work} />
+              ))}
+            </div>
+          ) : (
+            <div class="empty-state glass">
+              <p class="eyebrow">Archive preparing</p>
+              <p>公開許諾済みの作品を準備しています。</p>
+            </div>
+          )
+        }
+      </div>
+    </section>
+
+    <section class="multi-use" id="multi-use" aria-labelledby="multi-use-title">
+      <div class="container">
+        <SectionHeading
+          id="multi-use-title"
+          eyebrow="1 Source Multi-Use"
+          title="ひとつの魔王素材から、届き方を増やす。"
+          description="罵尻ロマ子様の口調、世界観、コミュニティの熱量を起点に、静止画、コードモーション、日常シネマ、講座へ展開する実例の見せ場です。"
+        />
+
+        <div class="multi-use-board">
+          <div class="source-card glass">
+            <span class="eyebrow">Source</span>
+            <strong>Romaco-sama</strong>
+            <span>罵倒の女王、毒舌エンタメ、気高き魔王感、愛あるコミュニティ</span>
+          </div>
+          <ol class="multi-use-flow">
+            {
+              multiUseSteps.map((step) => (
+                <li>
+                  <span class="step-number">{step.number}</span>
+                  <div>
+                    <strong>{step.title}</strong>
+                    <p>{step.purpose}</p>
+                    <small>{step.proof}</small>
+                  </div>
+                </li>
+              ))
+            }
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <section class="credit-section" id="credit" aria-labelledby="credit-title">
+      <div class="container credit-grid">
+        <SectionHeading
+          id="credit-title"
+          eyebrow="Produced & Crafted"
+          title="専属技術班として、Romaco-samaの見せ場を増やす。"
+          description="はげだんごは前に出すぎず、制作と演出で世界観を支えるAIクリエイターとしてクレジットします。"
+        />
+        <div class="credit-card glass">
+          <p class="credit-name">
+            Produced by はげだんご <a href={hagedangoXUrl} target="_blank" rel="noreferrer"
+              >@dango333</a
+            >
+          </p>
+          <ul>
+            {craftNotes.map((note) => <li>{note}</li>)}
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="links-section" id="links" aria-labelledby="links-title">
+      <div class="container">
+        <SectionHeading
+          id="links-title"
+          eyebrow="Official Links"
+          title="気になったら、女王の領地へ。"
+          description="Romaco-samaの活動、ゲーム、エッセイへすぐ飛べる公式導線です。"
+        />
+        <div class="official-links">
+          {
+            officialLinks.map((link) => (
+              <a
+                class:list={['official-link', 'glass', `official-link-${link.tone}`]}
+                href={link.href}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <span>{link.label}</span>
+                <strong>{link.title}</strong>
+                <small>{link.description}</small>
+              </a>
+            ))
+          }
+        </div>
+        <div class="reaction-panel glass">
+          <p>
+            見た感想は、Xでそのまま叫んでください。Romaco-samaの愛と罵倒が動き出す瞬間を、ぜひ共有で。
+          </p>
+          <a class="button button-primary" href={xShareUrl} target="_blank" rel="noreferrer"
+            >Xで感想・リアクションを叫ぶ</a
+          >
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <div>
+        <span>© 2026 Romaco-sama Creative Showcase.</span>
+        <p>
+          自分のキャラクターもこんな風に動かしてみたい……という奇特な方は、制作担当（はげだんご）の <a
+            href={hagedangoXUrl}
+            target="_blank"
+            rel="noreferrer">X DMへどうぞ</a
+          >。
+        </p>
+      </div>
+      <a href="#top">Back to top</a>
+    </div>
+  </footer>
+</BaseLayout>
+
+<script is:inline>
+  const buttons = Array.from(document.querySelectorAll('[data-filter]'));
+  const cards = Array.from(document.querySelectorAll('.works-grid [data-category]'));
+  const count = document.querySelector('[data-visible-count]');
+
+  buttons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const selected = button.getAttribute('data-filter');
+      let visible = 0;
+
+      cards.forEach((card) => {
+        const matches = selected === 'all' || card.getAttribute('data-category') === selected;
+        card.hidden = !matches;
+        if (matches) visible += 1;
+      });
+
+      buttons.forEach((item) => item.setAttribute('aria-selected', String(item === button)));
+      if (count) count.textContent = String(visible);
+    });
+  });
+</script>
+
+<style>
+  .site-header {
+    position: fixed;
+    z-index: var(--z-header);
+    top: var(--space-4);
+    left: 50%;
+    display: flex;
+    width: min(calc(100% - 2rem), var(--content-wide));
+    min-height: 4rem;
+    align-items: center;
+    gap: var(--space-5);
+    padding: var(--space-2) var(--space-3) var(--space-2) var(--space-4);
+    border-radius: var(--radius-pill);
+    transform: translateX(-50%);
+  }
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3);
+    font-family: var(--font-display);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-decoration: none;
+  }
+  .brand-mark {
+    display: grid;
+    width: 2.25rem;
+    height: 2.25rem;
+    place-items: center;
+    border: 1px solid rgb(242 199 110 / 62%);
+    border-radius: 50%;
+    box-shadow: var(--glow-gold);
+    color: var(--color-gold);
+    letter-spacing: 0;
+  }
+  nav {
+    display: flex;
+    margin-left: auto;
+    gap: var(--space-5);
+  }
+  nav a,
+  footer a,
+  .credit-line a,
+  .credit-name a {
+    color: var(--color-cyan);
+    font-size: var(--step--1);
+    text-decoration: none;
+  }
+  .header-cta,
+  .button {
+    display: inline-flex;
+    min-height: 3rem;
+    align-items: center;
+    justify-content: center;
+    padding-inline: var(--space-5);
+    border-radius: var(--radius-pill);
+    font-weight: 700;
+    line-height: 1.2;
+    text-decoration: none;
+  }
+  .header-cta,
+  .button-primary {
+    background: linear-gradient(110deg, var(--color-gold), var(--color-cyan));
+    box-shadow: 0 8px 30px rgb(242 199 110 / 18%);
+    color: var(--color-bg);
+  }
+  .hero {
+    position: relative;
+    display: grid;
+    min-height: 92svh;
+    align-items: end;
+    overflow: hidden;
+    padding-block: 8.5rem clamp(5.5rem, 12vh, 8rem);
+  }
+  .hero-media {
+    position: absolute;
+    z-index: -2;
+    inset: 0;
+    overflow: hidden;
+  }
+  .hero-scrim {
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    background:
+      linear-gradient(90deg, rgb(7 10 18 / 96%) 0%, rgb(7 10 18 / 86%) 44%, transparent 100%),
+      linear-gradient(180deg, transparent 0%, var(--color-bg) 100%);
+  }
+  .hero-frame {
+    position: absolute;
+    overflow: hidden;
+    border: 1px solid rgb(255 255 255 / 14%);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+    box-shadow: 0 24px 80px rgb(0 0 0 / 42%);
+  }
+  .hero-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .hero-frame figcaption {
+    position: absolute;
+    right: var(--space-3);
+    bottom: var(--space-3);
+    padding: var(--space-1) var(--space-3);
+    border: 1px solid rgb(255 255 255 / 14%);
+    border-radius: var(--radius-pill);
+    background: rgb(7 10 18 / 72%);
+    color: var(--color-text-muted);
+    font-size: 0.7rem;
+  }
+  .hero-frame-1 {
+    top: 13%;
+    right: 8%;
+    width: min(34vw, 27rem);
+    aspect-ratio: 16 / 10;
+  }
+  .hero-frame-2 {
+    right: 32%;
+    bottom: 7%;
+    width: min(24vw, 18rem);
+    aspect-ratio: 9 / 12;
+  }
+  .hero-frame-3 {
+    top: 45%;
+    right: -2%;
+    width: min(22vw, 16rem);
+    aspect-ratio: 1;
+  }
+  .hero-frame-4 {
+    top: 8%;
+    right: 42%;
+    width: min(18vw, 14rem);
+    aspect-ratio: 4 / 5;
+  }
+  .hero-frame-5 {
+    right: 18%;
+    bottom: -7%;
+    width: min(20vw, 16rem);
+    aspect-ratio: 16 / 9;
+  }
+  .hero-content {
+    display: grid;
+    gap: var(--space-5);
+  }
+  h1 {
+    max-width: 16ch;
+    font-family: var(--font-display);
+    font-size: var(--step-3);
+    line-height: 1.04;
+    letter-spacing: 0;
+  }
+  .hero-copy {
+    max-width: 49rem;
+    color: var(--color-text-muted);
+    font-size: var(--step-0);
+  }
+  .credit-line {
+    max-width: 44rem;
+    color: var(--color-text-subtle);
+    font-size: var(--step--1);
+  }
+  .hero-actions,
+  .reaction-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-top: var(--space-3);
+  }
+  .button-secondary {
+    border: 1px solid var(--glass-border);
+    background: var(--glass-bg);
+    color: var(--color-text);
+  }
+  .hero-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin: var(--space-5) 0 0;
+  }
+  .hero-stats div {
+    min-width: 8.5rem;
+    padding: var(--space-3) var(--space-4);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-md);
+    background: rgb(18 25 42 / 58%);
+  }
+  .hero-stats dt {
+    color: var(--color-text-subtle);
+    font-size: 0.75rem;
+  }
+  .hero-stats dd {
+    margin: 0;
+    color: var(--color-gold);
+    font-family: var(--font-display);
+    font-size: var(--step-1);
+    font-weight: 700;
+  }
+  .scroll-cue {
+    position: absolute;
+    right: var(--page-gutter);
+    bottom: var(--space-5);
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    color: var(--color-text-subtle);
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+  .works-section,
+  .multi-use,
+  .credit-section,
+  .links-section {
+    padding-block: var(--section-space);
+    scroll-margin-top: 6rem;
+  }
+  .section-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: end;
+    gap: var(--space-5);
+  }
+  .works-count {
+    margin: 0;
+    color: var(--color-text-subtle);
+    font-family: var(--font-display);
+    font-weight: 700;
+  }
+  .filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-top: var(--space-7);
+  }
+  .filter-bar button {
+    min-height: 2.75rem;
+    padding-inline: var(--space-4);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-pill);
+    background: rgb(18 25 42 / 62%);
+    color: var(--color-text-muted);
+    cursor: pointer;
+    font: inherit;
+    font-size: var(--step--1);
+  }
+  .filter-bar button[aria-selected='true'] {
+    border-color: rgb(242 199 110 / 58%);
+    background: rgb(242 199 110 / 12%);
+    color: var(--color-text);
+    box-shadow: var(--glow-gold);
+  }
+  .works-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-5);
+    margin-top: var(--space-5);
+  }
+  .works-grid [hidden] {
+    display: none;
+  }
+  .empty-state {
+    margin-top: var(--space-7);
+    padding: var(--space-7);
+    border-radius: var(--radius-lg);
+  }
+  .multi-use {
+    background:
+      linear-gradient(180deg, transparent, rgb(169 123 255 / 5%), transparent),
+      linear-gradient(90deg, rgb(242 199 110 / 6%), transparent 36%, rgb(81 229 255 / 4%));
+  }
+  .multi-use-board {
+    display: grid;
+    grid-template-columns: minmax(16rem, 0.7fr) minmax(0, 1.3fr);
+    gap: var(--space-6);
+    margin-top: var(--space-7);
+    align-items: stretch;
+  }
+  .source-card {
+    display: grid;
+    align-content: end;
+    min-height: 26rem;
+    gap: var(--space-3);
+    padding: var(--space-6);
+    border-color: rgb(242 199 110 / 36%);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--glass-highlight), var(--glow-gold);
+  }
+  .source-card strong {
+    color: var(--color-gold);
+    font-family: var(--font-display);
+    font-size: var(--step-2);
+    line-height: 1.12;
+  }
+  .source-card span:last-child {
+    color: var(--color-text-muted);
+  }
+  .multi-use-flow {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-4);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .multi-use-flow li {
+    display: grid;
+    min-height: 12rem;
+    align-content: space-between;
+    gap: var(--space-4);
+    padding: var(--space-5);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    background: rgb(13 18 32 / 72%);
+  }
+  .step-number {
+    color: var(--color-cyan);
+    font-family: var(--font-display);
+    font-size: var(--step-1);
+    font-weight: 700;
+  }
+  .multi-use-flow strong {
+    display: block;
+    font-size: var(--step-1);
+  }
+  .multi-use-flow p {
+    margin: var(--space-2) 0;
+    color: var(--color-text-muted);
+    font-size: var(--step--1);
+  }
+  .multi-use-flow small {
+    color: var(--color-gold);
+    font-weight: 700;
+  }
+  .credit-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: var(--space-7);
+    align-items: start;
+  }
+  .credit-card {
+    display: grid;
+    gap: var(--space-4);
+    padding: var(--space-6);
+    border-radius: var(--radius-lg);
+  }
+  .credit-name {
+    margin: 0;
+    color: var(--color-gold);
+    font-family: var(--font-display);
+    font-size: var(--step-1);
+    font-weight: 700;
+  }
+  .credit-card ul {
+    display: grid;
+    gap: var(--space-3);
+    margin: 0;
+    padding-left: 1.1rem;
+    color: var(--color-text-muted);
+  }
+  .official-links {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-4);
+    margin-top: var(--space-7);
+  }
+  .official-link {
+    display: grid;
+    min-height: 12rem;
+    align-content: space-between;
+    gap: var(--space-4);
+    padding: var(--space-5);
+    border-radius: var(--radius-lg);
+    text-decoration: none;
+  }
+  .official-link span {
+    color: var(--color-text-subtle);
+    font-size: 0.78rem;
+    font-weight: 700;
+  }
+  .official-link strong {
+    color: var(--color-text);
+    font-size: var(--step-1);
+    line-height: 1.35;
+  }
+  .official-link small {
+    color: var(--color-text-muted);
+    font-size: var(--step--1);
+  }
+  .official-link-cyan {
+    border-color: rgb(81 229 255 / 30%);
+  }
+  .official-link-gold {
+    border-color: rgb(242 199 110 / 36%);
+  }
+  .official-link-purple {
+    border-color: rgb(169 123 255 / 34%);
+  }
+  .reaction-panel {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    margin-top: var(--space-5);
+    padding: var(--space-5);
+    border-radius: var(--radius-lg);
+  }
+  .reaction-panel p {
+    max-width: 40rem;
+    margin: 0;
+    color: var(--color-text-muted);
+  }
+  footer {
+    padding-block: var(--space-6);
+    border-top: 1px solid var(--color-line);
+    color: var(--color-text-subtle);
+    font-size: var(--step--1);
+  }
+  .footer-inner {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-4);
+  }
+  footer p {
+    max-width: 52rem;
+    margin: var(--space-2) 0 0;
+  }
+  @media (max-width: 64rem) {
+    .hero-scrim {
+      background:
+        linear-gradient(180deg, rgb(7 10 18 / 82%) 0%, rgb(7 10 18 / 94%) 72%),
+        linear-gradient(180deg, transparent 0%, var(--color-bg) 100%);
+    }
+    .hero-frame-1 {
+      top: 10%;
+      right: 4%;
+      width: min(56vw, 25rem);
+    }
+    .hero-frame-2,
+    .hero-frame-4,
+    .hero-frame-5 {
+      display: none;
+    }
+    .hero-frame-3 {
+      top: 32%;
+      right: -9%;
+      width: min(42vw, 16rem);
+    }
+    .works-grid,
+    .official-links {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .multi-use-board,
+    .credit-grid {
+      grid-template-columns: 1fr;
+    }
+    .source-card {
+      min-height: 18rem;
+    }
+  }
+  @media (max-width: 46rem) {
+    .site-header {
+      top: var(--space-2);
+      width: calc(100% - 1rem);
+    }
+    .brand > span:last-child,
+    nav {
+      display: none;
+    }
+    .header-cta {
+      margin-left: auto;
+      min-height: 2.75rem;
+      padding-inline: var(--space-4);
+      font-size: 0.82rem;
+    }
+    .hero {
+      min-height: 94svh;
+      padding-bottom: 5.5rem;
+    }
+    .hero-copy {
+      line-height: 1.75;
+    }
+    .hero-stats div {
+      flex: 1 1 8rem;
+    }
+    .section-row,
+    .works-grid,
+    .multi-use-flow,
+    .official-links {
+      grid-template-columns: 1fr;
+    }
+    .official-link {
+      min-height: 10rem;
+    }
+    .scroll-cue {
+      right: auto;
+      left: var(--page-gutter);
+    }
+    .footer-inner {
+      flex-direction: column;
+    }
+  }
+</style>

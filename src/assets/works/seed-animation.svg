@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" role="img" aria-labelledby="title desc">
+  <title id="title">AI animation showcase placeholder</title>
+  <desc id="desc">Abstract animation stage with glowing character timing marks.</desc>
+  <rect width="1200" height="750" fill="#0b1020"/>
+  <rect x="92" y="92" width="1016" height="566" rx="36" fill="#151d32" stroke="#51e5ff" stroke-opacity=".34" stroke-width="3"/>
+  <circle cx="392" cy="318" r="128" fill="#a97bff" fill-opacity=".22"/>
+  <circle cx="392" cy="318" r="78" fill="#51e5ff" fill-opacity=".22"/>
+  <path d="M564 246h320M564 326h260M564 406h360M564 486h220" stroke="#f5f7ff" stroke-opacity=".42" stroke-width="24" stroke-linecap="round"/>
+  <path d="M202 574c120-92 234-92 342 0s224 92 348 0" fill="none" stroke="#f2c76e" stroke-opacity=".7" stroke-width="10" stroke-linecap="round"/>
+</svg>
