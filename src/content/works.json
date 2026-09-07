@@ -23,6 +23,31 @@
     "published": true
   },
   {
+    "id": "ep-0001-motion-comic",
+    "title": "知らない方が幸せだった。量子力学は、天才たちの正気を壊した｜動く4コマ",
+    "description": "4コマ漫画のコマとセリフをRemotionでコードモーション化した動画作品。",
+    "collection": "article-derived",
+    "episodeId": "EP-0001",
+    "format": "motion-comic",
+    "tools": [
+      "Remotion"
+    ],
+    "parentWorkIds": [
+      "ep-0001-comic"
+    ],
+    "relationshipVerified": true,
+    "evidenceUrl": "https://romaco-substack-portal.pages.dev/episodes/quantum-mechanics-genius/",
+    "poster": "https://i.ytimg.com/vi/ekWDjNHoB40/hqdefault.jpg",
+    "media": {
+      "type": "youtube",
+      "youtubeId": "ekWDjNHoB40"
+    },
+    "externalUrl": "https://youtu.be/ekWDjNHoB40",
+    "priority": 15,
+    "published": true,
+    "aspectRatio": "16:9"
+  },
+  {
     "id": "short-video-sample-01",
     "title": "知らない方が幸せだった。量子力学は、天才たちの正気を壊した｜ショート",
     "description": "ロマ子様の言葉と見どころを、短い映像で。",
