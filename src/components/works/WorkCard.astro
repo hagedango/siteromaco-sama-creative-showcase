@@ -1,171 +1,160 @@
 ---
 import type { CollectionEntry } from 'astro:content';
-import { getCategoryLabel } from '../../data/categories';
-
+import { formatLabels } from '../../data/content-graph';
 interface Props {
   work: CollectionEntry<'works'>;
+  label?: string;
+  relationship?: string;
 }
-const { work } = Astro.props;
+const { work, label, relationship } = Astro.props;
 const { data } = work;
-const categories = data.categories?.length ? data.categories : [data.category];
-const primaryLinks =
-  data.links.length > 0
-    ? data.links
-    : data.externalUrl
-      ? [{ label: '原典を読む', href: data.externalUrl }]
-      : [];
+const portrait = data.format === 'short' || data.aspectRatio === '9:16';
 ---
 
-<article class="work-card glass" data-categories={categories.join(' ')}>
-  <div class="poster">
-    <img
-      src={data.poster.src}
-      alt={data.posterAlt}
-      width={data.poster.width}
-      height={data.poster.height}
-      loading="lazy"
-      decoding="async"
-    />
-    {data.episodeId && <span class="episode-label">{data.episodeId}</span>}
-  </div>
-  <div class="body">
-    <div class="meta">
-      <span>{data.classification ?? getCategoryLabel(data.category)}</span><span aria-hidden="true"
-        >·</span
-      ><span>{data.year}</span>
+<article class="work-card glass" id={work.id} data-work-format={data.format}>
+  <a class="work-link" href={data.externalUrl} target="_blank" rel="noreferrer">
+    <div class:list={['work-preview', { portrait, comic: data.format === 'comic' }]}>
+      <img
+        src={data.poster}
+        alt={data.title + 'のプレビュー'}
+        loading="lazy"
+        decoding="async"
+        width="480"
+        height="360"
+      />
+      {
+        data.media.type === 'youtube' && (
+          <span class="play-mark" aria-hidden="true">
+            ▶
+          </span>
+        )
+      }
+      <span class="preview-tag">{formatLabels[data.format]}</span>
     </div>
-    <h3>{data.title}</h3>
-    <p>{data.shortDescription}</p>
-    <div class="format-row" aria-label="展開フォーマット">
-      {categories.map((category) => <span>{getCategoryLabel(category)}</span>)}
+    <div class="work-body">
+      {relationship && <p class="relationship">{relationship}</p>}
+      <h3>{label ?? data.title}</h3>
+      <p>{data.description}</p>
+      <span class="watch-link"
+        >{data.media.type === 'image' ? '漫画を読む' : '動画を見る'}
+        <span aria-hidden="true">↗</span></span
+      >
     </div>
-    <div class="detail-row">
-      <span>{data.aspectRatio}</span>
-      {data.durationSec && <span>{data.durationSec}秒</span>}
-      {data.role.slice(0, 2).map((role) => <span>{role}</span>)}
-    </div>
-    <ul aria-label="使用ツール">{data.tools.slice(0, 3).map((tool) => <li>{tool}</li>)}</ul>
-    {primaryLinks.length > 0 && (
-      <div class="link-row" aria-label="作品リンク">
-        {primaryLinks.slice(0, 4).map((link) => (
-          <a class="card-link" href={link.href} target="_blank" rel="noreferrer">
-            {link.label}
+  </a>
+  {data.tools.length > 0 && <p class="tools">{data.tools.join(' / ')}</p>}
+  {
+    data.media.type === 'image' && data.media.images.length > 1 && (
+      <div class="comic-pages" aria-label="漫画の各ページ">
+        {data.media.images.map((src, i) => (
+          <a href={src} target="_blank" rel="noreferrer">
+            {i + 1}ページ目を拡大 ↗
           </a>
         ))}
       </div>
-    )}
-  </div>
+    )
+  }
 </article>
-
 <style>
   .work-card {
+    min-width: 0;
     overflow: hidden;
     border-radius: var(--radius-lg);
-    transition:
-      transform var(--duration-normal) var(--ease-out),
-      border-color var(--duration-normal) var(--ease-out);
+    transition: border-color 0.2s;
   }
   .work-card:hover {
-    border-color: rgb(81 229 255 / 36%);
-    transform: translateY(-2px);
+    border-color: var(--color-gold);
   }
-  .poster {
-    position: relative;
-    aspect-ratio: 16 / 10;
-    overflow: hidden;
-    background: var(--color-surface);
-  }
-  .poster :global(img) {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform var(--duration-slow) var(--ease-out);
-  }
-  .work-card:hover .poster :global(img) {
-    transform: scale(1.02);
-  }
-  .episode-label {
-    position: absolute;
-    top: var(--space-3);
-    right: var(--space-3);
-    padding: var(--space-1) var(--space-3);
-    border: 1px solid rgb(255 255 255 / 18%);
-    border-radius: var(--radius-pill);
-    background: rgb(7 10 18 / 78%);
-    color: var(--color-text-muted);
-    font-size: 0.75rem;
-  }
-  .body {
-    display: grid;
-    gap: var(--space-3);
-    padding: var(--space-5);
-  }
-  .meta {
-    display: flex;
-    gap: var(--space-2);
-    color: var(--color-cyan);
-    font-size: var(--step--1);
-    font-weight: 600;
-  }
-  h3 {
-    font-size: var(--step-1);
-    line-height: 1.45;
-  }
-  p {
-    color: var(--color-text-muted);
-    font-size: var(--step--1);
-  }
-  .detail-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-2);
-    color: var(--color-text-subtle);
-    font-size: 0.78rem;
-  }
-  .format-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-2);
-  }
-  .format-row span {
-    padding: var(--space-1) var(--space-3);
-    border: 1px solid rgb(242 199 110 / 32%);
-    border-radius: var(--radius-pill);
-    background: rgb(242 199 110 / 8%);
-    color: var(--color-gold);
-    font-size: 0.74rem;
-    font-weight: 700;
-  }
-  .detail-row span {
-    border-bottom: 1px solid rgb(255 255 255 / 16%);
-  }
-  ul {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-2);
-    margin: var(--space-2) 0 0;
-    padding: 0;
-    list-style: none;
-  }
-  li {
-    padding: var(--space-1) var(--space-3);
-    border: 1px solid var(--color-line);
-    border-radius: var(--radius-pill);
-    color: var(--color-text-subtle);
-    font-size: 0.75rem;
-  }
-  .card-link {
-    display: inline-flex;
-    align-items: center;
-    width: fit-content;
-    color: var(--color-cyan);
-    font-size: var(--step--1);
-    font-weight: 700;
+  .work-link {
+    display: block;
     text-decoration: none;
   }
-  .link-row {
+  .work-preview {
+    position: relative;
+    height: clamp(15rem, 24vw, 20rem);
+    display: grid;
+    place-items: center;
+    background: #080d18;
+    overflow: hidden;
+  }
+  .work-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  .portrait {
+    padding: 0.75rem;
+    background: radial-gradient(ellipse at top, #24304a, #080d18 75%);
+  }
+  .portrait img {
+    width: auto;
+    max-width: 100%;
+    aspect-ratio: 9/16;
+    object-fit: cover;
+    border: 5px solid #04070d;
+    border-radius: 1rem;
+  }
+  .comic {
+    background: #121525;
+  }
+  .work-body {
+    padding: 1.4rem;
+    display: grid;
+    gap: 0.75rem;
+  }
+  h3 {
+    font-size: 1.2rem;
+    line-height: 1.55;
+    overflow-wrap: anywhere;
+  }
+  p {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: 1rem;
+  }
+  .relationship {
+    color: var(--color-gold);
+    font-size: 0.875rem;
+  }
+  .watch-link {
+    color: var(--color-cyan);
+    font-weight: 700;
+  }
+  .preview-tag {
+    position: absolute;
+    bottom: 0.75rem;
+    right: 0.75rem;
+    border: 1px solid #596170;
+    border-radius: 2rem;
+    background: #070a12e6;
+    padding: 0.2rem 0.7rem;
+    font-size: 0.75rem;
+  }
+  .play-mark {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: grid;
+    place-items: center;
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 50%;
+    background: #070a12cc;
+    border: 1px solid #ffffff80;
+    color: var(--color-cyan);
+  }
+  .tools {
+    padding: 0 1.4rem 1rem;
+    font-size: 0.875rem;
+  }
+  .comic-pages {
     display: flex;
+    gap: 1rem;
     flex-wrap: wrap;
-    gap: var(--space-3);
+    padding: 0 1.4rem 1.4rem;
+    font-size: 0.875rem;
+  }
+  .comic-pages a {
+    color: var(--color-cyan);
   }
 </style>

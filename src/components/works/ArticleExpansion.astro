@@ -1,0 +1,105 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import WorkCard from './WorkCard.astro';
+interface Props {
+  episode: CollectionEntry<'episodes'>;
+  works: CollectionEntry<'works'>[];
+}
+const { episode, works } = Astro.props;
+const related = works.filter(
+  (work) => work.data.episodeId === episode.id && work.data.relationshipVerified,
+);
+const comics = related.filter((work) => work.data.format === 'comic');
+const motions = related.filter((work) => work.data.format === 'motion-comic');
+const shorts = related.filter((work) => work.data.format === 'short');
+const lectures = related.filter((work) => work.data.format === 'lecture');
+---
+
+<section
+  class="episode-panel"
+  id={episode.id}
+  data-episode-panel
+  aria-labelledby={episode.id + '-title'}
+>
+  <div class="source-card glass">
+    {
+      episode.data.poster && (
+        <img
+          src={episode.data.poster}
+          alt={episode.data.title + 'の原典記事画像'}
+          width="640"
+          height="360"
+          loading="lazy"
+        />
+      )
+    }
+    <div>
+      <p class="eyebrow">SOURCE ARTICLE · {episode.id} / {episode.data.classification}</p>
+      <h3 id={episode.id + '-title'} tabindex="-1">{episode.data.title}</h3>
+      <p>{episode.data.summary}</p>
+      <a class="button primary" href={episode.data.sourceUrl} target="_blank" rel="noreferrer"
+        >Substackで原典を読む ↗</a
+      >
+    </div>
+  </div>
+  <p class="branch-intro">この原典から、読む・見る・学ぶ体験へ <span aria-hidden="true">↓</span></p>
+  <div class="expansion-grid">
+    {
+      comics.length > 0 && (
+        <div class="branch">
+          <p class="branch-label">物語と表情で楽しむ</p>
+          {comics.map((comic) => (
+            <div class="comic-branch">
+              <WorkCard work={comic} label="4コマ漫画" relationship="この記事から生まれた漫画" />
+              {motions
+                .filter((motion) => motion.data.parentWorkIds.includes(comic.id))
+                .map((motion) => (
+                  <>
+                    <p class="motion-connector">
+                      <span aria-hidden="true">↓</span> この4コマが動き出す
+                    </p>
+                    <WorkCard
+                      work={motion}
+                      label="動く4コマ（Remotion）"
+                      relationship="上の漫画から動画へ"
+                    />
+                  </>
+                ))}
+            </div>
+          ))}
+          {episode.id === 'EP-0001' && motions.length === 0 && (
+            <aside class="motion-note">
+              <h4>漫画が動くと、どんな感じ？</h4>
+              <p>別作品の「動く4コマ」もご覧いただけます。</p>
+              <a href="#four-panel-movie-sample-01">動く4コマの作品へ ↓</a>
+            </aside>
+          )}
+        </div>
+      )
+    }
+    {
+      shorts.length > 0 && (
+        <div class="branch">
+          <p class="branch-label">短い時間で楽しむ</p>
+          {shorts.map((work) => (
+            <WorkCard work={work} label="ショート動画" relationship="この記事からショートへ" />
+          ))}
+        </div>
+      )
+    }
+    {
+      lectures.length > 0 && (
+        <div class="branch">
+          <p class="branch-label">じっくり味わう</p>
+          {lectures.map((work) => (
+            <WorkCard work={work} label="講座動画" relationship="この記事から講座へ" />
+          ))}
+        </div>
+      )
+    }
+  </div>
+  <p class="portal-note">
+    <a href={episode.data.portalUrl} target="_blank" rel="noreferrer"
+      >このエピソードをメディアポータルで見る ↗</a>
+  </p>
+</section>

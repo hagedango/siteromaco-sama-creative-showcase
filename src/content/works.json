@@ -1,0 +1,331 @@
+[
+  {
+    "id": "ep-0001-comic",
+    "title": "知らない方が幸せだった。量子力学は、天才たちの正気を壊した｜4コマ漫画",
+    "description": "ロマ子様の言葉を、コマと表情で楽しむ。",
+    "collection": "article-derived",
+    "episodeId": "EP-0001",
+    "format": "comic",
+    "tools": [],
+    "parentWorkIds": [],
+    "relationshipVerified": true,
+    "evidenceUrl": "https://romaco-substack-portal.pages.dev/episodes/quantum-mechanics-genius/",
+    "poster": "https://romaco-substack-portal.pages.dev/media/EP-0001/quantum-comic-01.png",
+    "media": {
+      "type": "image",
+      "images": [
+        "https://romaco-substack-portal.pages.dev/media/EP-0001/quantum-comic-01.png",
+        "https://romaco-substack-portal.pages.dev/media/EP-0001/quantum-comic-02.png"
+      ]
+    },
+    "externalUrl": "https://romaco-substack-portal.pages.dev/episodes/quantum-mechanics-genius/#comic-heading",
+    "priority": 10,
+    "published": true
+  },
+  {
+    "id": "short-video-sample-01",
+    "title": "知らない方が幸せだった。量子力学は、天才たちの正気を壊した｜ショート",
+    "description": "ロマ子様の言葉と見どころを、短い映像で。",
+    "collection": "article-derived",
+    "episodeId": "EP-0001",
+    "format": "short",
+    "tools": [],
+    "parentWorkIds": [],
+    "relationshipVerified": true,
+    "evidenceUrl": "https://romaco-substack-portal.pages.dev/episodes/quantum-mechanics-genius/",
+    "poster": "https://i.ytimg.com/vi/4Gqv7d6ShXA/hqdefault.jpg",
+    "media": {
+      "type": "youtube",
+      "youtubeId": "4Gqv7d6ShXA"
+    },
+    "externalUrl": "https://youtube.com/shorts/4Gqv7d6ShXA",
+    "priority": 20,
+    "published": true
+  },
+  {
+    "id": "ep-0001-lecture",
+    "title": "知らない方が幸せだった。量子力学は、天才たちの正気を壊した｜講座動画",
+    "description": "スライドと音声で、テーマをじっくり味わう。",
+    "collection": "article-derived",
+    "episodeId": "EP-0001",
+    "format": "lecture",
+    "tools": [],
+    "parentWorkIds": [],
+    "relationshipVerified": true,
+    "evidenceUrl": "https://romaco-substack-portal.pages.dev/episodes/quantum-mechanics-genius/",
+    "poster": "https://i.ytimg.com/vi/1-WbG6_caRo/hqdefault.jpg",
+    "media": {
+      "type": "youtube",
+      "youtubeId": "1-WbG6_caRo"
+    },
+    "externalUrl": "https://youtu.be/1-WbG6_caRo",
+    "priority": 30,
+    "published": true
+  },
+  {
+    "id": "ep-0004-comic",
+    "title": "未来には行けるが、過去には戻れない。タイムマシーンの残酷さ｜4コマ漫画",
+    "description": "ロマ子様の言葉を、コマと表情で楽しむ。",
+    "collection": "article-derived",
+    "episodeId": "EP-0004",
+    "format": "comic",
+    "tools": [],
+    "parentWorkIds": [],
+    "relationshipVerified": true,
+    "evidenceUrl": "https://romaco-substack-portal.pages.dev/episodes/time-machine-relativity/",
+    "poster": "https://romaco-substack-portal.pages.dev/media/EP-0004/comic-1.jpg",
+    "media": {
+      "type": "image",
+      "images": [
+        "https://romaco-substack-portal.pages.dev/media/EP-0004/comic-1.jpg"
+      ]
+    },
+    "externalUrl": "https://romaco-substack-portal.pages.dev/episodes/time-machine-relativity/#comic-heading",
+    "priority": 10,
+    "published": true
+  },
+  {
+    "id": "ep-0004-short",
+    "title": "未来には行けるが、過去には戻れない。タイムマシーンの残酷さ｜ショート",
+    "description": "ロマ子様の言葉と見どころを、短い映像で。",
+    "collection": "article-derived",
+    "episodeId": "EP-0004",
+    "format": "short",
+    "tools": [],
+    "parentWorkIds": [],
+    "relationshipVerified": true,
+    "evidenceUrl": "https://romaco-substack-portal.pages.dev/episodes/time-machine-relativity/",
+    "poster": "https://i.ytimg.com/vi/Zoa5lGxvFjU/hqdefault.jpg",
+    "media": {
+      "type": "youtube",
+      "youtubeId": "Zoa5lGxvFjU"
+    },
+    "externalUrl": "https://youtube.com/shorts/Zoa5lGxvFjU",
+    "priority": 20,
+    "published": true
+  },
+  {
+    "id": "lecture-sample-01",
+    "title": "素数の美しさは、恋愛で例えると分かりやすい｜講座動画",
+    "description": "スライドと音声で、テーマをじっくり味わう。",
+    "collection": "article-derived",
+    "episodeId": "EP-0005",
+    "format": "lecture",
+    "tools": [],
+    "parentWorkIds": [],
+    "relationshipVerified": true,
+    "evidenceUrl": "https://romaco-substack-portal.pages.dev/episodes/prime-numbers-and-love/",
+    "poster": "https://i.ytimg.com/vi/C4k87y6XJJQ/hqdefault.jpg",
+    "media": {
+      "type": "youtube",
+      "youtubeId": "C4k87y6XJJQ"
+    },
+    "externalUrl": "https://youtu.be/C4k87y6XJJQ",
+    "priority": 30,
+    "published": true
+  },
+  {
+    "id": "ep-0006-comic",
+    "title": "許される下ネタと嫌われる下ネタの違い｜4コマ漫画",
+    "description": "ロマ子様の言葉を、コマと表情で楽しむ。",
+    "collection": "article-derived",
+    "episodeId": "EP-0006",
+    "format": "comic",
+    "tools": [],
+    "parentWorkIds": [],
+    "relationshipVerified": true,
+    "evidenceUrl": "https://romaco-substack-portal.pages.dev/episodes/allowed-vs-hated-dirty-jokes/",
+    "poster": "https://romaco-substack-portal.pages.dev/media/EP-0006/comic-1.jpg",
+    "media": {
+      "type": "image",
+      "images": [
+        "https://romaco-substack-portal.pages.dev/media/EP-0006/comic-1.jpg"
+      ]
+    },
+    "externalUrl": "https://romaco-substack-portal.pages.dev/episodes/allowed-vs-hated-dirty-jokes/#comic-heading",
+    "priority": 10,
+    "published": true
+  },
+  {
+    "id": "ep-0006-short",
+    "title": "許される下ネタと嫌われる下ネタの違い｜ショート",
+    "description": "ロマ子様の言葉と見どころを、短い映像で。",
+    "collection": "article-derived",
+    "episodeId": "EP-0006",
+    "format": "short",
+    "tools": [],
+    "parentWorkIds": [],
+    "relationshipVerified": true,
+    "evidenceUrl": "https://romaco-substack-portal.pages.dev/episodes/allowed-vs-hated-dirty-jokes/",
+    "poster": "https://i.ytimg.com/vi/sVV4sTq8hjM/hqdefault.jpg",
+    "media": {
+      "type": "youtube",
+      "youtubeId": "sVV4sTq8hjM"
+    },
+    "externalUrl": "https://youtube.com/shorts/sVV4sTq8hjM",
+    "priority": 20,
+    "published": true
+  },
+  {
+    "id": "ep-0007-short",
+    "title": "女心と鶴の恩返し｜ショート",
+    "description": "ロマ子様の言葉と見どころを、短い映像で。",
+    "collection": "article-derived",
+    "episodeId": "EP-0007",
+    "format": "short",
+    "tools": [],
+    "parentWorkIds": [],
+    "relationshipVerified": true,
+    "evidenceUrl": "https://romaco-substack-portal.pages.dev/episodes/womens-heart-and-crane-gratitude/",
+    "poster": "https://i.ytimg.com/vi/VonXZA3Vk9w/hqdefault.jpg",
+    "media": {
+      "type": "youtube",
+      "youtubeId": "VonXZA3Vk9w"
+    },
+    "externalUrl": "https://youtube.com/shorts/VonXZA3Vk9w",
+    "priority": 20,
+    "published": true
+  },
+  {
+    "id": "ep-0008-short",
+    "title": "部屋も人間関係も、放っとけば勝手に壊れる｜ショート",
+    "description": "ロマ子様の言葉と見どころを、短い映像で。",
+    "collection": "article-derived",
+    "episodeId": "EP-0008",
+    "format": "short",
+    "tools": [],
+    "parentWorkIds": [],
+    "relationshipVerified": true,
+    "evidenceUrl": "https://romaco-substack-portal.pages.dev/episodes/entropy-room-and-human-relationships/",
+    "poster": "https://i.ytimg.com/vi/he-0c5CYyS8/hqdefault.jpg",
+    "media": {
+      "type": "youtube",
+      "youtubeId": "he-0c5CYyS8"
+    },
+    "externalUrl": "https://youtube.com/shorts/he-0c5CYyS8",
+    "priority": 20,
+    "published": true
+  },
+  {
+    "id": "ep-0009-short",
+    "title": "嫉妬は認めねぇと毒となるのに、まだ強がってんの？｜ショート",
+    "description": "ロマ子様の言葉と見どころを、短い映像で。",
+    "collection": "article-derived",
+    "episodeId": "EP-0009",
+    "format": "short",
+    "tools": [],
+    "parentWorkIds": [],
+    "relationshipVerified": true,
+    "evidenceUrl": "https://romaco-substack-portal.pages.dev/episodes/jealousy-poison/",
+    "poster": "https://i.ytimg.com/vi/T_AVnd-k6S4/hqdefault.jpg",
+    "media": {
+      "type": "youtube",
+      "youtubeId": "T_AVnd-k6S4"
+    },
+    "externalUrl": "https://youtube.com/shorts/T_AVnd-k6S4",
+    "priority": 20,
+    "published": true
+  },
+  {
+    "id": "cooking-cinema-short-01",
+    "title": "ロマ子様料理｜いちごクレープ編",
+    "description": "いちごとクレープの、おいしいワンシーンをロマ子様と。",
+    "collection": "original",
+    "originalGroup": "cooking",
+    "format": "video",
+    "tools": [],
+    "parentWorkIds": [],
+    "relationshipVerified": false,
+    "poster": "https://i.ytimg.com/vi/qfpKfBIuMc4/hqdefault.jpg",
+    "media": {
+      "type": "youtube",
+      "youtubeId": "qfpKfBIuMc4"
+    },
+    "externalUrl": "https://youtube.com/shorts/qfpKfBIuMc4?feature=share",
+    "priority": 3,
+    "published": true,
+    "aspectRatio": "9:16"
+  },
+  {
+    "id": "four-panel-movie-sample-01",
+    "title": "ロマ子様の動く4コマ",
+    "description": "4コマ漫画の読みやすさを、動画として見やすいテンポ・字幕・間へ変換したサンプル。",
+    "collection": "original",
+    "originalGroup": "experiments",
+    "format": "motion-comic",
+    "tools": [],
+    "parentWorkIds": [],
+    "relationshipVerified": false,
+    "poster": "https://i.ytimg.com/vi/1PVJ6SJkLHo/hqdefault.jpg",
+    "media": {
+      "type": "youtube",
+      "youtubeId": "1PVJ6SJkLHo"
+    },
+    "externalUrl": "https://youtu.be/1PVJ6SJkLHo",
+    "priority": 2,
+    "published": true,
+    "aspectRatio": "16:9"
+  },
+  {
+    "id": "music-video-sample-01",
+    "title": "ロマ子様ミュージックビデオ",
+    "description": "キャラクターの世界観や楽曲に合わせて、最新AIと映像演出で惹き込むMVサンプル。",
+    "collection": "original",
+    "originalGroup": "experiments",
+    "format": "video",
+    "tools": [],
+    "parentWorkIds": [],
+    "relationshipVerified": false,
+    "poster": "https://i.ytimg.com/vi/aHuVB-HqrlA/hqdefault.jpg",
+    "media": {
+      "type": "youtube",
+      "youtubeId": "aHuVB-HqrlA"
+    },
+    "externalUrl": "https://youtu.be/aHuVB-HqrlA",
+    "priority": 2,
+    "published": true,
+    "aspectRatio": "16:9"
+  },
+  {
+    "id": "promo-video-sample-01",
+    "title": "ロマ子様作成ゲーム紹介",
+    "description": "ロマ子様のゲームの世界を、紹介映像で覗いてみる。",
+    "collection": "original",
+    "originalGroup": "experiments",
+    "format": "video",
+    "tools": [],
+    "parentWorkIds": [],
+    "relationshipVerified": false,
+    "poster": "https://i.ytimg.com/vi/rcqZ8HFt6_4/hqdefault.jpg",
+    "media": {
+      "type": "youtube",
+      "youtubeId": "rcqZ8HFt6_4"
+    },
+    "externalUrl": "https://youtu.be/rcqZ8HFt6_4",
+    "priority": 2,
+    "published": true,
+    "aspectRatio": "16:9"
+  },
+  {
+    "id": "remotion-video-sample-01",
+    "title": "ロマ子様のRemotion動画",
+    "description": "ロマ子様の見せ場を、コードで動かす映像作品。",
+    "collection": "original",
+    "originalGroup": "opal-remotion",
+    "format": "video",
+    "tools": [
+      "Remotion"
+    ],
+    "parentWorkIds": [],
+    "relationshipVerified": false,
+    "poster": "https://i.ytimg.com/vi/qKWwvM7l0R4/hqdefault.jpg",
+    "media": {
+      "type": "youtube",
+      "youtubeId": "qKWwvM7l0R4"
+    },
+    "externalUrl": "https://youtube.com/shorts/qKWwvM7l0R4?feature=share",
+    "priority": 2,
+    "published": true,
+    "aspectRatio": "9:16"
+  }
+]

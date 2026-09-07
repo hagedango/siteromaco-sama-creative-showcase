@@ -1,1235 +1,372 @@
 ---
 import { getCollection } from 'astro:content';
-import SectionHeading from '../components/common/SectionHeading.astro';
-import WorkCard from '../components/works/WorkCard.astro';
-import { workCategories } from '../data/categories';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionHeading from '../components/common/SectionHeading.astro';
+import ArticleExpansion from '../components/works/ArticleExpansion.astro';
+import WorkCard from '../components/works/WorkCard.astro';
+import { formatLabels, validateContentGraph } from '../data/content-graph';
+import '../styles/showcase.css';
 
-const allWorks = await getCollection('works');
-const works = allWorks
-  .filter(({ data }) => data.published || data.seed)
-  .sort((a, b) => a.data.priority - b.data.priority || b.data.year - a.data.year);
-
-const heroWorks = works.slice(0, 5);
-const litLinkUrl = import.meta.env.PUBLIC_ROMACO_LITLINK_URL ?? 'https://lit.link/Romaco';
-const gameUrl = import.meta.env.PUBLIC_ROMACO_GAME_URL ?? 'https://booth.pm/ja/items/8668950';
-const substackUrl = import.meta.env.PUBLIC_ROMACO_SUBSTACK_URL ?? 'https://substack.com/@romaco';
-const hagedangoXUrl = import.meta.env.PUBLIC_HAGEDANGO_X_URL ?? 'https://x.com/dango333';
-const contentMapUrl = 'https://romaco-substack-portal.pages.dev/content-map/';
-const flagshipEpisode = works.find((work) => work.data.episodeId === 'EP-0001');
-const shareText =
-  '1つのキャラクター、1つの文章から、ここまで広がる。Romaco-sama Creative Showcase、これは見ろ。';
-const xShareUrl =
+const episodes = (await getCollection('episodes')).sort(
+  (a, b) => a.data.priority - b.data.priority,
+);
+const catalog = await getCollection('works');
+const sourceImages = await getCollection('sourceImages');
+validateContentGraph(
+  episodes,
+  catalog.map((work) => ({ ...work.data, id: work.id })),
+  sourceImages,
+);
+const works = catalog
+  .filter((work) => work.data.published)
+  .sort((a, b) => a.data.priority - b.data.priority);
+const originals = works.filter((work) => work.data.collection === 'original');
+const litLink = import.meta.env.PUBLIC_ROMACO_LITLINK_URL ?? 'https://lit.link/Romaco';
+const substack = import.meta.env.PUBLIC_ROMACO_SUBSTACK_URL ?? 'https://substack.com/@romaco';
+const game = import.meta.env.PUBLIC_ROMACO_GAME_URL ?? 'https://booth.pm/ja/items/8668950';
+const creator = import.meta.env.PUBLIC_HAGEDANGO_X_URL ?? 'https://x.com/dango333';
+const share =
   import.meta.env.PUBLIC_X_SHARE_URL ??
-  `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`;
-
-const promoSamples = [
+  'https://twitter.com/intent/tweet?text=' +
+    encodeURIComponent('読むロマ子様。動くロマ子様。広がるロマ子様。Romaco-sama Creative Showcase');
+const flagship = episodes.find((episode) => episode.id === 'EP-0001')!;
+const groups = [
   {
-    title: '宣伝用動画サンプル',
+    id: 'opal-remotion',
+    title: 'Opal × Remotion',
+    subtitle: '告知に、動きと遊び心を。',
     description:
-      'キャラクターや企画の魅力を、短いPV・告知映像として一気に伝えるサンプル。',
-    href: 'https://youtu.be/rcqZ8HFt6_4',
-    sample: 'https://img.youtube.com/vi/rcqZ8HFt6_4/hqdefault.jpg',
-    sampleAlt: '宣伝用動画サンプルのYouTubeサムネイル',
-    label: 'promo movie',
+      '素材とコードで、ロマ子様の見せ場をつくる。ここではRemotionの動画作品をご覧いただけます。',
   },
   {
-    title: 'ロマ子様ミュージックビデオ（MV）',
-    description:
-      'キャラクターの世界観や楽曲に合わせて、最新AIと映像演出で惹き込む公式MVサンプル。',
-    href: 'https://youtu.be/aHuVB-HqrlA',
-    sample: 'https://img.youtube.com/vi/aHuVB-HqrlA/hqdefault.jpg',
-    sampleAlt: 'ロマ子様ミュージックビデオのYouTubeサムネイル',
-    label: 'music video',
+    id: 'cooking',
+    title: '料理動画',
+    subtitle: 'おいしい瞬間も、ロマ子様と。',
+    description: '食材の質感、調理の動き。料理のワンシーンを、シネマのように。',
+  },
+  {
+    id: 'experiments',
+    title: 'お試し動画・映像ラボ',
+    subtitle: 'まだ見たことのないロマ子様。',
+    description: '告知、MV、お遊び、AIアニメ。いろいろな映像表現を楽しむ場所。',
   },
 ];
-
-const creativeFormats = [
-  {
-    icon: '🖼️',
-    title: '4コマ漫画',
-    description: 'キャラクターの静止画を、読めるコミックへ。',
-    sample:
-      'https://romaco-substack-portal.pages.dev/media/EP-0001/quantum-comic-01.png',
-    sampleAlt: 'EP-0001 量子力学エピソードの4コマ漫画サンプル',
-    href: 'https://romaco-substack-portal.pages.dev/episodes/quantum-mechanics-genius/#comic-heading',
-    filter: 'four-panel',
-    label: 'EP-0001 comic',
-    tone: 'comic',
-    preview: 'image',
-    actionLabel: '4コマを見る ↗',
-  },
-  {
-    icon: '🎬',
-    title: '動く4コマ',
-    description: 'Remotionでコマ割りをコードモーション化。',
-    sample: 'https://img.youtube.com/vi/1PVJ6SJkLHo/hqdefault.jpg',
-    sampleAlt: '4コマ漫画動画サンプルのYouTubeプレビューサムネイル',
-    href: 'https://youtu.be/1PVJ6SJkLHo',
-    filter: 'remotion',
-    label: '4-panel movie',
-    tone: 'motion',
-    preview: 'phone',
-    actionLabel: '動画を見る ↗',
-  },
-  {
-    icon: '📱',
-    title: 'ショート動画',
-    description: '縦型SNS向けに字幕とテンポを最適化。',
-    sample: 'https://img.youtube.com/vi/4Gqv7d6ShXA/hqdefault.jpg',
-    sampleAlt: 'ショート動画サンプルのYouTube Shortsプレビューサムネイル',
-    href: 'https://youtube.com/shorts/4Gqv7d6ShXA',
-    filter: 'short-video',
-    label: 'vertical shorts',
-    tone: 'short',
-    preview: 'phone',
-    actionLabel: 'Shortsを見る ↗',
-  },
-  {
-    icon: '🍳',
-    title: '料理シネマ動画',
-    description: '最新AIでシズル感と映画的な空気を生成。',
-    sample: 'https://img.youtube.com/vi/qfpKfBIuMc4/hqdefault.jpg',
-    sampleAlt: '料理シネマ動画のYouTube Shortsプレビューサムネイル',
-    href: 'https://youtube.com/shorts/qfpKfBIuMc4',
-    filter: 'sizzle',
-    label: 'cooking short',
-    tone: 'sizzle',
-    preview: 'phone',
-    actionLabel: 'Shortsを見る ↗',
-  },
-  {
-    icon: '🎓',
-    title: '講座動画',
-    description: 'スライドと音声で教材・解説動画へ展開。',
-    sample: 'https://img.youtube.com/vi/C4k87y6XJJQ/hqdefault.jpg',
-    sampleAlt: '講座動画サンプルのYouTubeプレビューサムネイル',
-    href: 'https://youtu.be/C4k87y6XJJQ',
-    filter: 'education',
-    label: 'lecture deck',
-    tone: 'lecture',
-    preview: 'slide',
-    actionLabel: '講座を見る ↗',
-  },
-];
-
-const romacoLinks = [
-  {
-    label: '総合リンク',
-    title: 'Romaco-sama Lit.Link',
-    description: '配信、SNS、活動情報をまとめて追う入口。',
-    href: litLinkUrl,
-    tone: 'cyan',
-  },
-  {
-    label: 'ゲーム',
-    title: '観測してはいけない女',
-    description: 'BOOTHで公開中のRomaco-samaゲーム。',
-    href: gameUrl,
-    tone: 'gold',
-  },
-  {
-    label: 'エッセイ',
-    title: 'Romaco-sama Substack',
-    description: '毒舌の奥にある思想と物語を読むニュースレター。',
-    href: substackUrl,
-    tone: 'purple',
-  },
-];
-
-const multiUseSteps = [
-  {
-    number: '01',
-    title: 'Substack原典',
-    purpose: 'EP-0001「量子力学は、天才たちの正気を壊した」を思想の源泉にする。',
-    proof: '原典記事・思考法',
-  },
-  {
-    number: '02',
-    title: '4コマ漫画',
-    purpose: '抽象的な科学テーマを、Romaco-samaの罵倒とオチで読み切れる形へ圧縮する。',
-    proof: '公開ポータル掲載',
-  },
-  {
-    number: '03',
-    title: 'Shorts / Remotion',
-    purpose: 'コマ割り、字幕、視線誘導を時間軸へ置き換え、SNSで届く短尺へ展開する。',
-    proof: 'コードモーション・縦型動画',
-  },
-  {
-    number: '04',
-    title: '講座動画',
-    purpose: '難解なテーマを音声・スライド・字幕で理解できる教材型コンテンツへ変換する。',
-    proof: '講座動画公開',
-  },
-];
-
-const craftNotes = [
-  '本サイト内の4コマ漫画、Remotion動画、料理シネマ、講座動画はすべて、はげだんごが最新AIとコード技術で制作・実装しています。',
-  '素材をただ並べるだけではなく、Romaco-samaの毒舌エンタメが媒体ごとにどう変化するかまで設計します。',
-  'はげだんごは専属技術班／AIクリエイターとして、生成、編集、モーション、実装をつなぎます。',
+const links = [
+  { title: 'Romaco-sama Lit.Link', label: '活動をもっと知る', href: litLink },
+  { title: 'ロマ子様のSubstack', label: '言葉の続きを読む', href: substack },
+  { title: '観測してはいけない女', label: 'ゲームの世界へ', href: game },
 ];
 ---
 
 <BaseLayout
   title="Romaco-sama Creative Showcase | Produced by Hagedango"
-  description="1つのキャラクター、1つの文章から、4コマ漫画、動く4コマ、ショート動画、料理シネマ、講座動画へ。最新AIとコード技術によるマルチ展開ショウケースです。"
+  description="読むロマ子様。動くロマ子様。広がるロマ子様。記事や画像から生まれた4コマ漫画、ショート、講座、料理、MVを楽しむPRショウケース。"
 >
+  <a class="skip-link" href="#main-content">作品へ移動</a>
   <header class="site-header glass">
-    <a class="brand" href="#top" aria-label="Romaco-sama Creative Showcase ホーム">
-      <span class="brand-mark" aria-hidden="true">RC</span><span>ROMACO-SAMA</span>
-    </a>
+    <a class="brand" href="#top"
+      ><span class="brand-mark" aria-hidden="true">RC</span><span>ROMACO-SAMA</span></a
+    >
     <nav aria-label="メインナビゲーション">
-      <a href="#works">Works</a><a href="#multi-use">Multi-Use</a><a href="#credit">Credit</a><a
-        href="#links">Links</a
+      <a href="#multi-use">記事から</a><a href="#originals">画像・アイデアから</a><a href="#links"
+        >もっと楽しむ</a
       >
     </nav>
-    <a class="header-cta" href={hagedangoXUrl} target="_blank" rel="noreferrer">制作相談</a>
+    <a class="header-link" href={litLink} target="_blank" rel="noreferrer">活動リンク ↗</a>
   </header>
 
-  <main id="top">
-    <section class="hero" aria-labelledby="hero-title">
-      <div class="hero-media" aria-hidden="true">
+  <main id="main-content">
+    <section id="top" class="hero container" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow">Nonoshiri Romaco Showcase</p>
+        <h1 id="hero-title">
+          読むロマ子様。<br />動くロマ子様。<br /><span>広がるロマ子様。</span>
+        </h1>
+        <p class="hero-lead">
+          あの記事、あの一枚から、漫画・ショート・講座、そして新しい映像へ。<br
+          />ロマ子様の言葉と世界観を、いろいろなかたちでお楽しみください。
+        </p>
+        <div class="actions">
+          <a class="button primary" href="#multi-use">ロマ子様の作品を見る ↓</a>
+          <a class="button secondary" href={substack} target="_blank" rel="noreferrer"
+            >原典のSubstackを読む ↗</a
+          >
+        </div>
+        <p class="hero-credit">Creative Showcase · Produced by はげだんご</p>
+      </div>
+      <a class="hero-art" href="#multi-use" aria-label="量子力学の記事から広がる作品を見る">
+        <img
+          src={flagship.data.poster}
+          alt="ロマ子様の量子力学エピソードの原典ビジュアル"
+          width="640"
+          height="360"
+          fetchpriority="high"
+        />
+        <span class="hero-art-caption"
+          ><span>ひとつの言葉から</span><strong>広がる、ロマ子様の世界。</strong><span
+            >EP-0001 / 量子力学 <span aria-hidden="true">↓</span></span
+          ></span
+        >
+      </a>
+    </section>
+
+    <section class="section container" id="multi-use" aria-labelledby="expansion-title">
+      <SectionHeading
+        id="expansion-title"
+        eyebrow="01 / From a story"
+        title="記事から広がるコンテンツ"
+        description="同じお話が、漫画にも、短い映像にも、じっくり学ぶ講座にも。原典と作品を見比べてみてください。"
+      />
+      <div class="episode-selector" hidden data-selector>
+        <label for="episode-choice">原典を選ぶ</label>
+        <select id="episode-choice"
+          >{
+            episodes.map((episode) => (
+              <option value={episode.id}>
+                {episode.id} / {episode.data.title}
+              </option>
+            ))
+          }</select
+        >
+        <p aria-live="polite" data-episode-status></p>
+      </div>
+      {episodes.map((episode) => <ArticleExpansion episode={episode} works={works} />)}
+    </section>
+
+    <section class="section container" id="works" aria-labelledby="episodes-title">
+      <SectionHeading
+        id="episodes-title"
+        eyebrow="More stories"
+        title="ほかのお話も、覗いてみる？"
+        description="気になる原典を選ぶと、その記事から生まれた作品が見られます。"
+      />
+      <div class="filter-row" aria-label="掲載形式で記事を絞り込む" data-episode-filters hidden>
+        <button type="button" data-format-filter="all" aria-pressed="true"
+          >すべて / 原典エッセイ</button
+        >
         {
-          heroWorks.map((work, index) => (
-            <figure class:list={['hero-frame', `hero-frame-${index + 1}`]}>
-              <img src={work.data.poster.src} alt="" loading={index === 0 ? 'eager' : 'lazy'} />
-              <figcaption>{work.data.category}</figcaption>
-            </figure>
+          (['comic', 'motion-comic', 'short', 'lecture'] as const).map((format) => (
+            <button type="button" data-format-filter={format} aria-pressed="false">
+              {formatLabels[format]}
+            </button>
           ))
         }
       </div>
-      <div class="hero-scrim" aria-hidden="true"></div>
-      <div class="container hero-content">
-        <p class="eyebrow">Nonoshiri Romaco Showcase</p>
-        <h1 id="hero-title">罵尻ロマ子（Romaco-sama）Creative Showcase</h1>
-        <p class="hero-copy">
-          1つのキャラクター、1つの文章から、ここまで広がる――。
-          静止画から、動く漫画、ショート、シネマ、講座動画へ。最新AI×コード技術によるマルチ展開ショウケース。
-        </p>
-        <div class="promo-samples" aria-label="最初に見せたい動画サンプル">
-          {
-            promoSamples.map((sample) => (
-              <a class="promo-sample glass" href={sample.href} target="_blank" rel="noreferrer">
-                <span class="promo-visual">
-                  <img src={sample.sample} alt={sample.sampleAlt} loading="eager" decoding="async" />
-                  <span class="play-badge play-badge-large" aria-hidden="true">▶</span>
-                  <span class="sample-label">{sample.label}</span>
-                </span>
-                <span class="promo-copy">
-                  <span class="eyebrow">First Look</span>
-                  <strong>{sample.title}</strong>
-                  <span>{sample.description}</span>
-                  <em>YouTubeで見る ↗</em>
-                </span>
-              </a>
-            ))
-          }
-        </div>
-        <div class="format-showcase" aria-label="制作できるクリエイティブ">
-          {
-            creativeFormats.map((format) => (
-              <a
-                class:list={['format-card', 'glass', `format-card-${format.tone}`]} href={format.href} target="_blank" rel="noreferrer"
-                data-jump-filter={format.filter}
-              >
-                <span class:list={['sample-frame', `sample-${format.preview}`]}>
-                  <img src={format.sample} alt={format.sampleAlt} loading="lazy" decoding="async" />
-                  {(format.preview === 'video' || format.preview === 'phone' || format.preview === 'slide') && (
-                    <span class="play-badge" aria-hidden="true">▶</span>
-                  )}
-                  <span class="sample-label">{format.label}</span>
-                </span>
-                <span class="format-copy">
-                  <span class="format-icon" aria-hidden="true">{format.icon}</span>
-                  <strong>{format.title}</strong>
-                  <span>{format.description}</span>
-                  <em class="format-action">{format.actionLabel}</em>
-                </span>
-              </a>
-            ))
-          }
-        </div>
-        <p class="credit-line">
-          Produced & Crafted by はげだんご <a
-            href={hagedangoXUrl}
-            target="_blank"
-            rel="noreferrer">@dango333</a
-          >
-        </p>
-        <div class="hero-actions">
-          <a class="button button-primary" href="#works">作品ギャラリーを見る</a>
-          <a class="button button-secondary" href={hagedangoXUrl} target="_blank" rel="noreferrer"
-            >制作相談をX DMへ</a
-          >
-          <a class="button button-secondary" href={xShareUrl} target="_blank" rel="noreferrer"
-            >Xで感想を叫ぶ</a
-          >
-        </div>
-        <p class="consult-note">
-          自分のキャラクターや教材も、こんな風に動かしてみたい方へ。制作・マルチ展開の相談は、はげだんごのX DMへお気軽にどうぞ。
-        </p>
-        <dl class="hero-stats" aria-label="展示カテゴリ">
-          <div><dt>Core</dt><dd>Romaco-sama</dd></div>
-          <div><dt>Episodes</dt><dd>{works.length}</dd></div>
-          <div><dt>Filters</dt><dd>{workCategories.length + 1}</dd></div>
-        </dl>
-      </div>
-      <a class="scroll-cue" href="#works"><span>Scroll</span><span aria-hidden="true">↓</span></a>
-    </section>
-
-    <section class="works-section" id="works" aria-labelledby="works-title">
-      <div class="container">
-        <div class="section-row">
-          <SectionHeading
-            id="works-title"
-            eyebrow="Works Gallery"
-            title="Substack原典から広がった、本物の作品群。"
-            description="公開済みポータルの7エピソードを、4コマ、ショート、講座、原典エッセイの実績として整理。カードから原典記事や各公開アセットへ直接飛べます。"
-          />
-          <p class="works-count" aria-live="polite">
-            <span data-visible-count>{works.length}</span>件表示
-          </p>
-        </div>
-
-        <div class="filter-bar" role="tablist" aria-label="作品カテゴリ">
-          <button type="button" data-filter="all" aria-selected="true">すべて</button>
-          {
-            workCategories.map((category) => (
-              <button type="button" data-filter={category.slug} aria-selected="false">
-                {category.label}
-              </button>
-            ))
-          }
-        </div>
-        <p class="source-note">
-          Source: <a href={contentMapUrl} target="_blank" rel="noreferrer"
-            >Romaco-sama Substack Portal Content Map</a
-          >（原典7 / 4コマ4 / ショート6 / 講座2）
-        </p>
-
+      <p class="small-note" data-episode-count aria-live="polite">{episodes.length}件の原典記事</p>
+      <div class="episode-grid">
         {
-          works.length > 0 ? (
-            <div class="works-grid">
-              {works.map((work) => (
-                <WorkCard work={work} />
-              ))}
-            </div>
-          ) : (
-            <div class="empty-state glass">
-              <p class="eyebrow">Archive preparing</p>
-              <p>公開許諾済みの作品を準備しています。</p>
-            </div>
-          )
+          episodes.map((episode) => {
+            const formats = [
+              ...new Set(
+                works
+                  .filter((work) => work.data.episodeId === episode.id)
+                  .map((work) => work.data.format),
+              ),
+            ];
+            return (
+              <article class="episode-card glass" data-episode-formats={formats.join(' ')}>
+                <a href={'#' + episode.id} data-select-episode={episode.id}>
+                  {episode.data.poster && (
+                    <img
+                      src={episode.data.poster}
+                      alt={episode.data.title + 'の原典記事画像'}
+                      width="640"
+                      height="360"
+                      loading="lazy"
+                    />
+                  )}
+                  <div class="episode-card-body">
+                    <>
+                      <p class="eyebrow">
+                        {episode.id} · {episode.data.classification}
+                      </p>
+                      <h3>{episode.data.title}</h3>
+                    </>
+                    <div class="badges" aria-label="掲載中の形式">
+                      {formats.map((format) => (
+                        <span>{formatLabels[format]}</span>
+                      ))}
+                    </div>
+                    <span class="watch-link">この原典の展開を見る ↑</span>
+                  </div>
+                </a>
+              </article>
+            );
+          })
         }
       </div>
+      <p data-no-episodes hidden>
+        この形式の掲載作品はまだありません。ほかの形式からお楽しみください。
+      </p>
+      <a
+        class="text-link"
+        href="https://romaco-substack-portal.pages.dev/content-map/"
+        target="_blank"
+        rel="noreferrer">メディアポータルでコンテンツマップを見る ↗</a
+      >
     </section>
 
-    <section class="multi-use" id="multi-use" aria-labelledby="multi-use-title">
+    <section class="original-section section" id="originals" aria-labelledby="originals-title">
       <div class="container">
         <SectionHeading
-          id="multi-use-title"
-          eyebrow="1 Source Multi-Use"
-          title="EP-0001を見れば、マルチ展開力が一発で分かる。"
-          description="ひとつのSubstack記事を起点に、4コマ、Shorts、Remotion的なコードモーション、講座動画まで展開する。Romaco-samaの毒舌エンタメを媒体ごとに変換する実例です。"
+          id="originals-title"
+          eyebrow="02 / From an idea"
+          title="画像やアイデアから、こんなロマ子様も。"
+          description="イベントの告知、料理のワンシーン、ちょっと遊んだアニメまで。ここでも、ロマ子様の世界が広がっています。"
         />
-
-        <div class="multi-use-board">
-          <div class="source-card glass">
-            <span class="eyebrow">Flagship Case</span>
-            <strong>EP-0001 量子力学</strong>
-            <span class="source-summary"
-              >知らない方が幸せだった。量子力学は、天才たちの正気を壊した</span
-            >
-            {
-              flagshipEpisode?.data.externalUrl && flagshipEpisode.data.portalUrl && (
-                <div class="source-actions">
-                  <a href={flagshipEpisode.data.externalUrl} target="_blank" rel="noreferrer">
-                    原典を読む
-                  </a>
-                  <a href={flagshipEpisode.data.portalUrl} target="_blank" rel="noreferrer">
-                    展開を見る
-                  </a>
-                </div>
-              )
-            }
-          </div>
-          <ol class="multi-use-flow">
-            {
-              multiUseSteps.map((step) => (
-                <li>
-                  <span class="step-number">{step.number}</span>
-                  <div>
-                    <strong>{step.title}</strong>
-                    <p>{step.purpose}</p>
-                    <small>{step.proof}</small>
-                  </div>
-                </li>
-              ))
-            }
-          </ol>
-        </div>
-      </div>
-    </section>
-
-    <section class="credit-section" id="credit" aria-labelledby="credit-title">
-      <div class="container credit-grid">
-        <SectionHeading
-          id="credit-title"
-          eyebrow="Produced & Crafted"
-          title="専属技術班として、Romaco-samaの見せ場を増やす。"
-          description="はげだんごは前に出すぎず、制作と演出で世界観を支えるAIクリエイターとしてクレジットします。"
-        />
-        <div class="credit-card glass">
-          <p class="credit-name">
-            Produced by はげだんご <a href={hagedangoXUrl} target="_blank" rel="noreferrer"
-              >@dango333</a
-            >
-          </p>
-          <ul>
-            {craftNotes.map((note) => <li>{note}</li>)}
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <section class="links-section" id="links" aria-labelledby="links-title">
-      <div class="container">
-        <SectionHeading
-          id="links-title"
-          eyebrow="Romaco Links"
-          title="気になったら、女王の領地へ。"
-          description="Romaco-samaの活動、ゲーム、エッセイへすぐ飛べる関連リンクです。"
-        />
-        <div class="romaco-links">
+        <div class="original-grid">
           {
-            romacoLinks.map((link) => (
-              <a
-                class:list={['romaco-link', 'glass', `romaco-link-${link.tone}`]}
-                href={link.href}
-                target="_blank"
-                rel="noreferrer"
-              >
-                <span>{link.label}</span>
-                <strong>{link.title}</strong>
-                <small>{link.description}</small>
-              </a>
+            groups.map((group) => (
+              <section class="original-group" aria-labelledby={'group-' + group.id}>
+                <div class="group-heading">
+                  <>
+                    <p class="eyebrow">{group.subtitle}</p>
+                    <h3 id={'group-' + group.id}>{group.title}</h3>
+                    <p>{group.description}</p>
+                  </>
+                </div>
+                {originals
+                  .filter((work) => work.data.originalGroup === group.id)
+                  .map((work) => (
+                    <div class="original-work">
+                      {work.data.relationshipVerified &&
+                        work.data.sourceImageIds.map((id) => {
+                          const image = sourceImages.find(
+                            (image) => image.id === id && image.data.displayAllowed,
+                          );
+                          return (
+                            image && (
+                              <figure class="source-image">
+                                <img src={image.data.src} alt={image.data.alt} loading="lazy" />
+                                <figcaption>この一枚から ↓ · {image.data.creatorCredit}</figcaption>
+                              </figure>
+                            )
+                          );
+                        })}
+                      <WorkCard work={work} />
+                    </div>
+                  ))}
+              </section>
             ))
           }
         </div>
-        <div class="reaction-panel glass">
-          <p>
-            見た感想は、Xでそのまま叫んでください。自分のキャラクターや教材も動かしてみたい方は、制作担当へ気軽に声をかけてください。
-          </p>
-          <div class="reaction-actions">
-            <a class="button button-primary" href={xShareUrl} target="_blank" rel="noreferrer"
-              >Xで感想・リアクションを叫ぶ</a
-            >
-            <a class="button button-secondary" href={hagedangoXUrl} target="_blank" rel="noreferrer"
-              >制作担当に相談する</a
-            >
-          </div>
-        </div>
+      </div>
+    </section>
+
+    <section class="section container" id="links" aria-labelledby="links-title">
+      <SectionHeading
+        id="links-title"
+        eyebrow="Follow Romaco-sama"
+        title="ロマ子様を、もっと楽しむ。"
+        description="言葉の続きも、次の配信も。ロマ子様の世界へ。"
+      />
+      <div class="links-grid">
+        {
+          links.map((link) => (
+            <a class="romaco-link glass" href={link.href} target="_blank" rel="noreferrer">
+              <>
+                <span>{link.label}</span>
+                <strong>{link.title}</strong>
+                <span aria-hidden="true">↗</span>
+              </>
+            </a>
+          ))
+        }
+      </div>
+      <div class="reaction">
+        <p>お気に入りの作品が見つかったら、感想を叫んでください。</p><a
+          class="button primary"
+          href={share}
+          target="_blank"
+          rel="noreferrer">Xで感想・リアクションをシェア ↗</a>
       </div>
     </section>
   </main>
-
-  <footer>
-    <div class="container footer-inner">
-      <div>
-        <span>© 2026 Romaco-sama Creative Showcase.</span>
-        <p>
-          自分のキャラクターや教材も、こんな風に動かしてみたい方へ。制作・マルチ展開のご相談は、制作担当（はげだんご <a
-            href={hagedangoXUrl}
-            target="_blank"
-            rel="noreferrer">@dango333</a
-          >）のX DMへお気軽にどうぞ。
-        </p>
+  <footer id="credit">
+    <div class="container">
+      <p class="credit">
+        Produced &amp; Crafted by はげだんご <a href={creator} target="_blank" rel="noreferrer"
+          >@dango333</a>
+      </p>
+      <p>
+        ロマ子様の記事や画像をもとに、漫画・映像・講座へ。生成・編集・モーション・実装を担当しています。
+      </p>
+      <p>
+        <a href={creator} target="_blank" rel="noreferrer"
+          >お手元の記事や画像も、こんなふうに広げてみたい方は、制作担当のXへどうぞ。</a>
+      </p>
+      <div class="footer-bottom">
+        <span>© 2026 Romaco-sama Creative Showcase</span><a href="#top">ページの先頭へ ↑</a>
       </div>
-      <a href="#top">Back to top</a>
     </div>
   </footer>
 </BaseLayout>
-
-<script is:inline>
-  const buttons = Array.from(document.querySelectorAll('[data-filter]'));
-  const cards = Array.from(document.querySelectorAll('.works-grid [data-categories]'));
-  const count = document.querySelector('[data-visible-count]');
-
-  buttons.forEach((button) => {
-    button.addEventListener('click', () => {
-      const selected = button.getAttribute('data-filter');
-      let visible = 0;
-
-      cards.forEach((card) => {
-        const categories = card.getAttribute('data-categories')?.split(' ') ?? [];
-        const matches = selected === 'all' || categories.includes(selected);
-        card.hidden = !matches;
-        if (matches) visible += 1;
-      });
-
-      buttons.forEach((item) => item.setAttribute('aria-selected', String(item === button)));
-      if (count) count.textContent = String(visible);
+<script>
+  const panels = Array.from(document.querySelectorAll<HTMLElement>('[data-episode-panel]'));
+  const select = document.querySelector<HTMLSelectElement>('#episode-choice');
+  const status = document.querySelector<HTMLElement>('[data-episode-status]');
+  const ids = new Set(panels.map((panel) => panel.id));
+  function showEpisode(id: string, focus = false) {
+    if (!ids.has(id)) return;
+    panels.forEach((panel) => {
+      panel.hidden = panel.id !== id;
     });
-  });
-
-  // direct links are preserved for format-cards
+    if (select) select.value = id;
+    const heading = document.getElementById(id + '-title');
+    if (status) status.textContent = id + 'を表示中';
+    if (focus && heading) {
+      heading.focus({ preventScroll: true });
+      heading.scrollIntoView({
+        behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth',
+        block: 'start',
+      });
+    }
+  }
+  if (select && panels.length) {
+    document.querySelector<HTMLElement>('[data-selector]')!.hidden = false;
+    showEpisode(ids.has(location.hash.slice(1)) ? location.hash.slice(1) : 'EP-0001');
+    select.addEventListener('change', () => {
+      history.pushState(null, '', '#' + select.value);
+      showEpisode(select.value, true);
+    });
+    document.querySelectorAll<HTMLAnchorElement>('[data-select-episode]').forEach((link) => {
+      link.addEventListener('click', (event) => {
+        if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey || event.button !== 0)
+          return;
+        event.preventDefault();
+        const id = link.dataset.selectEpisode!;
+        history.pushState(null, '', '#' + id);
+        showEpisode(id, true);
+      });
+    });
+    addEventListener('hashchange', () => {
+      const hash = location.hash.slice(1);
+      const containingPanel = document
+        .getElementById(hash)
+        ?.closest<HTMLElement>('[data-episode-panel]');
+      if (ids.has(hash)) showEpisode(hash, true);
+      else if (containingPanel) showEpisode(containingPanel.id);
+    });
+  }
+  const filterBar = document.querySelector<HTMLElement>('[data-episode-filters]');
+  const cards = Array.from(document.querySelectorAll<HTMLElement>('[data-episode-formats]'));
+  if (filterBar) {
+    filterBar.hidden = false;
+    const buttons = filterBar.querySelectorAll<HTMLButtonElement>('button');
+    buttons.forEach((button) =>
+      button.addEventListener('click', () => {
+        const format = button.dataset.formatFilter;
+        let count = 0;
+        cards.forEach((card) => {
+          card.hidden =
+            format !== 'all' && !card.dataset.episodeFormats?.split(' ').includes(format!);
+          if (!card.hidden) count++;
+        });
+        buttons.forEach((item) => item.setAttribute('aria-pressed', String(item === button)));
+        document.querySelector<HTMLElement>('[data-episode-count]')!.textContent =
+          count + '件の原典記事';
+        document.querySelector<HTMLElement>('[data-no-episodes]')!.hidden = count > 0;
+      }),
+    );
+  }
 </script>
-
-<style>
-  .site-header {
-    position: fixed;
-    z-index: var(--z-header);
-    top: var(--space-4);
-    left: 50%;
-    display: flex;
-    width: min(calc(100% - 2rem), var(--content-wide));
-    min-height: 4rem;
-    align-items: center;
-    gap: var(--space-5);
-    padding: var(--space-2) var(--space-3) var(--space-2) var(--space-4);
-    border-radius: var(--radius-pill);
-    transform: translateX(-50%);
-  }
-  .brand {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-3);
-    font-family: var(--font-display);
-    font-size: 0.8rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-decoration: none;
-  }
-  .brand-mark {
-    display: grid;
-    width: 2.25rem;
-    height: 2.25rem;
-    place-items: center;
-    border: 1px solid rgb(242 199 110 / 62%);
-    border-radius: 50%;
-    box-shadow: var(--glow-gold);
-    color: var(--color-gold);
-    letter-spacing: 0;
-  }
-  nav {
-    display: flex;
-    margin-left: auto;
-    gap: var(--space-5);
-  }
-  nav a,
-  footer a,
-  .credit-line a,
-  .credit-name a {
-    color: var(--color-cyan);
-    font-size: var(--step--1);
-    text-decoration: none;
-  }
-  .header-cta,
-  .button {
-    display: inline-flex;
-    min-height: 3rem;
-    align-items: center;
-    justify-content: center;
-    padding-inline: var(--space-5);
-    border-radius: var(--radius-pill);
-    font-weight: 700;
-    line-height: 1.2;
-    text-decoration: none;
-  }
-  .header-cta,
-  .button-primary {
-    background: linear-gradient(110deg, var(--color-gold), var(--color-cyan));
-    box-shadow: 0 8px 30px rgb(242 199 110 / 18%);
-    color: var(--color-bg);
-  }
-  .hero {
-    position: relative;
-    display: grid;
-    min-height: 92svh;
-    align-items: end;
-    overflow: hidden;
-    padding-block: 8.5rem clamp(5.5rem, 12vh, 8rem);
-  }
-  .hero-media {
-    position: absolute;
-    z-index: -2;
-    inset: 0;
-    overflow: hidden;
-  }
-  .hero-scrim {
-    position: absolute;
-    z-index: -1;
-    inset: 0;
-    background:
-      linear-gradient(90deg, rgb(7 10 18 / 96%) 0%, rgb(7 10 18 / 86%) 44%, transparent 100%),
-      linear-gradient(180deg, transparent 0%, var(--color-bg) 100%);
-  }
-  .hero-frame {
-    position: absolute;
-    overflow: hidden;
-    border: 1px solid rgb(255 255 255 / 14%);
-    border-radius: var(--radius-lg);
-    background: var(--color-surface);
-    box-shadow: 0 24px 80px rgb(0 0 0 / 42%);
-  }
-  .hero-frame img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  .hero-frame figcaption {
-    position: absolute;
-    right: var(--space-3);
-    bottom: var(--space-3);
-    padding: var(--space-1) var(--space-3);
-    border: 1px solid rgb(255 255 255 / 14%);
-    border-radius: var(--radius-pill);
-    background: rgb(7 10 18 / 72%);
-    color: var(--color-text-muted);
-    font-size: 0.7rem;
-  }
-  .hero-frame-1 {
-    top: 13%;
-    right: 8%;
-    width: min(34vw, 27rem);
-    aspect-ratio: 16 / 10;
-  }
-  .hero-frame-2 {
-    right: 32%;
-    bottom: 7%;
-    width: min(24vw, 18rem);
-    aspect-ratio: 9 / 12;
-  }
-  .hero-frame-3 {
-    top: 45%;
-    right: -2%;
-    width: min(22vw, 16rem);
-    aspect-ratio: 1;
-  }
-  .hero-frame-4 {
-    top: 8%;
-    right: 42%;
-    width: min(18vw, 14rem);
-    aspect-ratio: 4 / 5;
-  }
-  .hero-frame-5 {
-    right: 18%;
-    bottom: -7%;
-    width: min(20vw, 16rem);
-    aspect-ratio: 16 / 9;
-  }
-  .hero-content {
-    display: grid;
-    gap: var(--space-5);
-  }
-  h1 {
-    max-width: 16ch;
-    font-family: var(--font-display);
-    font-size: var(--step-3);
-    line-height: 1.04;
-    letter-spacing: 0;
-  }
-  .hero-copy {
-    max-width: 49rem;
-    color: var(--color-text-muted);
-    font-size: var(--step-0);
-  }
-  .promo-samples {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--space-4);
-    max-width: min(100%, 74rem);
-  }
-  .promo-sample {
-    display: grid;
-    grid-template-columns: 1fr;
-    overflow: hidden;
-    border-color: rgb(242 199 110 / 42%);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--glass-highlight), var(--glow-gold);
-    color: var(--color-text);
-    text-decoration: none;
-  }
-  .promo-visual {
-    position: relative;
-    min-height: 15rem;
-    overflow: hidden;
-    background:
-      radial-gradient(circle at 20% 20%, rgb(242 199 110 / 24%), transparent 40%),
-      rgb(7 10 18 / 88%);
-  }
-  .promo-visual img {
-    width: 100%;
-    height: 100%;
-    min-height: 15rem;
-    object-fit: cover;
-    transition: transform var(--duration-slow) var(--ease-out);
-  }
-  .promo-sample:hover .promo-visual img,
-  .promo-sample:focus-visible .promo-visual img {
-    transform: scale(1.05);
-  }
-  .promo-visual::after {
-    position: absolute;
-    inset: 0;
-    background:
-      linear-gradient(180deg, transparent 35%, rgb(7 10 18 / 68%) 100%),
-      radial-gradient(circle at 82% 18%, rgb(81 229 255 / 20%), transparent 34%);
-    content: '';
-  }
-  .promo-copy {
-    display: grid;
-    align-content: center;
-    gap: var(--space-3);
-    padding: var(--space-5);
-  }
-  .promo-copy strong {
-    color: var(--color-gold);
-    font-family: var(--font-display);
-    font-size: var(--step-2);
-    line-height: 1.15;
-  }
-  .promo-copy span:not(.eyebrow) {
-    color: var(--color-text-muted);
-    line-height: 1.75;
-  }
-  .promo-copy em {
-    color: var(--color-cyan);
-    font-style: normal;
-    font-weight: 700;
-  }
-  .format-showcase {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: var(--space-4);
-    max-width: min(100%, 74rem);
-  }
-  .format-card {
-    display: grid;
-    grid-template-rows: auto 1fr;
-    overflow: hidden;
-    min-height: 16rem;
-    align-content: stretch;
-    gap: 0;
-    padding: 0;
-    border-radius: var(--radius-md);
-    color: var(--color-text);
-    text-decoration: none;
-    transition:
-      transform var(--duration-normal) var(--ease-out),
-      border-color var(--duration-normal) var(--ease-out),
-      box-shadow var(--duration-normal) var(--ease-out);
-  }
-  .format-card:hover,
-  .format-card:focus-visible {
-    transform: translateY(-3px);
-  }
-  .format-card-comic:hover,
-  .format-card-comic:focus-visible,
-  .format-card-lecture:hover,
-  .format-card-lecture:focus-visible {
-    border-color: rgb(242 199 110 / 48%);
-    box-shadow: var(--glass-highlight), var(--glow-gold);
-  }
-  .format-card-motion:hover,
-  .format-card-motion:focus-visible,
-  .format-card-short:hover,
-  .format-card-short:focus-visible {
-    border-color: rgb(81 229 255 / 42%);
-    box-shadow: var(--glass-highlight), var(--glow-cyan);
-  }
-  .format-card-sizzle:hover,
-  .format-card-sizzle:focus-visible {
-    border-color: rgb(169 123 255 / 42%);
-    box-shadow: var(--glass-highlight), var(--glow-purple);
-  }
-  .sample-frame {
-    position: relative;
-    display: block;
-    height: clamp(15rem, 24vw, 20rem);
-    overflow: hidden;
-    background:
-      radial-gradient(circle at 20% 10%, rgb(81 229 255 / 24%), transparent 36%),
-      linear-gradient(135deg, rgb(7 10 18 / 96%), rgb(21 28 49 / 82%));
-  }
-  .sample-frame img {
-    width: 100%;
-    height: 100%;
-    min-height: 0;
-    object-fit: contain;
-    transform: scale(1.01);
-    transition: transform var(--duration-slow) var(--ease-out);
-  }
-  .format-card:hover .sample-frame img,
-  .format-card:focus-visible .sample-frame img {
-    transform: scale(1.06);
-  }
-  .sample-frame::after {
-    position: absolute;
-    inset: 0;
-    background:
-      linear-gradient(180deg, transparent 35%, rgb(7 10 18 / 62%) 100%),
-      radial-gradient(circle at 80% 20%, rgb(242 199 110 / 22%), transparent 34%);
-    content: '';
-  }
-  .sample-phone {
-    display: grid;
-    padding: 0.75rem;
-    place-items: center;
-  }
-  .sample-phone img {
-    width: auto;
-    max-width: 100%;
-    aspect-ratio: 9 / 16;
-    object-fit: cover;
-    border: 0.42rem solid rgb(7 10 18 / 84%);
-    border-radius: 1.1rem;
-    box-shadow: 0 14px 36px rgb(0 0 0 / 46%);
-  }
-  .sample-cinema {
-    border-block: 0.42rem solid rgb(7 10 18 / 82%);
-  }
-  .sample-slide img {
-    object-position: center;
-  }
-  .sample-label {
-    position: absolute;
-    z-index: 1;
-    right: var(--space-3);
-    bottom: var(--space-3);
-    padding: var(--space-1) var(--space-2);
-    border: 1px solid rgb(255 255 255 / 18%);
-    border-radius: var(--radius-pill);
-    background: rgb(7 10 18 / 74%);
-    color: var(--color-text-muted);
-    font-size: 0.68rem;
-    font-weight: 700;
-    letter-spacing: 0.02em;
-  }
-  .play-badge {
-    position: absolute;
-    z-index: 1;
-    top: 50%;
-    left: 50%;
-    display: grid;
-    width: 2.8rem;
-    height: 2.8rem;
-    place-items: center;
-    border: 1px solid rgb(255 255 255 / 24%);
-    border-radius: 50%;
-    background: rgb(7 10 18 / 72%);
-    box-shadow: var(--glow-cyan);
-    color: var(--color-cyan);
-    font-size: 0.95rem;
-    transform: translate(-50%, -50%);
-  }
-  .play-badge-large {
-    width: 4rem;
-    height: 4rem;
-    font-size: 1.15rem;
-  }
-  .format-copy {
-    display: grid;
-    align-content: start;
-    gap: var(--space-2);
-    padding: var(--space-4);
-  }
-  .format-icon {
-    font-size: 1.6rem;
-    line-height: 1;
-  }
-  .format-copy strong {
-    color: var(--color-gold);
-    font-size: 1.125rem;
-  }
-  .format-copy span:last-child {
-    color: var(--color-text-muted);
-    font-size: 0.8rem;
-    line-height: 1.55;
-  }
-  .credit-line {
-    max-width: 44rem;
-    color: var(--color-text-subtle);
-    font-size: var(--step--1);
-  }
-  .consult-note {
-    max-width: 48rem;
-    margin: 0;
-    color: var(--color-text-muted);
-    font-size: var(--step--1);
-  }
-  .hero-actions,
-  .reaction-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-3);
-    margin-top: var(--space-3);
-  }
-  .button-secondary {
-    border: 1px solid var(--glass-border);
-    background: var(--glass-bg);
-    color: var(--color-text);
-  }
-  .hero-stats {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-3);
-    margin: var(--space-5) 0 0;
-  }
-  .hero-stats div {
-    min-width: 8.5rem;
-    padding: var(--space-3) var(--space-4);
-    border: 1px solid var(--color-line);
-    border-radius: var(--radius-md);
-    background: rgb(18 25 42 / 58%);
-  }
-  .hero-stats dt {
-    color: var(--color-text-subtle);
-    font-size: 0.75rem;
-  }
-  .hero-stats dd {
-    margin: 0;
-    color: var(--color-gold);
-    font-family: var(--font-display);
-    font-size: var(--step-1);
-    font-weight: 700;
-  }
-  .scroll-cue {
-    position: absolute;
-    right: var(--page-gutter);
-    bottom: var(--space-5);
-    display: flex;
-    align-items: center;
-    gap: var(--space-3);
-    color: var(--color-text-subtle);
-    font-family: var(--font-display);
-    font-size: 0.75rem;
-    letter-spacing: 0.12em;
-    text-decoration: none;
-    text-transform: uppercase;
-  }
-  .works-section,
-  .multi-use,
-  .credit-section,
-  .links-section {
-    padding-block: var(--section-space);
-    scroll-margin-top: 6rem;
-  }
-  .section-row {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    align-items: end;
-    gap: var(--space-5);
-  }
-  .works-count {
-    margin: 0;
-    color: var(--color-text-subtle);
-    font-family: var(--font-display);
-    font-weight: 700;
-  }
-  .filter-bar {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-2);
-    margin-top: var(--space-7);
-  }
-  .filter-bar button {
-    min-height: 2.75rem;
-    padding-inline: var(--space-4);
-    border: 1px solid var(--color-line);
-    border-radius: var(--radius-pill);
-    background: rgb(18 25 42 / 62%);
-    color: var(--color-text-muted);
-    cursor: pointer;
-    font: inherit;
-    font-size: var(--step--1);
-  }
-  .filter-bar button[aria-selected='true'] {
-    border-color: rgb(242 199 110 / 58%);
-    background: rgb(242 199 110 / 12%);
-    color: var(--color-text);
-    box-shadow: var(--glow-gold);
-  }
-  .source-note {
-    margin: var(--space-4) 0 0;
-    color: var(--color-text-subtle);
-    font-size: var(--step--1);
-  }
-  .source-note a {
-    color: var(--color-cyan);
-    text-decoration: none;
-  }
-  .works-grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: var(--space-5);
-    margin-top: var(--space-5);
-  }
-  .works-grid [hidden] {
-    display: none;
-  }
-  .empty-state {
-    margin-top: var(--space-7);
-    padding: var(--space-7);
-    border-radius: var(--radius-lg);
-  }
-  .multi-use {
-    background:
-      linear-gradient(180deg, transparent, rgb(169 123 255 / 5%), transparent),
-      linear-gradient(90deg, rgb(242 199 110 / 6%), transparent 36%, rgb(81 229 255 / 4%));
-  }
-  .multi-use-board {
-    display: grid;
-    grid-template-columns: minmax(16rem, 0.7fr) minmax(0, 1.3fr);
-    gap: var(--space-6);
-    margin-top: var(--space-7);
-    align-items: stretch;
-  }
-  .source-card {
-    display: grid;
-    align-content: end;
-    min-height: 26rem;
-    gap: var(--space-3);
-    padding: var(--space-6);
-    border-color: rgb(242 199 110 / 36%);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--glass-highlight), var(--glow-gold);
-  }
-  .source-card strong {
-    color: var(--color-gold);
-    font-family: var(--font-display);
-    font-size: var(--step-2);
-    line-height: 1.12;
-  }
-  .source-summary {
-    color: var(--color-text-muted);
-  }
-  .source-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-3);
-    margin-top: var(--space-3);
-  }
-  .source-actions a {
-    color: var(--color-cyan);
-    font-size: var(--step--1);
-    font-weight: 700;
-    text-decoration: none;
-  }
-  .multi-use-flow {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--space-4);
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-  .multi-use-flow li {
-    display: grid;
-    min-height: 12rem;
-    align-content: space-between;
-    gap: var(--space-4);
-    padding: var(--space-5);
-    border: 1px solid var(--glass-border);
-    border-radius: var(--radius-lg);
-    background: rgb(13 18 32 / 72%);
-  }
-  .step-number {
-    color: var(--color-cyan);
-    font-family: var(--font-display);
-    font-size: var(--step-1);
-    font-weight: 700;
-  }
-  .multi-use-flow strong {
-    display: block;
-    font-size: var(--step-1);
-  }
-  .multi-use-flow p {
-    margin: var(--space-2) 0;
-    color: var(--color-text-muted);
-    font-size: var(--step--1);
-  }
-  .multi-use-flow small {
-    color: var(--color-gold);
-    font-weight: 700;
-  }
-  .credit-grid {
-    display: grid;
-    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-    gap: var(--space-7);
-    align-items: start;
-  }
-  .credit-card {
-    display: grid;
-    gap: var(--space-4);
-    padding: var(--space-6);
-    border-radius: var(--radius-lg);
-  }
-  .credit-name {
-    margin: 0;
-    color: var(--color-gold);
-    font-family: var(--font-display);
-    font-size: var(--step-1);
-    font-weight: 700;
-  }
-  .credit-card ul {
-    display: grid;
-    gap: var(--space-3);
-    margin: 0;
-    padding-left: 1.1rem;
-    color: var(--color-text-muted);
-  }
-  .romaco-links {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: var(--space-4);
-    margin-top: var(--space-7);
-  }
-  .romaco-link {
-    display: grid;
-    min-height: 12rem;
-    align-content: space-between;
-    gap: var(--space-4);
-    padding: var(--space-5);
-    border-radius: var(--radius-lg);
-    text-decoration: none;
-  }
-  .romaco-link span {
-    color: var(--color-text-subtle);
-    font-size: 0.78rem;
-    font-weight: 700;
-  }
-  .romaco-link strong {
-    color: var(--color-text);
-    font-size: var(--step-1);
-    line-height: 1.35;
-  }
-  .romaco-link small {
-    color: var(--color-text-muted);
-    font-size: var(--step--1);
-  }
-  .romaco-link-cyan {
-    border-color: rgb(81 229 255 / 30%);
-  }
-  .romaco-link-gold {
-    border-color: rgb(242 199 110 / 36%);
-  }
-  .romaco-link-purple {
-    border-color: rgb(169 123 255 / 34%);
-  }
-  .reaction-panel {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--space-4);
-    margin-top: var(--space-5);
-    padding: var(--space-5);
-    border-radius: var(--radius-lg);
-  }
-  .reaction-panel p {
-    max-width: 40rem;
-    margin: 0;
-    color: var(--color-text-muted);
-  }
-  footer {
-    padding-block: var(--space-6);
-    border-top: 1px solid var(--color-line);
-    color: var(--color-text-subtle);
-    font-size: var(--step--1);
-  }
-  .footer-inner {
-    display: flex;
-    justify-content: space-between;
-    gap: var(--space-4);
-  }
-  footer p {
-    max-width: 52rem;
-    margin: var(--space-2) 0 0;
-  }
-  @media (max-width: 64rem) {
-    .hero-scrim {
-      background:
-        linear-gradient(180deg, rgb(7 10 18 / 82%) 0%, rgb(7 10 18 / 94%) 72%),
-        linear-gradient(180deg, transparent 0%, var(--color-bg) 100%);
-    }
-    .hero-frame-1 {
-      top: 10%;
-      right: 4%;
-      width: min(56vw, 25rem);
-    }
-    .hero-frame-2,
-    .hero-frame-4,
-    .hero-frame-5 {
-      display: none;
-    }
-    .hero-frame-3 {
-      top: 32%;
-      right: -9%;
-      width: min(42vw, 16rem);
-    }
-    .promo-samples {
-      grid-template-columns: 1fr;
-    }
-    .works-grid,
-    .romaco-links {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-    .multi-use-board,
-    .credit-grid {
-      grid-template-columns: 1fr;
-    }
-    .source-card {
-      min-height: 18rem;
-    }
-  }
-  @media (max-width: 56rem) {
-    .format-showcase {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-  }
-  @media (max-width: 46rem) {
-    .site-header {
-      top: var(--space-2);
-      width: calc(100% - 1rem);
-    }
-    .brand > span:last-child,
-    nav {
-      display: none;
-    }
-    .header-cta {
-      margin-left: auto;
-      min-height: 2.75rem;
-      padding-inline: var(--space-4);
-      font-size: 0.82rem;
-    }
-    .hero {
-      min-height: 94svh;
-      padding-bottom: 5.5rem;
-    }
-    .hero-copy {
-      line-height: 1.75;
-    }
-    .hero-stats div {
-      flex: 1 1 8rem;
-    }
-    .format-showcase,
-    .section-row,
-    .works-grid,
-    .multi-use-flow,
-    .romaco-links {
-      grid-template-columns: 1fr;
-    }
-    .romaco-link {
-      min-height: 10rem;
-    }
-    .scroll-cue {
-      right: auto;
-      left: var(--page-gutter);
-    }
-    .footer-inner {
-      flex-direction: column;
-    }
-  }
-</style>
