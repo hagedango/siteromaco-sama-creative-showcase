@@ -4,6 +4,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import SectionHeading from '../components/common/SectionHeading.astro';
 import ArticleExpansion from '../components/works/ArticleExpansion.astro';
 import WorkCard from '../components/works/WorkCard.astro';
+import OriginCharacter from '../components/works/OriginCharacter.astro';
+import VideoModal from '../components/works/VideoModal.astro';
 import { formatLabels, validateContentGraph } from '../data/content-graph';
 import '../styles/showcase.css';
 
@@ -20,7 +22,9 @@ validateContentGraph(
 const works = catalog
   .filter((work) => work.data.published)
   .sort((a, b) => a.data.priority - b.data.priority);
-const originals = works.filter((work) => work.data.collection === 'original');
+const originals = works.filter(
+  (work) => work.data.collection === 'original' && work.data.format !== 'motion-comic',
+);
 const litLink = import.meta.env.PUBLIC_ROMACO_LITLINK_URL ?? 'https://lit.link/Romaco';
 const substack = import.meta.env.PUBLIC_ROMACO_SUBSTACK_URL ?? 'https://substack.com/@romaco';
 const game = import.meta.env.PUBLIC_ROMACO_GAME_URL ?? 'https://booth.pm/ja/items/8668950';
@@ -31,25 +35,26 @@ const share =
     encodeURIComponent('読むロマ子様。動くロマ子様。広がるロマ子様。Romaco-sama Creative Showcase');
 const flagship = episodes.find((episode) => episode.id === 'EP-0001')!;
 const groups = [
-    {
-      id: 'opal-remotion',
-      title: 'メッセージを届ける',
-      subtitle: 'ロマ子様から、ひと言。',
-      description: '画面から直接語りかけるメッセージや、イベントの動的告知映像。あの一枚のロマ子様が言葉を紡ぎます。',
-    },
-    {
-      id: 'cooking',
-      title: '日常で出会う',
-      subtitle: '今日も、ロマ子様と。',
-      description: '食材のシズル感や調理のひとコマ。日常をシネマティックに魅せる映像作品。',
-    },
-    {
-      id: 'experiments',
-      title: '作品の世界へ誘う',
-      subtitle: '気になったら、その先へ。',
-      description: '公式MVやゲーム紹介映像。作品の世界観を広げ、次の体験へ誘うプロモーション映像。',
-    },
-  ];
+  {
+    id: 'opal-remotion',
+    title: 'メッセージを届ける',
+    subtitle: 'ロマ子様から、ひと言。',
+    description:
+      '画面から直接語りかけるメッセージや、イベントの動的告知映像。あの一枚のロマ子様が言葉を紡ぎます。',
+  },
+  {
+    id: 'cooking',
+    title: '日常で出会う',
+    subtitle: '今日も、ロマ子様と。',
+    description: '食材のシズル感や調理のひとコマ。日常をシネマティックに魅せる映像作品。',
+  },
+  {
+    id: 'experiments',
+    title: '作品の世界へ誘う',
+    subtitle: '気になったら、その先へ。',
+    description: 'MVやゲーム紹介映像。作品の世界観を広げ、次の体験へ誘うプロモーション映像。',
+  },
+];
 const links = [
   { title: 'Romaco-sama Lit.Link', label: '活動をもっと知る', href: litLink },
   { title: 'ロマ子様のSubstack', label: '言葉の続きを読む', href: substack },
@@ -213,46 +218,43 @@ const links = [
           title="ロマ子様の魅力を、いろんな届け方で。"
           description="ひと言伝えたいときも、おいしい時間も、新しい作品のお知らせも。あの一枚のロマ子様が、いろんな場面で動き出します。"
         />
-        <div class="character-origin-banner">
-          <p class="origin-banner-text">
-            <span class="origin-badge">元になるロマ子様の画像</span>
-            <span class="origin-connector">この一枚が、いろんな場面へ <span aria-hidden="true">↓</span></span>
-          </p>
-        </div>
+        <OriginCharacter />
         <div class="original-grid">
           {
-            groups.map((group) => (
-              <section class="original-group" aria-labelledby={'group-' + group.id}>
-                <div class="group-heading">
-                  <>
+            groups.map((group) => {
+              const groupWorks = originals.filter((work) => work.data.originalGroup === group.id);
+              const featured = groupWorks[0];
+              const extras = groupWorks.slice(1);
+              return (
+                <section class="original-group" aria-labelledby={'group-' + group.id}>
+                  <div class="group-heading">
                     <p class="eyebrow">{group.subtitle}</p>
                     <h3 id={'group-' + group.id}>{group.title}</h3>
                     <p>{group.description}</p>
-                  </>
-                </div>
-                {originals
-                  .filter((work) => work.data.originalGroup === group.id)
-                  .map((work) => (
-                    <div class="original-work">
-                      {work.data.relationshipVerified &&
-                        work.data.sourceImageIds.map((id) => {
-                          const image = sourceImages.find(
-                            (image) => image.id === id && image.data.displayAllowed,
-                          );
-                          return (
-                            image && (
-                              <figure class="source-image">
-                                <img src={image.data.src} alt={image.data.alt} loading="lazy" />
-                                <figcaption>この一枚から ↓ · {image.data.creatorCredit}</figcaption>
-                              </figure>
-                            )
-                          );
-                        })}
-                      <WorkCard work={work} />
-                    </div>
-                  ))}
-              </section>
-            ))
+                  </div>
+                  <div class="representative-work">
+                    {featured && <WorkCard work={featured} featured />}
+                  </div>
+                  <div class="additional-works">
+                    {extras.length > 0 && (
+                      <details class="more-works-accordion">
+                        <summary class="more-works-summary">
+                          ほかの動画を見る（{extras.length}本）
+                          <span class="toggle-icon" aria-hidden="true">
+                            ⌄
+                          </span>
+                        </summary>
+                        <div class="more-works-list">
+                          {extras.map((work) => (
+                            <WorkCard work={work} />
+                          ))}
+                        </div>
+                      </details>
+                    )}
+                  </div>
+                </section>
+              );
+            })
           }
         </div>
       </div>
@@ -283,7 +285,8 @@ const links = [
           class="button primary"
           href={share}
           target="_blank"
-          rel="noreferrer">Xで感想・リアクションをシェア ↗</a>
+          rel="noreferrer">Xで感想・リアクションをシェア ↗</a
+        >
       </div>
     </section>
   </main>
@@ -291,20 +294,23 @@ const links = [
     <div class="container">
       <p class="credit">
         Produced &amp; Crafted by はげだんご <a href={creator} target="_blank" rel="noreferrer"
-          >@dango333</a>
+          >@dango333</a
+        >
       </p>
       <p>
         ロマ子様の記事や画像をもとに、漫画・映像・講座へ。生成・編集・モーション・実装を担当しています。
       </p>
       <p>
         <a href={creator} target="_blank" rel="noreferrer"
-          >お手元の記事や画像も、こんなふうに広げてみたい方は、制作担当のXへどうぞ。</a>
+          >お手元の記事や画像も、こんなふうに広げてみたい方は、制作担当のXへどうぞ。</a
+        >
       </p>
       <div class="footer-bottom">
         <span>© 2026 Romaco-sama Creative Showcase</span><a href="#top">ページの先頭へ ↑</a>
       </div>
     </div>
   </footer>
+  <VideoModal />
 </BaseLayout>
 <script>
   const panels = Array.from(document.querySelectorAll<HTMLElement>('[data-episode-panel]'));
@@ -329,7 +335,21 @@ const links = [
   }
   if (select && panels.length) {
     document.querySelector<HTMLElement>('[data-selector]')!.hidden = false;
-    showEpisode(ids.has(location.hash.slice(1)) ? location.hash.slice(1) : 'EP-0001');
+    function revealHashTarget() {
+      const id = location.hash.slice(1);
+      const target = document.getElementById(id);
+      const panel = target?.closest<HTMLElement>('[data-episode-panel]');
+      if (panel) showEpisode(panel.id);
+      else if (ids.has(id)) showEpisode(id);
+      else return false;
+      let ancestor = target?.parentElement;
+      while (ancestor) {
+        if (ancestor instanceof HTMLDetailsElement) ancestor.open = true;
+        ancestor = ancestor.parentElement;
+      }
+      return true;
+    }
+    if (!revealHashTarget()) showEpisode('EP-0001');
     select.addEventListener('change', () => {
       history.pushState(null, '', '#' + select.value);
       showEpisode(select.value, true);
@@ -350,7 +370,7 @@ const links = [
         .getElementById(hash)
         ?.closest<HTMLElement>('[data-episode-panel]');
       if (ids.has(hash)) showEpisode(hash, true);
-      else if (containingPanel) showEpisode(containingPanel.id);
+      else if (containingPanel) revealHashTarget();
     });
   }
   const filterBar = document.querySelector<HTMLElement>('[data-episode-filters]');

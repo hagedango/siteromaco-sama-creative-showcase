@@ -343,13 +343,18 @@ footer a {
   border-block: 1px solid var(--color-line);
 }
 .original-grid {
-  margin-top: 2.5rem;
+  margin-top: 0;
+  grid-template-rows: auto auto auto;
 }
 .original-group {
   min-width: 0;
+  display: grid;
+  grid-template-rows: subgrid;
+  grid-row: span 3;
+  gap: 0;
 }
 .group-heading {
-  min-height: 13rem;
+  min-height: 11rem;
   padding-bottom: 1.5rem;
 }
 .group-heading h3 {
@@ -466,6 +471,9 @@ footer p {
   .group-heading {
     min-height: auto;
   }
+  .original-group {
+    display: block;
+  }
   .hero {
     padding-top: 2rem;
   }
@@ -525,7 +533,10 @@ footer p {
   font-weight: 600;
   color: var(--color-gold, #f2c76e);
   text-decoration: none;
-  transition: background 0.2s, border-color 0.2s, transform 0.2s;
+  transition:
+    background 0.2s,
+    border-color 0.2s,
+    transform 0.2s;
 }
 .extra-action-button:hover {
   background: rgb(242 199 110 / 25%);
@@ -549,7 +560,21 @@ footer p {
   color: var(--color-text-muted, #94a3b8);
   cursor: pointer;
   user-select: none;
-  transition: background 0.2s, color 0.2s;
+  transition:
+    background 0.2s,
+    color 0.2s;
+}
+.more-works-summary:focus-visible {
+  outline-offset: -3px;
+}
+@supports not (grid-template-rows: subgrid) {
+  .original-group {
+    display: flex;
+    flex-direction: column;
+  }
+  .representative-work {
+    flex: 1;
+  }
 }
 .more-works-summary:hover {
   background: rgb(255 255 255 / 6%);

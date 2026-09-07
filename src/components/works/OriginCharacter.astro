@@ -1,0 +1,125 @@
+---
+import { existsSync } from 'node:fs';
+const hasImage = existsSync('public/images/origin-romaco.png');
+---
+
+<div class="origin-character">
+  <div class="origin-character-card">
+    <div class="origin-portrait">
+      {
+        hasImage && (
+          <img
+            src="/images/origin-romaco.png"
+            alt="元になるロマ子様のキャラクター画像"
+            width="320"
+            height="320"
+            loading="lazy"
+            data-origin-image
+          />
+        )
+      }
+      <div class="origin-placeholder" hidden={hasImage} data-origin-fallback>
+        <span aria-hidden="true">RC</span>
+        <strong>Romaco-sama</strong>
+        <small>元画像は準備中</small>
+      </div>
+    </div>
+    <p>あの一枚のロマ子様が、<br />いろんな場面で動き出します</p>
+  </div>
+  <svg class="origin-arrows" viewBox="0 0 1000 80" preserveAspectRatio="none" aria-hidden="true">
+    <defs
+      ><marker
+        id="origin-arrow-tip"
+        markerWidth="7"
+        markerHeight="7"
+        refX="5"
+        refY="3"
+        orient="auto"><path d="M0 0 L6 3 L0 6" fill="none" stroke="currentColor"></path></marker
+      ></defs
+    >
+    <g fill="none" stroke="currentColor" stroke-width="1.5" vector-effect="non-scaling-stroke">
+      <path d="M500 0 C500 45 167 20 167 70" marker-end="url(#origin-arrow-tip)"></path>
+      <path d="M500 0 L500 70" marker-end="url(#origin-arrow-tip)"></path>
+      <path d="M500 0 C500 45 833 20 833 70" marker-end="url(#origin-arrow-tip)"></path>
+    </g>
+  </svg>
+</div>
+<script>
+  const origin = document.querySelector<HTMLImageElement>('[data-origin-image]');
+  function showFallback() {
+    if (origin) origin.hidden = true;
+    const fallback = document.querySelector<HTMLElement>('[data-origin-fallback]');
+    if (fallback) fallback.hidden = false;
+  }
+  origin?.addEventListener('error', showFallback);
+  if (origin?.complete && origin.naturalWidth === 0) showFallback();
+</script>
+<style>
+  .origin-character {
+    margin-top: 2rem;
+  }
+  .origin-character-card {
+    width: min(100%, 24rem);
+    margin: auto;
+    padding: 1.4rem;
+    border: 1px solid transparent;
+    border-radius: 1.5rem;
+    background:
+      linear-gradient(#111322, #111322) padding-box,
+      linear-gradient(135deg, var(--color-purple), var(--color-gold), #8353ba) border-box;
+    box-shadow:
+      0 0 40px #a97bff20,
+      0 0 28px #f2c76e14;
+    text-align: center;
+  }
+  .origin-portrait {
+    width: min(100%, 14rem);
+    aspect-ratio: 1;
+    margin: auto;
+    border-radius: 1rem;
+    overflow: hidden;
+    background: radial-gradient(circle at top, #a97bff24, transparent 75%);
+  }
+  .origin-portrait img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  .origin-placeholder {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+  }
+  .origin-placeholder span {
+    color: var(--color-gold);
+    font: 700 3rem var(--font-display);
+    letter-spacing: 0.1em;
+  }
+  .origin-placeholder small {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+  }
+  p {
+    margin: 1rem 0 0;
+    font-size: 1rem;
+  }
+  .origin-arrows {
+    display: block;
+    width: 100%;
+    height: 5rem;
+    color: var(--color-gold);
+    opacity: 0.6;
+  }
+  @media (max-width: 56rem) {
+    .origin-arrows {
+      width: 100%;
+      height: 3rem;
+    }
+    .origin-arrows g > path:not([d='M500 0 L500 70']) {
+      display: none;
+    }
+  }
+</style>

@@ -13,6 +13,9 @@ const comics = related.filter((work) => work.data.format === 'comic');
 const motions = related.filter((work) => work.data.format === 'motion-comic');
 const shorts = related.filter((work) => work.data.format === 'short');
 const lectures = related.filter((work) => work.data.format === 'lecture');
+const extraMotions = works.filter(
+  (work) => work.data.format === 'motion-comic' && !work.data.episodeId,
+);
 ---
 
 <section
@@ -67,12 +70,17 @@ const lectures = related.filter((work) => work.data.format === 'lecture');
                 ))}
             </div>
           ))}
-          {episode.id === 'EP-0001' && motions.length === 0 && (
-            <aside class="motion-note">
-              <h4>漫画が動くと、どんな感じ？</h4>
-              <p>別作品の「動く4コマ」もご覧いただけます。</p>
-              <a href="#four-panel-movie-sample-01">動く4コマの作品へ ↓</a>
-            </aside>
+          {episode.id === 'EP-0001' && extraMotions.length > 0 && (
+            <details class="more-works-accordion">
+              <summary class="more-works-summary">
+                別の漫画動画も見る（{extraMotions.length}本）
+              </summary>
+              <div class="more-works-list">
+                {extraMotions.map((work) => (
+                  <WorkCard work={work} relationship="別の漫画を動画にした作品" />
+                ))}
+              </div>
+            </details>
           )}
         </div>
       )
@@ -100,6 +108,7 @@ const lectures = related.filter((work) => work.data.format === 'lecture');
   </div>
   <p class="portal-note">
     <a href={episode.data.portalUrl} target="_blank" rel="noreferrer"
-      >このエピソードをメディアポータルで見る ↗</a>
+      >このエピソードをメディアポータルで見る ↗</a
+    >
   </p>
 </section>

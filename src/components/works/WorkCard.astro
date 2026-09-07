@@ -5,14 +5,27 @@ interface Props {
   work: CollectionEntry<'works'>;
   label?: string;
   relationship?: string;
+  featured?: boolean;
 }
-const { work, label, relationship } = Astro.props;
+const { work, label, relationship, featured = false } = Astro.props;
 const { data } = work;
 const portrait = data.format === 'short' || data.aspectRatio === '9:16';
 ---
 
-<article class="work-card glass" id={work.id} data-work-format={data.format}>
-  <a class="work-link" href={data.externalUrl} target="_blank" rel="noreferrer">
+<article
+  class:list={['work-card', 'glass', { featured }]}
+  id={work.id}
+  data-work-format={data.format}
+>
+  <a
+    class="work-link"
+    href={data.externalUrl}
+    target="_blank"
+    rel="noreferrer"
+    data-youtube-id={data.media.type === 'youtube' ? data.media.youtubeId : undefined}
+    data-video-title={data.media.type === 'youtube' ? data.title : undefined}
+    aria-haspopup={data.media.type === 'youtube' ? 'dialog' : undefined}
+  >
     <div class:list={['work-preview', { portrait, comic: data.format === 'comic' }]}>
       <img
         src={data.poster}
@@ -63,6 +76,29 @@ const portrait = data.format === 'short' || data.aspectRatio === '9:16';
   }
   .work-card:hover {
     border-color: var(--color-gold);
+  }
+  .featured {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .featured .work-link {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .featured .work-preview {
+    flex-shrink: 0;
+  }
+  .featured .work-body {
+    flex: 1;
+    grid-template-rows: minmax(3.75rem, auto) 1fr auto;
+  }
+  .featured .work-body > p {
+    min-height: 5.4rem;
+  }
+  .featured .tools {
+    margin-top: auto;
   }
   .work-link {
     display: block;
