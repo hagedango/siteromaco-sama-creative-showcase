@@ -31,26 +31,25 @@ const share =
     encodeURIComponent('読むロマ子様。動くロマ子様。広がるロマ子様。Romaco-sama Creative Showcase');
 const flagship = episodes.find((episode) => episode.id === 'EP-0001')!;
 const groups = [
-  {
-    id: 'opal-remotion',
-    title: 'Opal × Remotion',
-    subtitle: '告知に、動きと遊び心を。',
-    description:
-      '素材とコードで、ロマ子様の見せ場をつくる。ここではRemotionの動画作品をご覧いただけます。',
-  },
-  {
-    id: 'cooking',
-    title: '料理動画',
-    subtitle: 'おいしい瞬間も、ロマ子様と。',
-    description: '食材の質感、調理の動き。料理のワンシーンを、シネマのように。',
-  },
-  {
-    id: 'experiments',
-    title: 'お試し動画・映像ラボ',
-    subtitle: 'まだ見たことのないロマ子様。',
-    description: '告知、MV、お遊び、AIアニメ。いろいろな映像表現を楽しむ場所。',
-  },
-];
+    {
+      id: 'opal-remotion',
+      title: 'メッセージを届ける',
+      subtitle: 'ロマ子様から、ひと言。',
+      description: '画面から直接語りかけるメッセージや、イベントの動的告知映像。あの一枚のロマ子様が言葉を紡ぎます。',
+    },
+    {
+      id: 'cooking',
+      title: '日常で出会う',
+      subtitle: '今日も、ロマ子様と。',
+      description: '食材のシズル感や調理のひとコマ。日常をシネマティックに魅せる映像作品。',
+    },
+    {
+      id: 'experiments',
+      title: '作品の世界へ誘う',
+      subtitle: '気になったら、その先へ。',
+      description: '公式MVやゲーム紹介映像。作品の世界観を広げ、次の体験へ誘うプロモーション映像。',
+    },
+  ];
 const links = [
   { title: 'Romaco-sama Lit.Link', label: '活動をもっと知る', href: litLink },
   { title: 'ロマ子様のSubstack', label: '言葉の続きを読む', href: substack },
@@ -210,10 +209,16 @@ const links = [
       <div class="container">
         <SectionHeading
           id="originals-title"
-          eyebrow="02 / From an idea"
-          title="画像やアイデアから、こんなロマ子様も。"
-          description="イベントの告知、料理のワンシーン、ちょっと遊んだアニメまで。ここでも、ロマ子様の世界が広がっています。"
+          eyebrow="02 / From an image"
+          title="ロマ子様の魅力を、いろんな届け方で。"
+          description="ひと言伝えたいときも、おいしい時間も、新しい作品のお知らせも。あの一枚のロマ子様が、いろんな場面で動き出します。"
         />
+        <div class="character-origin-banner">
+          <p class="origin-banner-text">
+            <span class="origin-badge">元になるロマ子様の画像</span>
+            <span class="origin-connector">この一枚が、いろんな場面へ <span aria-hidden="true">↓</span></span>
+          </p>
+        </div>
         <div class="original-grid">
           {
             groups.map((group) => (

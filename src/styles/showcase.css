@@ -482,3 +482,93 @@ footer p {
     flex-direction: column;
   }
 }
+
+/* Character Origin Banner & 3-Column Improvements */
+.character-origin-banner {
+  display: flex;
+  justify-content: center;
+  margin: 1.5rem 0 2rem;
+}
+.origin-banner-text {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 1.25rem;
+  background: rgb(242 199 110 / 8%);
+  border: 1px solid rgb(242 199 110 / 30%);
+  border-radius: var(--radius-pill, 9999px);
+  font-size: 0.85rem;
+  color: var(--color-gold, #f2c76e);
+}
+.origin-badge {
+  font-weight: 700;
+  padding: 0.2rem 0.6rem;
+  background: rgb(242 199 110 / 20%);
+  border-radius: var(--radius-pill, 9999px);
+}
+.origin-connector {
+  color: var(--color-text, #f0f2f8);
+  font-weight: 500;
+}
+.extra-action-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  width: 100%;
+  margin-top: 0.75rem;
+  padding: 0.6rem 1rem;
+  background: rgb(242 199 110 / 12%);
+  border: 1px solid rgb(242 199 110 / 40%);
+  border-radius: 0.75rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--color-gold, #f2c76e);
+  text-decoration: none;
+  transition: background 0.2s, border-color 0.2s, transform 0.2s;
+}
+.extra-action-button:hover {
+  background: rgb(242 199 110 / 25%);
+  border-color: var(--color-gold, #f2c76e);
+  transform: translateY(-2px);
+}
+.more-works-accordion {
+  margin-top: 1rem;
+  border-radius: 0.75rem;
+  border: 1px solid rgb(255 255 255 / 10%);
+  background: rgb(255 255 255 / 3%);
+  overflow: hidden;
+}
+.more-works-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--color-text-muted, #94a3b8);
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.2s, color 0.2s;
+}
+.more-works-summary:hover {
+  background: rgb(255 255 255 / 6%);
+  color: var(--color-gold, #f2c76e);
+}
+.more-works-summary::-webkit-details-marker {
+  display: none;
+}
+.more-works-accordion[open] .toggle-icon {
+  transform: rotate(180deg);
+}
+.toggle-icon {
+  transition: transform 0.2s ease;
+}
+.more-works-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 0.75rem;
+  border-top: 1px solid rgb(255 255 255 / 8%);
+  background: rgb(0 0 0 / 20%);
+}

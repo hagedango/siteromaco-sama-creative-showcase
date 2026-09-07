@@ -23,6 +23,50 @@
     "published": true
   },
   {
+    "id": "ep-0004-comic",
+    "title": "未来には行けるが、過去には戻れない。タイムマシーンの残酷さ｜4コマ漫画",
+    "description": "ロマ子様の言葉を、コマと表情で楽しむ。",
+    "collection": "article-derived",
+    "episodeId": "EP-0004",
+    "format": "comic",
+    "tools": [],
+    "parentWorkIds": [],
+    "relationshipVerified": true,
+    "evidenceUrl": "https://romaco-substack-portal.pages.dev/episodes/time-machine-relativity/",
+    "poster": "https://romaco-substack-portal.pages.dev/media/EP-0004/comic-1.jpg",
+    "media": {
+      "type": "image",
+      "images": [
+        "https://romaco-substack-portal.pages.dev/media/EP-0004/comic-1.jpg"
+      ]
+    },
+    "externalUrl": "https://romaco-substack-portal.pages.dev/episodes/time-machine-relativity/#comic-heading",
+    "priority": 10,
+    "published": true
+  },
+  {
+    "id": "ep-0006-comic",
+    "title": "許される下ネタと嫌われる下ネタの違い｜4コマ漫画",
+    "description": "ロマ子様の言葉を、コマと表情で楽しむ。",
+    "collection": "article-derived",
+    "episodeId": "EP-0006",
+    "format": "comic",
+    "tools": [],
+    "parentWorkIds": [],
+    "relationshipVerified": true,
+    "evidenceUrl": "https://romaco-substack-portal.pages.dev/episodes/allowed-vs-hated-dirty-jokes/",
+    "poster": "https://romaco-substack-portal.pages.dev/media/EP-0006/comic-1.jpg",
+    "media": {
+      "type": "image",
+      "images": [
+        "https://romaco-substack-portal.pages.dev/media/EP-0006/comic-1.jpg"
+      ]
+    },
+    "externalUrl": "https://romaco-substack-portal.pages.dev/episodes/allowed-vs-hated-dirty-jokes/#comic-heading",
+    "priority": 10,
+    "published": true
+  },
+  {
     "id": "ep-0001-motion-comic",
     "title": "知らない方が幸せだった。量子力学は、天才たちの正気を壊した｜動く4コマ",
     "description": "4コマ漫画のコマとセリフをRemotionでコードモーション化した動画作品。",
@@ -68,48 +112,6 @@
     "published": true
   },
   {
-    "id": "ep-0001-lecture",
-    "title": "知らない方が幸せだった。量子力学は、天才たちの正気を壊した｜講座動画",
-    "description": "スライドと音声で、テーマをじっくり味わう。",
-    "collection": "article-derived",
-    "episodeId": "EP-0001",
-    "format": "lecture",
-    "tools": [],
-    "parentWorkIds": [],
-    "relationshipVerified": true,
-    "evidenceUrl": "https://romaco-substack-portal.pages.dev/episodes/quantum-mechanics-genius/",
-    "poster": "https://i.ytimg.com/vi/1-WbG6_caRo/hqdefault.jpg",
-    "media": {
-      "type": "youtube",
-      "youtubeId": "1-WbG6_caRo"
-    },
-    "externalUrl": "https://youtu.be/1-WbG6_caRo",
-    "priority": 30,
-    "published": true
-  },
-  {
-    "id": "ep-0004-comic",
-    "title": "未来には行けるが、過去には戻れない。タイムマシーンの残酷さ｜4コマ漫画",
-    "description": "ロマ子様の言葉を、コマと表情で楽しむ。",
-    "collection": "article-derived",
-    "episodeId": "EP-0004",
-    "format": "comic",
-    "tools": [],
-    "parentWorkIds": [],
-    "relationshipVerified": true,
-    "evidenceUrl": "https://romaco-substack-portal.pages.dev/episodes/time-machine-relativity/",
-    "poster": "https://romaco-substack-portal.pages.dev/media/EP-0004/comic-1.jpg",
-    "media": {
-      "type": "image",
-      "images": [
-        "https://romaco-substack-portal.pages.dev/media/EP-0004/comic-1.jpg"
-      ]
-    },
-    "externalUrl": "https://romaco-substack-portal.pages.dev/episodes/time-machine-relativity/#comic-heading",
-    "priority": 10,
-    "published": true
-  },
-  {
     "id": "ep-0004-short",
     "title": "未来には行けるが、過去には戻れない。タイムマシーンの残酷さ｜ショート",
     "description": "ロマ子様の言葉と見どころを、短い映像で。",
@@ -127,48 +129,6 @@
     },
     "externalUrl": "https://youtube.com/shorts/Zoa5lGxvFjU",
     "priority": 20,
-    "published": true
-  },
-  {
-    "id": "lecture-sample-01",
-    "title": "素数の美しさは、恋愛で例えると分かりやすい｜講座動画",
-    "description": "スライドと音声で、テーマをじっくり味わう。",
-    "collection": "article-derived",
-    "episodeId": "EP-0005",
-    "format": "lecture",
-    "tools": [],
-    "parentWorkIds": [],
-    "relationshipVerified": true,
-    "evidenceUrl": "https://romaco-substack-portal.pages.dev/episodes/prime-numbers-and-love/",
-    "poster": "https://i.ytimg.com/vi/C4k87y6XJJQ/hqdefault.jpg",
-    "media": {
-      "type": "youtube",
-      "youtubeId": "C4k87y6XJJQ"
-    },
-    "externalUrl": "https://youtu.be/C4k87y6XJJQ",
-    "priority": 30,
-    "published": true
-  },
-  {
-    "id": "ep-0006-comic",
-    "title": "許される下ネタと嫌われる下ネタの違い｜4コマ漫画",
-    "description": "ロマ子様の言葉を、コマと表情で楽しむ。",
-    "collection": "article-derived",
-    "episodeId": "EP-0006",
-    "format": "comic",
-    "tools": [],
-    "parentWorkIds": [],
-    "relationshipVerified": true,
-    "evidenceUrl": "https://romaco-substack-portal.pages.dev/episodes/allowed-vs-hated-dirty-jokes/",
-    "poster": "https://romaco-substack-portal.pages.dev/media/EP-0006/comic-1.jpg",
-    "media": {
-      "type": "image",
-      "images": [
-        "https://romaco-substack-portal.pages.dev/media/EP-0006/comic-1.jpg"
-      ]
-    },
-    "externalUrl": "https://romaco-substack-portal.pages.dev/episodes/allowed-vs-hated-dirty-jokes/#comic-heading",
-    "priority": 10,
     "published": true
   },
   {
@@ -252,44 +212,44 @@
     "published": true
   },
   {
-    "id": "cooking-cinema-short-01",
-    "title": "ロマ子様料理｜いちごクレープ編",
-    "description": "いちごとクレープの、おいしいワンシーンをロマ子様と。",
-    "collection": "original",
-    "originalGroup": "cooking",
-    "format": "video",
+    "id": "ep-0001-lecture",
+    "title": "知らない方が幸せだった。量子力学は、天才たちの正気を壊した｜講座動画",
+    "description": "スライドと音声で、テーマをじっくり味わう。",
+    "collection": "article-derived",
+    "episodeId": "EP-0001",
+    "format": "lecture",
     "tools": [],
     "parentWorkIds": [],
-    "relationshipVerified": false,
-    "poster": "https://i.ytimg.com/vi/qfpKfBIuMc4/hqdefault.jpg",
+    "relationshipVerified": true,
+    "evidenceUrl": "https://romaco-substack-portal.pages.dev/episodes/quantum-mechanics-genius/",
+    "poster": "https://i.ytimg.com/vi/1-WbG6_caRo/hqdefault.jpg",
     "media": {
       "type": "youtube",
-      "youtubeId": "qfpKfBIuMc4"
+      "youtubeId": "1-WbG6_caRo"
     },
-    "externalUrl": "https://youtube.com/shorts/qfpKfBIuMc4?feature=share",
-    "priority": 3,
-    "published": true,
-    "aspectRatio": "9:16"
+    "externalUrl": "https://youtu.be/1-WbG6_caRo",
+    "priority": 30,
+    "published": true
   },
   {
-    "id": "four-panel-movie-sample-01",
-    "title": "ロマ子様の動く4コマ",
-    "description": "4コマ漫画の読みやすさを、動画として見やすいテンポ・字幕・間へ変換したサンプル。",
-    "collection": "original",
-    "originalGroup": "experiments",
-    "format": "motion-comic",
+    "id": "lecture-sample-01",
+    "title": "素数の美しさは、恋愛で例えると分かりやすい｜講座動画",
+    "description": "スライドと音声で、テーマをじっくり味わう。",
+    "collection": "article-derived",
+    "episodeId": "EP-0005",
+    "format": "lecture",
     "tools": [],
     "parentWorkIds": [],
-    "relationshipVerified": false,
-    "poster": "https://i.ytimg.com/vi/1PVJ6SJkLHo/hqdefault.jpg",
+    "relationshipVerified": true,
+    "evidenceUrl": "https://romaco-substack-portal.pages.dev/episodes/prime-numbers-and-love/",
+    "poster": "https://i.ytimg.com/vi/C4k87y6XJJQ/hqdefault.jpg",
     "media": {
       "type": "youtube",
-      "youtubeId": "1PVJ6SJkLHo"
+      "youtubeId": "C4k87y6XJJQ"
     },
-    "externalUrl": "https://youtu.be/1PVJ6SJkLHo",
-    "priority": 2,
-    "published": true,
-    "aspectRatio": "16:9"
+    "externalUrl": "https://youtu.be/C4k87y6XJJQ",
+    "priority": 30,
+    "published": true
   },
   {
     "id": "music-video-sample-01",
@@ -307,7 +267,7 @@
       "youtubeId": "aHuVB-HqrlA"
     },
     "externalUrl": "https://youtu.be/aHuVB-HqrlA",
-    "priority": 2,
+    "priority": 1,
     "published": true,
     "aspectRatio": "16:9"
   },
@@ -352,5 +312,45 @@
     "priority": 2,
     "published": true,
     "aspectRatio": "9:16"
+  },
+  {
+    "id": "cooking-cinema-short-01",
+    "title": "ロマ子様料理｜いちごクレープ編",
+    "description": "いちごとクレープの、おいしいワンシーンをロマ子様と。",
+    "collection": "original",
+    "originalGroup": "cooking",
+    "format": "video",
+    "tools": [],
+    "parentWorkIds": [],
+    "relationshipVerified": false,
+    "poster": "https://i.ytimg.com/vi/qfpKfBIuMc4/hqdefault.jpg",
+    "media": {
+      "type": "youtube",
+      "youtubeId": "qfpKfBIuMc4"
+    },
+    "externalUrl": "https://youtube.com/shorts/qfpKfBIuMc4?feature=share",
+    "priority": 3,
+    "published": true,
+    "aspectRatio": "9:16"
+  },
+  {
+    "id": "four-panel-movie-sample-01",
+    "title": "ロマ子様の動く4コマ",
+    "description": "4コマ漫画の読みやすさを、動画として見やすいテンポ・字幕・間へ変換したサンプル。",
+    "collection": "original",
+    "originalGroup": "experiments",
+    "format": "motion-comic",
+    "tools": [],
+    "parentWorkIds": [],
+    "relationshipVerified": false,
+    "poster": "https://i.ytimg.com/vi/1PVJ6SJkLHo/hqdefault.jpg",
+    "media": {
+      "type": "youtube",
+      "youtubeId": "1PVJ6SJkLHo"
+    },
+    "externalUrl": "https://youtu.be/1PVJ6SJkLHo",
+    "priority": 3,
+    "published": true,
+    "aspectRatio": "16:9"
   }
 ]
