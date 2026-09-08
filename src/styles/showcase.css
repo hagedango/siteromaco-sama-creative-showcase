@@ -129,10 +129,13 @@ a {
   text-decoration: none;
   background: #0d1423;
 }
-.hero-art img {
+.hero-video {
+  display: block;
   width: 100%;
-  aspect-ratio: 4/3;
-  object-fit: contain;
+  height: auto;
+  aspect-ratio: 16/9;
+  border: 0;
+  background: #000;
 }
 .hero-art-caption {
   display: grid;
@@ -441,9 +444,6 @@ footer p {
   }
   .hero-art {
     max-width: 40rem;
-  }
-  .hero-art img {
-    aspect-ratio: 16/9;
   }
   .expansion-grid,
   .episode-grid,

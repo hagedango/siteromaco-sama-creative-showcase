@@ -33,7 +33,10 @@ const share =
   import.meta.env.PUBLIC_X_SHARE_URL ??
   'https://twitter.com/intent/tweet?text=' +
     encodeURIComponent('読むロマ子様。動くロマ子様。広がるロマ子様。Romaco-sama Creative Showcase');
-const flagship = episodes.find((episode) => episode.id === 'EP-0001')!;
+const heroVideo = works.find((work) => work.id === 'promo-video-sample-01')!;
+if (heroVideo.data.media.type !== 'youtube') {
+  throw new Error('Hero game introduction must have a YouTube video.');
+}
 const groups = [
   {
     id: 'opal-remotion',
@@ -98,20 +101,23 @@ const links = [
         </div>
         <p class="hero-credit">Creative Showcase · Produced by はげだんご</p>
       </div>
-      <a class="hero-art" href="#multi-use" aria-label="量子力学の記事から広がる作品を見る">
-        <img
-          src={flagship.data.poster}
-          alt="ロマ子様の量子力学エピソードの原典ビジュアル"
+      <div class="hero-art" aria-label="ロマ子様作成ゲーム紹介">
+        <iframe
+          class="hero-video"
+          src={`https://www.youtube-nocookie.com/embed/${heroVideo.data.media.youtubeId}?playsinline=1&rel=0`}
+          title={heroVideo.data.title}
           width="640"
           height="360"
-          fetchpriority="high"
-        />
-        <span class="hero-art-caption"
-          ><span>ひとつの言葉から</span><strong>広がる、ロマ子様の世界。</strong><span
-            >EP-0001 / 量子力学 <span aria-hidden="true">↓</span></span
-          ></span
-        >
-      </a>
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen
+          referrerpolicy="strict-origin-when-cross-origin"
+        ></iframe>
+        <div class="hero-art-caption">
+          <span>ロマ子様のゲームの世界へ</span>
+          <strong>{heroVideo.data.title}</strong>
+          <span>{heroVideo.data.description}</span>
+        </div>
+      </div>
     </section>
 
     <section class="section container" id="multi-use" aria-labelledby="expansion-title">
