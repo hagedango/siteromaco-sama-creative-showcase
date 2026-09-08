@@ -1,6 +1,6 @@
 ---
 import { existsSync } from 'node:fs';
-const hasImage = existsSync('public/images/origin-romaco.png');
+const hasImage = existsSync('public/images/origin-romaco.jpg');
 ---
 
 <div class="origin-character">
@@ -9,10 +9,10 @@ const hasImage = existsSync('public/images/origin-romaco.png');
       {
         hasImage && (
           <img
-            src="/images/origin-romaco.png"
+            src="/images/origin-romaco.jpg"
             alt="元になるロマ子様のキャラクター画像"
-            width="320"
-            height="320"
+            width="450"
+            height="900"
             loading="lazy"
             data-origin-image
           />
@@ -73,12 +73,12 @@ const hasImage = existsSync('public/images/origin-romaco.png');
     text-align: center;
   }
   .origin-portrait {
-    width: min(100%, 14rem);
-    aspect-ratio: 1;
+    width: min(100%, 12rem);
+    aspect-ratio: 1 / 1.8;
     margin: auto;
     border-radius: 1rem;
     overflow: hidden;
-    background: radial-gradient(circle at top, #a97bff24, transparent 75%);
+    background: linear-gradient(180deg, #ffffff, #f9f4ff);
   }
   .origin-portrait img {
     width: 100%;

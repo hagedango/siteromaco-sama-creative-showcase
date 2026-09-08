@@ -324,6 +324,46 @@
     "aspectRatio": "9:16"
   },
   {
+    "id": "daily-remotion-short-02",
+    "title": "ロマ子様のRemotion動画②",
+    "description": "ロマ子様の日常の見せ場を、縦型ショートとして軽やかに動かす追加作品。",
+    "collection": "original",
+    "originalGroup": "cooking",
+    "format": "video",
+    "tools": ["Remotion"],
+    "parentWorkIds": [],
+    "relationshipVerified": false,
+    "poster": "https://i.ytimg.com/vi/zi6KX844fg0/hqdefault.jpg",
+    "media": {
+      "type": "youtube",
+      "youtubeId": "zi6KX844fg0"
+    },
+    "externalUrl": "https://youtube.com/shorts/zi6KX844fg0?feature=share",
+    "priority": 4,
+    "published": true,
+    "aspectRatio": "9:16"
+  },
+  {
+    "id": "cooking-cinema-short-02",
+    "title": "ロマ子様料理｜スペアリブ編",
+    "description": "スペアリブの照りと香ばしさを、ロマ子様と楽しむ料理ショート。",
+    "collection": "original",
+    "originalGroup": "cooking",
+    "format": "video",
+    "tools": [],
+    "parentWorkIds": [],
+    "relationshipVerified": false,
+    "poster": "https://i.ytimg.com/vi/_HRJ60Jf-jM/hqdefault.jpg",
+    "media": {
+      "type": "youtube",
+      "youtubeId": "_HRJ60Jf-jM"
+    },
+    "externalUrl": "https://youtube.com/shorts/_HRJ60Jf-jM?feature=share",
+    "priority": 5,
+    "published": true,
+    "aspectRatio": "9:16"
+  },
+  {
     "id": "four-panel-movie-sample-01",
     "title": "ロマ子様の動く4コマ",
     "description": "4コマ漫画の読みやすさを、動画として見やすいテンポ・字幕・間へ変換したサンプル。",

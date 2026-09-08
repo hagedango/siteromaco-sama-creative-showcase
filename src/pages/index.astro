@@ -237,19 +237,16 @@ const links = [
                   </div>
                   <div class="additional-works">
                     {extras.length > 0 && (
-                      <details class="more-works-accordion">
-                        <summary class="more-works-summary">
+                      <div class="more-works-panel">
+                        <p class="more-works-summary">
                           ほかの動画を見る（{extras.length}本）
-                          <span class="toggle-icon" aria-hidden="true">
-                            ⌄
-                          </span>
-                        </summary>
+                        </p>
                         <div class="more-works-list">
                           {extras.map((work) => (
                             <WorkCard work={work} />
                           ))}
                         </div>
-                      </details>
+                      </div>
                     )}
                   </div>
                 </section>

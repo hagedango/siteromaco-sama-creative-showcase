@@ -543,7 +543,7 @@ footer p {
   border-color: var(--color-gold, #f2c76e);
   transform: translateY(-2px);
 }
-.more-works-accordion {
+.more-works-panel {
   margin-top: 1rem;
   border-radius: 0.75rem;
   border: 1px solid rgb(255 255 255 / 10%);
@@ -555,17 +555,11 @@ footer p {
   align-items: center;
   justify-content: space-between;
   padding: 0.75rem 1rem;
+  margin: 0;
   font-size: 0.82rem;
   font-weight: 600;
   color: var(--color-text-muted, #94a3b8);
-  cursor: pointer;
-  user-select: none;
-  transition:
-    background 0.2s,
-    color 0.2s;
-}
-.more-works-summary:focus-visible {
-  outline-offset: -3px;
+  border-bottom: 1px solid rgb(255 255 255 / 8%);
 }
 @supports not (grid-template-rows: subgrid) {
   .original-group {
@@ -576,24 +570,10 @@ footer p {
     flex: 1;
   }
 }
-.more-works-summary:hover {
-  background: rgb(255 255 255 / 6%);
-  color: var(--color-gold, #f2c76e);
-}
-.more-works-summary::-webkit-details-marker {
-  display: none;
-}
-.more-works-accordion[open] .toggle-icon {
-  transform: rotate(180deg);
-}
-.toggle-icon {
-  transition: transform 0.2s ease;
-}
 .more-works-list {
   display: flex;
   flex-direction: column;
   gap: 1rem;
   padding: 0.75rem;
-  border-top: 1px solid rgb(255 255 255 / 8%);
   background: rgb(0 0 0 / 20%);
 }
