@@ -36,7 +36,9 @@
     "poster": "https://romaco-substack-portal.pages.dev/media/EP-0004/comic-1.jpg",
     "media": {
       "type": "image",
-      "images": ["https://romaco-substack-portal.pages.dev/media/EP-0004/comic-1.jpg"]
+      "images": [
+        "https://romaco-substack-portal.pages.dev/media/EP-0004/comic-1.jpg"
+      ]
     },
     "externalUrl": "https://romaco-substack-portal.pages.dev/episodes/time-machine-relativity/#comic-heading",
     "priority": 10,
@@ -56,7 +58,9 @@
     "poster": "https://romaco-substack-portal.pages.dev/media/EP-0006/comic-1.jpg",
     "media": {
       "type": "image",
-      "images": ["https://romaco-substack-portal.pages.dev/media/EP-0006/comic-1.jpg"]
+      "images": [
+        "https://romaco-substack-portal.pages.dev/media/EP-0006/comic-1.jpg"
+      ]
     },
     "externalUrl": "https://romaco-substack-portal.pages.dev/episodes/allowed-vs-hated-dirty-jokes/#comic-heading",
     "priority": 10,
@@ -69,8 +73,12 @@
     "collection": "article-derived",
     "episodeId": "EP-0001",
     "format": "motion-comic",
-    "tools": ["Remotion"],
-    "parentWorkIds": ["ep-0001-comic"],
+    "tools": [
+      "Remotion"
+    ],
+    "parentWorkIds": [
+      "ep-0001-comic"
+    ],
     "relationshipVerified": true,
     "evidenceUrl": "https://romaco-substack-portal.pages.dev/episodes/quantum-mechanics-genius/",
     "poster": "https://i.ytimg.com/vi/ekWDjNHoB40/hqdefault.jpg",
@@ -290,7 +298,9 @@
     "collection": "original",
     "originalGroup": "opal-remotion",
     "format": "video",
-    "tools": ["Remotion"],
+    "tools": [
+      "Remotion"
+    ],
     "parentWorkIds": [],
     "relationshipVerified": false,
     "poster": "https://i.ytimg.com/vi/qKWwvM7l0R4/hqdefault.jpg",
@@ -328,9 +338,11 @@
     "title": "ロマ子様のRemotion動画②",
     "description": "ロマ子様の日常の見せ場を、縦型ショートとして軽やかに動かす追加作品。",
     "collection": "original",
-    "originalGroup": "cooking",
+    "originalGroup": "opal-remotion",
     "format": "video",
-    "tools": ["Remotion"],
+    "tools": [
+      "Remotion"
+    ],
     "parentWorkIds": [],
     "relationshipVerified": false,
     "poster": "https://i.ytimg.com/vi/zi6KX844fg0/hqdefault.jpg",
