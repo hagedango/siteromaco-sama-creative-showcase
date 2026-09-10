@@ -10,6 +10,9 @@ const {
   title = 'Romaco-sama Creative Showcase | Produced by Hagedango',
   description = '罵尻ロマ子様の愛と罵倒が、4コマ漫画、動く4コマ、ショート動画、料理シネマ、講座動画として最新AIとコード技術で広がるクリエイティブ・ショウケースです。',
 } = Astro.props;
+const canonicalUrl = new URL(Astro.url.pathname, 'https://romaco-showcase.pages.dev/').href;
+const socialImage = 'https://romaco-showcase.pages.dev/images/origin-romaco.jpg';
+const socialImageAlt = '青い衣装をまとった罵尻ロマ子様（Romaco-sama）';
 ---
 
 <!doctype html>
@@ -24,7 +27,20 @@ const {
     <meta property="og:locale" content="ja_JP" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:site_name" content="Romaco-sama Creative Showcase" />
+    <meta property="og:image" content={socialImage} />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="454" />
+    <meta property="og:image:height" content="900" />
+    <meta property="og:image:alt" content={socialImageAlt} />
     <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImage} />
+    <meta name="twitter:image:alt" content={socialImageAlt} />
+    <meta name="twitter:creator" content="@dango333" />
+    <link rel="canonical" href={canonicalUrl} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
