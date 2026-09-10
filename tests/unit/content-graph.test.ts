@@ -7,7 +7,7 @@ const copy = () => structuredClone(works) as GraphWork[];
 describe('content relationships', () => {
   it('validates the real catalog and keeps the supplied videos unique', () => {
     expect(() => validateContentGraph(episodes, works)).not.toThrow();
-    for (const id of ['aHuVB-HqrlA', '1PVJ6SJkLHo', '4Gqv7d6ShXA', 'qfpKfBIuMc4', 'C4k87y6XJJQ']) {
+    for (const id of ['aHuVB-HqrlA', '4Gqv7d6ShXA', 'qfpKfBIuMc4', 'C4k87y6XJJQ']) {
       expect(works.filter((work) => work.media.youtubeId === id)).toHaveLength(1);
     }
     expect(works.find((work) => work.media.youtubeId === '4Gqv7d6ShXA')?.episodeId).toBe('EP-0001');

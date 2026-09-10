@@ -13,9 +13,6 @@ const comics = related.filter((work) => work.data.format === 'comic');
 const motions = related.filter((work) => work.data.format === 'motion-comic');
 const shorts = related.filter((work) => work.data.format === 'short');
 const lectures = related.filter((work) => work.data.format === 'lecture');
-const extraMotions = works.filter(
-  (work) => work.data.format === 'motion-comic' && !work.data.episodeId,
-);
 ---
 
 <section
@@ -70,18 +67,6 @@ const extraMotions = works.filter(
                 ))}
             </div>
           ))}
-          {episode.id === 'EP-0001' && extraMotions.length > 0 && (
-            <div class="more-works-panel">
-              <p class="more-works-summary">
-                別の漫画動画も見る（{extraMotions.length}本）
-              </p>
-              <div class="more-works-list">
-                {extraMotions.map((work) => (
-                  <WorkCard work={work} relationship="別の漫画を動画にした作品" />
-                ))}
-              </div>
-            </div>
-          )}
         </div>
       )
     }

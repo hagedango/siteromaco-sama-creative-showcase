@@ -374,25 +374,5 @@
     "priority": 5,
     "published": true,
     "aspectRatio": "9:16"
-  },
-  {
-    "id": "four-panel-movie-sample-01",
-    "title": "ロマ子様の動く4コマ",
-    "description": "4コマ漫画の読みやすさを、動画として見やすいテンポ・字幕・間へ変換したサンプル。",
-    "collection": "original",
-    "originalGroup": "experiments",
-    "format": "motion-comic",
-    "tools": [],
-    "parentWorkIds": [],
-    "relationshipVerified": false,
-    "poster": "https://i.ytimg.com/vi/1PVJ6SJkLHo/hqdefault.jpg",
-    "media": {
-      "type": "youtube",
-      "youtubeId": "1PVJ6SJkLHo"
-    },
-    "externalUrl": "https://youtu.be/1PVJ6SJkLHo",
-    "priority": 3,
-    "published": true,
-    "aspectRatio": "16:9"
   }
 ]
